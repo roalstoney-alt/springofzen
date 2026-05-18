@@ -73,7 +73,11 @@ async function renderTrackDetail() {
   container.innerHTML = `<section class="detail-layout">
     <div class="detail-panel">
       <img src="${track.cover_url}" alt="${track.title} cover">
-      <audio controls src="${track.audio_url}"></audio>
+      <audio controls preload="metadata" src="${track.audio_url}"></audio>
+      <div class="meta-row">
+        <a class="tag" href="${track.audio_url}">MP3 playback</a>
+        <a class="tag" href="${track.wav_url}">WAV archive</a>
+      </div>
       <div class="meta-row">
         ${track.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
       </div>

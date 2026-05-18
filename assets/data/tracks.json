@@ -5,8 +5,10 @@
     "date": "2026-05-18",
     "dna_family": "psychedelic",
     "duration": "01:35",
-    "audio_url": "assets/audio/2026-05-18/DNA_20260518_v01.wav",
-    "cover_url": "assets/covers/2026-05-18/DNA_20260518_v01.jpg",
+    "audio_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v01.mp3",
+    "wav_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v01.wav",
+    "cover_url": "https://cdn-domain/covers/2026-05-18/DNA_20260518_v01.jpg",
+    "preview_url": "https://cdn-domain/previews/2026-05-18/DNA_20260518_v01_preview.mp3",
     "description": "slow emotional bloom with sparse lead tones and floating depth",
     "tags": [
       "deep_space",
@@ -21,7 +23,7 @@
       "repetition_ratio": 0.62,
       "harmonic_tension": 0.71
     },
-    "feedback_form_url": "PASTE_GOOGLE_FORM_EMBED_URL_HERE"
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
   },
   {
     "track_id": "DNA_20260518_v02",
@@ -29,8 +31,10 @@
     "date": "2026-05-18",
     "dna_family": "psychedelic",
     "duration": "01:31",
-    "audio_url": "assets/audio/2026-05-18/DNA_20260518_v02.wav",
-    "cover_url": "assets/covers/2026-05-18/DNA_20260518_v02.jpg",
+    "audio_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v02.mp3",
+    "wav_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v02.wav",
+    "cover_url": "https://cdn-domain/covers/2026-05-18/DNA_20260518_v02.jpg",
+    "preview_url": "https://cdn-domain/previews/2026-05-18/DNA_20260518_v02_preview.mp3",
     "description": "grounded bass loop with delayed release and breathing drums",
     "tags": [
       "bass_hypnosis",
@@ -45,7 +49,7 @@
       "repetition_ratio": 0.62,
       "harmonic_tension": 0.71
     },
-    "feedback_form_url": "PASTE_GOOGLE_FORM_EMBED_URL_HERE"
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
   },
   {
     "track_id": "DNA_20260518_v03",
@@ -53,8 +57,10 @@
     "date": "2026-05-18",
     "dna_family": "modern_attention",
     "duration": "00:43",
-    "audio_url": "assets/audio/2026-05-18/DNA_20260518_v03.wav",
-    "cover_url": "assets/covers/2026-05-18/DNA_20260518_v03.jpg",
+    "audio_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v03.mp3",
+    "wav_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v03.wav",
+    "cover_url": "https://cdn-domain/covers/2026-05-18/DNA_20260518_v03.jpg",
+    "preview_url": "https://cdn-domain/previews/2026-05-18/DNA_20260518_v03_preview.mp3",
     "description": "short attention cycle with quick motif recognition",
     "tags": [
       "fast_hook",
@@ -69,7 +75,7 @@
       "repetition_ratio": 0.84,
       "harmonic_tension": 0.42
     },
-    "feedback_form_url": "PASTE_GOOGLE_FORM_EMBED_URL_HERE"
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
   },
   {
     "track_id": "DNA_20260518_v04",
@@ -77,8 +83,10 @@
     "date": "2026-05-18",
     "dna_family": "modern_attention",
     "duration": "00:43",
-    "audio_url": "assets/audio/2026-05-18/DNA_20260518_v04.wav",
-    "cover_url": "assets/covers/2026-05-18/DNA_20260518_v04.jpg",
+    "audio_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v04.mp3",
+    "wav_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v04.wav",
+    "cover_url": "https://cdn-domain/covers/2026-05-18/DNA_20260518_v04.jpg",
+    "preview_url": "https://cdn-domain/previews/2026-05-18/DNA_20260518_v04_preview.mp3",
     "description": "repeated motif and tight low-end for replay testing",
     "tags": [
       "repeatable_phrase",
@@ -93,7 +101,7 @@
       "repetition_ratio": 0.92,
       "harmonic_tension": 0.42
     },
-    "feedback_form_url": "PASTE_GOOGLE_FORM_EMBED_URL_HERE"
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
   },
   {
     "track_id": "DNA_20260518_v05",
@@ -101,8 +109,10 @@
     "date": "2026-05-18",
     "dna_family": "hybrid",
     "duration": "01:16",
-    "audio_url": "assets/audio/2026-05-18/DNA_20260518_v05.wav",
-    "cover_url": "assets/covers/2026-05-18/DNA_20260518_v05.jpg",
+    "audio_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v05.mp3",
+    "wav_url": "https://cdn-domain/audio/2026-05-18/DNA_20260518_v05.wav",
+    "cover_url": "https://cdn-domain/covers/2026-05-18/DNA_20260518_v05.jpg",
+    "preview_url": "https://cdn-domain/previews/2026-05-18/DNA_20260518_v05_preview.mp3",
     "description": "fast motif riding over a spacious psychedelic bed",
     "tags": [
       "hybrid",
@@ -117,6 +127,6 @@
       "repetition_ratio": 0.73,
       "harmonic_tension": 0.58
     },
-    "feedback_form_url": "PASTE_GOOGLE_FORM_EMBED_URL_HERE"
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
   }
 ]
