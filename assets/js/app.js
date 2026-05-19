@@ -8,13 +8,18 @@ function card(track) {
     <img src="${track.cover_url}" alt="${track.title} cover">
     <div class="meta-row">
       <span class="tag">${track.track_id}</span>
-      <span class="tag">${track.dna_family}</span>
+      <span class="tag">${track.mutation_role || track.dna_family}</span>
       <span class="tag">${track.duration}</span>
     </div>
     <h3>${track.title}</h3>
     <p>${track.description}</p>
     <a class="button primary" href="track.html?id=${encodeURIComponent(track.track_id)}">Listen</a>
   </article>`;
+}
+
+async function loadDailyTheme() {
+  const response = await fetch("assets/data/daily_theme.json");
+  return response.json();
 }
 
 function parameterList(parameters) {
@@ -33,8 +38,15 @@ function formUrl(track) {
 
 async function renderHome() {
   const container = document.querySelector("#todayTracks");
+  const themeContainer = document.querySelector("#dailyTheme");
   if (!container) return;
   const tracks = await loadTracks();
+  const daily = await loadDailyTheme();
+  if (themeContainer && daily.theme) {
+    themeContainer.innerHTML = `<p class="eyebrow">Today's DNA Theme</p>
+      <h2>${daily.theme.name || "Daily DNA"}</h2>
+      <p>${daily.theme.description || ""}</p>`;
+  }
   container.innerHTML = tracks.slice(0, 5).map(card).join("");
 }
 
@@ -42,6 +54,11 @@ async function renderTracks() {
   const container = document.querySelector("#trackList");
   if (!container) return;
   const tracks = await loadTracks();
+  const daily = await loadDailyTheme();
+  const intro = document.querySelector("#tracksIntro");
+  if (intro && daily.theme) {
+    intro.textContent = `Today's theme: ${daily.theme.name}. ${daily.theme.description}`;
+  }
   const draw = (filter) => {
     const visible = filter === "all" ? tracks : tracks.filter((track) => track.dna_family === filter);
     container.innerHTML = visible.map(card).join("");
@@ -86,6 +103,10 @@ async function renderTrackDetail() {
       <p class="eyebrow">${track.track_id} / ${track.dna_family}</p>
       <h1>${track.title}</h1>
       <p class="subtitle">${track.description}</p>
+      <div class="theme-note">
+        <strong>Today's theme</strong><br>${track.daily_theme}<br><br>
+        <strong>Mutation role</strong><br>${track.mutation_role}
+      </div>
       <h2>Structure Parameters</h2>
       <div class="params">${parameterList(track.parameters)}</div>
       <p class="muted">After listening, please give 5 simple ratings. Your feedback helps mutate the next generation of music DNA.</p>

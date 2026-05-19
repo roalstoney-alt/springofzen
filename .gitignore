@@ -1,6 +1,7 @@
-.DS_Store
-
-# media
+# GitHub Pages should stay lightweight.
+assets/audio/
+assets/covers/
+assets/previews/
 *.wav
 *.mp3
 *.mp4
@@ -12,6 +13,7 @@ __pycache__/
 *.pyc
 
 # mac
+.DS_Store
 .AppleDouble
 .LSOverride
 
