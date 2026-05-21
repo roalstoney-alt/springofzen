@@ -1,5 +1,145 @@
 [
   {
+    "track_id": "V35_20260521_v01",
+    "title": "Ocean Drift - Core Tide Signal",
+    "date": "2026-05-21",
+    "dna_family": "psychedelic",
+    "daily_theme": "Ocean Drift",
+    "theme_description": "floating release, slow breathing, and body softening",
+    "mutation_role": "Core DNA",
+    "duration": "01:36",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v01.mp3",
+    "wav_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v01.wav",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v01_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v01.jpg",
+    "description": "Pure expression of today's ocean drift state.",
+    "tags": [
+      "ocean_drift",
+      "core_dna",
+      "am_delta"
+    ],
+    "parameters": {
+      "tempo_bpm": 62,
+      "space_ratio": 0.84,
+      "silence_ratio": 0.5,
+      "mutation_rate": 0.14,
+      "repetition_ratio": 0.62
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "V35_20260521_v02",
+    "title": "Ocean Drift - Low Shore Drift",
+    "date": "2026-05-21",
+    "dna_family": "psychedelic",
+    "daily_theme": "Ocean Drift",
+    "theme_description": "floating release, slow breathing, and body softening",
+    "mutation_role": "Deep Mutation",
+    "duration": "01:40",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v02.mp3",
+    "wav_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v02.wav",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v02_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v02.jpg",
+    "description": "Slower and lower, with wider shoreline space and deeper release.",
+    "tags": [
+      "ocean_drift",
+      "deep_mutation",
+      "am_drone"
+    ],
+    "parameters": {
+      "tempo_bpm": 62,
+      "space_ratio": 0.78,
+      "silence_ratio": 0.42,
+      "mutation_rate": 0.14,
+      "repetition_ratio": 0.62
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "V35_20260521_v03",
+    "title": "Ocean Drift - Wave Replay Fragment",
+    "date": "2026-05-21",
+    "dna_family": "modern_attention",
+    "daily_theme": "Ocean Drift",
+    "theme_description": "floating release, slow breathing, and body softening",
+    "mutation_role": "Attention Mutation",
+    "duration": "00:50",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v03.mp3",
+    "wav_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v03.wav",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v03_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v03.jpg",
+    "description": "A more replay-oriented wave fragment while staying inside the floating ocean field.",
+    "tags": [
+      "ocean_drift",
+      "attention_mutation",
+      "am_float"
+    ],
+    "parameters": {
+      "tempo_bpm": 82,
+      "space_ratio": 0.21,
+      "silence_ratio": 0.08,
+      "mutation_rate": 0.33,
+      "repetition_ratio": 0.84
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "V35_20260521_v04",
+    "title": "Ocean Drift - Tidal Release",
+    "date": "2026-05-21",
+    "dna_family": "psychedelic",
+    "daily_theme": "Ocean Drift",
+    "theme_description": "floating release, slow breathing, and body softening",
+    "mutation_role": "Emotional Expansion",
+    "duration": "01:35",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v04.mp3",
+    "wav_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v04.wav",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v04_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v04.jpg",
+    "description": "More emotional harmonic motion with a longer tidal answering phrase.",
+    "tags": [
+      "ocean_drift",
+      "emotional_expansion",
+      "am_chant"
+    ],
+    "parameters": {
+      "tempo_bpm": 68,
+      "space_ratio": 0.78,
+      "silence_ratio": 0.42,
+      "mutation_rate": 0.19,
+      "repetition_ratio": 0.62
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "V35_20260521_v05",
+    "title": "Ocean Drift - Black Water Hybrid",
+    "date": "2026-05-21",
+    "dna_family": "hybrid",
+    "daily_theme": "Ocean Drift",
+    "theme_description": "floating release, slow breathing, and body softening",
+    "mutation_role": "Experimental Hybrid",
+    "duration": "01:38",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v05.mp3",
+    "wav_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-21/V35_20260521_v05.wav",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v05_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v05.jpg",
+    "description": "Riskier structure experiment for body release, memory, and voluntary return.",
+    "tags": [
+      "ocean_drift",
+      "experimental_hybrid",
+      "am_breath"
+    ],
+    "parameters": {
+      "tempo_bpm": 66,
+      "space_ratio": 0.78,
+      "silence_ratio": 0.42,
+      "mutation_rate": 0.14,
+      "repetition_ratio": 0.62
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
     "track_id": "V35_20260520_v01",
     "title": "Lunar Sleep - Core Moon Signal",
     "date": "2026-05-20",
