@@ -36,6 +36,17 @@ function formUrl(track) {
   return configured;
 }
 
+function archiveLinks(track) {
+  const links = [`<a class="tag" href="${track.audio_url}">MP3 playback</a>`];
+  if (track.wav_url) {
+    links.push(`<a class="tag" href="${track.wav_url}">WAV archive</a>`);
+  }
+  if (track.midi_url) {
+    links.push(`<a class="tag" href="${track.midi_url}">MIDI archive</a>`);
+  }
+  return links.join("");
+}
+
 async function renderHome() {
   const container = document.querySelector("#todayTracks");
   const themeContainer = document.querySelector("#dailyTheme");
@@ -92,8 +103,7 @@ async function renderTrackDetail() {
       <img src="${track.cover_url}" alt="${track.title} cover">
       <audio controls preload="metadata" src="${track.audio_url}"></audio>
       <div class="meta-row">
-        <a class="tag" href="${track.audio_url}">MP3 playback</a>
-        <a class="tag" href="${track.wav_url}">WAV archive</a>
+        ${archiveLinks(track)}
       </div>
       <div class="meta-row">
         ${track.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}

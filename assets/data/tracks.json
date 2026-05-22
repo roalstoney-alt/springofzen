@@ -1,5 +1,191 @@
 [
   {
+    "track_id": "NWA_20260522_v01",
+    "title": "Lotus Memory Garden",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "D major / B minor pentatonic",
+    "duration": "03:40",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v01.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v01_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v01.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v01.mid",
+    "wav_url": "",
+    "description": "guzheng drops, dizi breath, nylon warmth, human-voice mist",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "01_lotus_memory_garden"
+    ],
+    "parameters": {
+      "tempo_bpm": 72,
+      "track_count": 13,
+      "duration_minutes_estimate": 3.56,
+      "safety": 9,
+      "float": 8,
+      "memory_residue": 9,
+      "tension": 3
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "NWA_20260522_v02",
+    "title": "Sacred Water Chapel",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "G suspended pentatonic",
+    "duration": "04:27",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v02.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v02_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v02.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v02.mid",
+    "wav_url": "",
+    "description": "xiao, voice pad, low water drone, slow temple air",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "02_sacred_water_chapel"
+    ],
+    "parameters": {
+      "tempo_bpm": 66,
+      "track_count": 13,
+      "duration_minutes_estimate": 8.0,
+      "safety": 8,
+      "float": 9,
+      "memory_residue": 8,
+      "tension": 2
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "NWA_20260522_v03",
+    "title": "Bamboo Rain Letters",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "A minor pentatonic",
+    "duration": "03:17",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v03.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v03_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v03.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v03.mid",
+    "wav_url": "",
+    "description": "bamboo flute, plucked rain, guitar traces, high wet air",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "03_bamboo_rain_letters"
+    ],
+    "parameters": {
+      "tempo_bpm": 76,
+      "track_count": 13,
+      "duration_minutes_estimate": 5.05,
+      "safety": 9,
+      "float": 8,
+      "memory_residue": 8,
+      "tension": 3
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "NWA_20260522_v04",
+    "title": "Nordic Fjord Dream",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "E minor / G major open fifth",
+    "duration": "03:47",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v04.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v04_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v04.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v04.mid",
+    "wav_url": "",
+    "description": "slow flute, soft strings, harp shimmer, cold open sky",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "04_nordic_fjord_dream"
+    ],
+    "parameters": {
+      "tempo_bpm": 70,
+      "track_count": 13,
+      "duration_minutes_estimate": 6.4,
+      "safety": 8,
+      "float": 9,
+      "memory_residue": 8,
+      "tension": 3
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "NWA_20260522_v05",
+    "title": "Desert Star Ritual",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "D dorian pentatonic color",
+    "duration": "03:17",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v05.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v05_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v05.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v05.mid",
+    "wav_url": "",
+    "description": "oud-like pluck, low flute, soft chant, dry night pulse",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "05_desert_star_ritual"
+    ],
+    "parameters": {
+      "tempo_bpm": 78,
+      "track_count": 13,
+      "duration_minutes_estimate": 4.92,
+      "safety": 8,
+      "float": 7,
+      "memory_residue": 8,
+      "tension": 4
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
+    "track_id": "NWA_20260522_v06",
+    "title": "Ocean Moon Procession",
+    "date": "2026-05-22",
+    "dna_family": "newage",
+    "daily_theme": "Gardens Of Inner Weather",
+    "theme_description": "A curated New Age consciousness album built from layered air, soft pulse, memory residue, and distant instrumental replies.",
+    "mutation_role": "C major / A minor luminous pentatonic",
+    "duration": "04:21",
+    "audio_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/2026-05-22/NWA_20260522_v06.mp3",
+    "preview_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v06_preview.mp3",
+    "cover_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v06.jpg",
+    "midi_url": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/midi/2026-05-22/NWA_20260522_v06.mid",
+    "wav_url": "",
+    "description": "piano droplets, flute distance, harp, oceanic choir air",
+    "tags": [
+      "newage",
+      "consciousness_album",
+      "06_ocean_moon_procession"
+    ],
+    "parameters": {
+      "tempo_bpm": 68,
+      "track_count": 13,
+      "duration_minutes_estimate": 7.53,
+      "safety": 9,
+      "float": 9,
+      "memory_residue": 9,
+      "tension": 2
+    },
+    "feedback_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScGQcQnAPPXwIsYb0YKTLAhNV_zDMLD3TUSaAa8UFjja5r5dQ/viewform?embedded=true"
+  },
+  {
     "track_id": "V35_20260521_v01",
     "title": "Ocean Drift - Core Tide Signal",
     "date": "2026-05-21",
