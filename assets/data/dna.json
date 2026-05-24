@@ -1,0 +1,36 @@
+[
+  {
+    "name": "lotus.secret_garden.memory_air.v0.3",
+    "brand": "Spring of Zen",
+    "sub_brand": "Memory Air",
+    "role": "premium session line",
+    "mapping": {
+      "voice_pad_length_up": "sacredness_up",
+      "bell_density_down": "safety_up",
+      "silence_ratio_up": "memory_residue_up",
+      "drum_density_up": "float_down"
+    }
+  },
+  {
+    "name": "sacred.water.voice_air.v0.2",
+    "brand": "Spring of Zen",
+    "sub_brand": "Memory Air",
+    "role": "sacred stillness session",
+    "mapping": {
+      "human_air_up": "sacredness_up",
+      "low_drone_up": "body_stillness_up",
+      "melody_density_up": "stillness_down"
+    }
+  },
+  {
+    "name": "underwater.pulse.focus.v0.1",
+    "brand": "Spring of Zen",
+    "sub_brand": "Memory Air",
+    "role": "focus and attention session",
+    "mapping": {
+      "pulse_stability_up": "focus_up",
+      "bell_density_up": "distraction_up",
+      "low_air_up": "work_endurance_up"
+    }
+  }
+]

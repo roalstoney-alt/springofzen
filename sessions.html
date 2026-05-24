@@ -1,29 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>Archive Track — Spring of Zen</title>
+  <title>Sessions — Spring of Zen</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Spring of Zen archived listening page.">
+  <meta name="description" content="Spring of Zen consciousness sessions by inner state.">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body data-page="track">
+<body data-page="sessions">
   <header class="site-header">
     <a class="brand" href="index.html"><span>Spring of Zen</span><small>Memory Air</small></a>
     <nav>
       <a href="sessions.html">Sessions</a>
       <a href="products.html">Products</a>
       <a href="lab.html">Lab</a>
-      <a href="tracks.html">Archive</a>
       <a href="about.html">About</a>
     </nav>
   </header>
   <main>
-    <div id="trackDetail"></div>
+    <section class="page-intro">
+      <p class="eyebrow">Consciousness Sessions</p>
+      <h1>Choose by state, not by genre.</h1>
+      <p>Each session is designed around a target inner state and a measurable consciousness signature.</p>
+    </section>
+    <div id="sessionsList" class="session-grid"></div>
   </main>
-  <script src="assets/js/tracks.js"></script>
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/tracking.js"></script>
+  <script src="assets/js/recommender.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

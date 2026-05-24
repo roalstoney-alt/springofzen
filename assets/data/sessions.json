@@ -1,0 +1,122 @@
+[
+  {
+    "id": "lotus_sleep",
+    "title": "Lotus Sleep Session",
+    "state": "Deep Sleep",
+    "dna": "lotus.sleep.low_tension.v0.1",
+    "description": "Slow, safe, low-tension sound environment for falling asleep.",
+    "consciousness_signature": {
+      "safety": 9,
+      "float": 7.5,
+      "memory_residue": 6,
+      "sacredness": 5,
+      "tension": 1.5,
+      "loopability": 9,
+      "dream_blur": 8,
+      "human_presence": 5,
+      "emotional_micro_disturbance": 2
+    },
+    "layers": ["warm_low_air", "slow_breath_pad", "soft_bass_floor", "distant_lotus_bells", "sleep_drift"],
+    "preview_audio": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v06_preview.mp3",
+    "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v06.jpg",
+    "youtube_url": "",
+    "etsy_url": "",
+    "recommended_for": ["falling asleep", "tired nervous system", "bedtime decompression", "low-tension looping"]
+  },
+  {
+    "id": "memory_air",
+    "title": "Memory Air Session",
+    "state": "Floating Reflection",
+    "dna": "lotus.secret_garden.memory_air.v0.3",
+    "description": "A quiet consciousness environment for floating memory and safe loneliness.",
+    "consciousness_signature": {
+      "safety": 8.5,
+      "float": 9,
+      "memory_residue": 9,
+      "sacredness": 7,
+      "tension": 2.5,
+      "loopability": 8,
+      "dream_blur": 8,
+      "human_presence": 7,
+      "emotional_micro_disturbance": 4
+    },
+    "layers": ["memory_fragments", "human_air", "water_blur", "underwater_pulse", "consciousness_drift"],
+    "preview_audio": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v01_preview.mp3",
+    "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v01.jpg",
+    "youtube_url": "",
+    "etsy_url": "",
+    "recommended_for": ["late night reflection", "soft loneliness", "journaling", "emotional floating"]
+  },
+  {
+    "id": "sacred_water",
+    "title": "Sacred Water Session",
+    "state": "Sacred Stillness",
+    "dna": "sacred.water.voice_air.v0.2",
+    "description": "Human voice air, water blur, and spacious stillness for meditation-like presence.",
+    "consciousness_signature": {
+      "safety": 8,
+      "float": 9,
+      "memory_residue": 8,
+      "sacredness": 9,
+      "tension": 2,
+      "loopability": 7.5,
+      "dream_blur": 8,
+      "human_presence": 8,
+      "emotional_micro_disturbance": 3
+    },
+    "layers": ["voice_air", "temple_water", "slow_xiao", "low_drone", "distant_light"],
+    "preview_audio": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v02_preview.mp3",
+    "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v02.jpg",
+    "youtube_url": "",
+    "etsy_url": "",
+    "recommended_for": ["meditation", "sacred stillness", "quiet prayer", "slow breathing"]
+  },
+  {
+    "id": "night_water",
+    "title": "Night Water Session",
+    "state": "Emotional Reset",
+    "dna": "night.water.reset.v0.1",
+    "description": "Quiet water-like atmosphere for emotional cooling and overthinking reset.",
+    "consciousness_signature": {
+      "safety": 8.5,
+      "float": 8,
+      "memory_residue": 7.5,
+      "sacredness": 5.5,
+      "tension": 2,
+      "loopability": 8,
+      "dream_blur": 7,
+      "human_presence": 6,
+      "emotional_micro_disturbance": 3.5
+    },
+    "layers": ["cool_water_pad", "soft_rain_pluck", "low_body_floor", "slow_air", "release_tail"],
+    "preview_audio": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v01_preview.mp3",
+    "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v01.jpg",
+    "youtube_url": "",
+    "etsy_url": "",
+    "recommended_for": ["overthinking at night", "stress cooldown", "sad heaviness", "emotional reset"]
+  },
+  {
+    "id": "underwater_pulse",
+    "title": "Underwater Pulse Session",
+    "state": "Calm Focus",
+    "dna": "underwater.pulse.focus.v0.1",
+    "description": "Low distraction pulse and soft atmosphere for steady attention.",
+    "consciousness_signature": {
+      "safety": 8,
+      "float": 7,
+      "memory_residue": 5,
+      "sacredness": 4,
+      "tension": 3,
+      "loopability": 8.5,
+      "dream_blur": 5,
+      "human_presence": 4,
+      "emotional_micro_disturbance": 2.5
+    },
+    "layers": ["low_pulse", "soft_focus_air", "minimal_bell_marker", "stable_floor", "attention_drift"],
+    "preview_audio": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v04_preview.mp3",
+    "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v04.jpg",
+    "youtube_url": "",
+    "etsy_url": "",
+    "recommended_for": ["writing", "study", "deep work", "calm focus"]
+  }
+]

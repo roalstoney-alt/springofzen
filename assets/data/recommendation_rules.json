@@ -1,0 +1,32 @@
+{
+  "sleep": {
+    "keywords": ["sleep", "tired", "insomnia", "can't sleep", "cant sleep", "bed", "rest"],
+    "session_id": "lotus_sleep",
+    "product_id": "lotus_sleep_pack",
+    "reason": "You described a tired or sleep-seeking state. Lotus Sleep is designed for low tension, soft safety, and nervous-system downshift."
+  },
+  "memory_air": {
+    "keywords": ["lonely", "memory", "nostalgia", "reflection", "night", "safe", "floating calm"],
+    "session_id": "memory_air",
+    "product_id": "memory_air_pack",
+    "reason": "You described a reflective or lonely night state. Memory Air is designed for floating memory, soft safety, and low-tension emotional drift."
+  },
+  "sacred_water": {
+    "keywords": ["meditation", "zen", "pray", "sacred", "stillness", "spiritual"],
+    "session_id": "sacred_water",
+    "product_id": "sacred_water_pack",
+    "reason": "You described a still or sacred state. Sacred Water uses human voice air, water blur, and spacious stillness."
+  },
+  "night_water": {
+    "keywords": ["anxious", "stress", "overthinking", "reset", "sad", "heavy"],
+    "session_id": "night_water",
+    "product_id": "night_water_pack",
+    "reason": "You described stress, heaviness, or overthinking. Night Water is designed for emotional cooling and quiet reset."
+  },
+  "underwater_pulse": {
+    "keywords": ["focus", "work", "write", "study", "deep work", "concentrate"],
+    "session_id": "underwater_pulse",
+    "product_id": "underwater_pulse_pack",
+    "reason": "You described a steady attention state. Underwater Pulse keeps the pulse low-distraction and the atmosphere soft."
+  }
+}

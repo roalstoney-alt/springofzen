@@ -1,52 +1,104 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>Consciousness Audio Lab</title>
+  <title>Spring of Zen — Consciousness Sessions</title>
   <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Daily experimental sound-structure listening lab.">
-<link rel="stylesheet" href="assets/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consciousness sessions for sleep, floating memory, sacred stillness, and emotional reset.">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body data-page="home">
   <header class="site-header">
-    <a class="brand" href="index.html">Consciousness Audio Lab</a>
+    <a class="brand" href="index.html"><span>Spring of Zen</span><small>Memory Air</small></a>
     <nav>
-      <a href="tracks.html">Tracks</a>
+      <a href="sessions.html">Sessions</a>
+      <a href="products.html">Products</a>
+      <a href="lab.html">Lab</a>
       <a href="about.html">About</a>
-      <a href="deep-listener.html">Deep Listener</a>
     </nav>
   </header>
+
   <main>
-    <section class="hero">
-      <p class="eyebrow">Experimental music structure feedback laboratory</p>
-      <h1>We are mapping how sound structures interact with human consciousness.</h1>
-      <p class="subtitle">Listen to daily experimental music DNA, share how it affects your state, and help evolve the next generation of consciousness audio.</p>
-      <div class="actions">
-        <a class="button primary" href="tracks.html">Listen Today’s DNA</a>
-        <a class="button" href="tracks.html">Join Feedback Experiment</a>
-        <a class="button" href="deep-listener.html">Become Deep Listener</a>
+    <section class="hero state-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Consciousness Session Portal</p>
+        <h1>What state do you want to enter tonight?</h1>
+        <p class="subtitle">Consciousness Sessions for sleep, floating memory, sacred stillness, and emotional reset.</p>
+        <div class="actions">
+          <a class="button primary" href="#stateSelector">Find My Session</a>
+          <a class="button" href="session.html?id=memory_air">Explore Memory Air</a>
+        </div>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
       </div>
     </section>
-    <section id="dailyTheme" class="theme-band"></section>
+
+    <section id="stateSelector" class="section-block">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Choose an inner state</p>
+          <h2>Start from how you want to feel.</h2>
+        </div>
+      </div>
+      <div id="stateCards" class="state-grid"></div>
+    </section>
+
+    <section class="intent-panel" aria-labelledby="intentTitle">
+      <div>
+        <p class="eyebrow">Intent input</p>
+        <h2 id="intentTitle">Describe how you feel, or what state you want to enter.</h2>
+      </div>
+      <form id="intentForm" class="intent-form">
+        <input id="intentInput" name="intent" autocomplete="off" placeholder="anxious but tired / lonely but safe / can't sleep / need floating calm">
+        <button class="button primary" type="submit">Recommend a Session</button>
+      </form>
+      <div id="recommendationResult" class="recommendation-result" aria-live="polite"></div>
+    </section>
+
+    <section class="featured-session">
+      <div class="featured-copy">
+        <p class="eyebrow">Featured Session</p>
+        <h2>Memory Air Session</h2>
+        <p>Soft human voice air, water blur, distant lotus bells, and low-tension emotional drift for floating memory and safe night reflection.</p>
+        <div class="actions">
+          <a class="button primary" href="session.html?id=memory_air">Open Session</a>
+          <a class="button" href="products.html#memory_air_pack">Full Session Pack</a>
+        </div>
+      </div>
+      <div class="signature-panel" id="featuredSignature"></div>
+    </section>
+
     <section class="section-grid">
       <article>
-        <h2>What is this?</h2>
-        <p>This project frames music as a structure that can interact with attention, emotion, memory, and inner state through listener-reported experience.</p>
+        <p class="eyebrow">Why This Exists</p>
+        <h2>Sound as state entry.</h2>
+        <p>Spring of Zen creates consciousness sessions: sound environments designed for sleep, reflection, sacred stillness, emotional reset, and floating memory.</p>
+        <p>We do not publish music as content volume. We study how layers of sound help people enter different inner states.</p>
       </article>
       <article>
-        <h2>Listen → Feedback → Evolution</h2>
-        <p>Your ratings help identify replayable emotional structures. Strong patterns become mother DNA for future generations.</p>
+        <p class="eyebrow">Memory Air</p>
+        <h2>A language for floating memory.</h2>
+        <p>Memory Air is our first premium session line: soft human voice air, water blur, distant lotus bells, and low-tension emotional drift.</p>
+        <p>It is built for night reflection, safe loneliness, journaling, and emotional floating.</p>
       </article>
     </section>
-    <section>
-      <div class="section-title">
-        <h2>Today’s DNA</h2>
-        <a href="tracks.html">View all</a>
+
+    <section class="email-band">
+      <div>
+        <p class="eyebrow">Join the Memory Air Sessions</p>
+        <h2>Receive new consciousness environments and listening notes.</h2>
       </div>
-      <div id="todayTracks" class="track-grid"></div>
+      <form class="email-form" data-email-form>
+        <input name="email" type="email" placeholder="you@example.com" required>
+        <button class="button primary" type="submit">Join</button>
+      </form>
     </section>
   </main>
-  <script src="assets/js/tracks.js"></script>
+
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/tracking.js"></script>
+  <script src="assets/js/recommender.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>
