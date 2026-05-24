@@ -12,10 +12,20 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
+function labelFromKey(key) {
+  return String(key || "")
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 function metricPills(signature = {}) {
   return Object.entries(signature)
-    .map(([key, value]) => `<span class="metric"><strong>${escapeHtml(key.replaceAll("_", " "))}</strong>${escapeHtml(value)}</span>`)
+    .map(([key, value]) => `<span class="metric"><strong>${escapeHtml(window.SpringOfZenI18n?.t(labelFromKey(key)) || labelFromKey(key))}</strong>${escapeHtml(value)}</span>`)
     .join("");
+}
+
+function applyLanguage() {
+  window.SpringOfZenI18n?.apply();
 }
 
 function sessionCard(session) {
@@ -135,6 +145,7 @@ async function bindIntentForm() {
     if (!rawInput) return;
     const result = await window.SpringOfZenRecommender.recommend(rawInput);
     resultContainer.innerHTML = recommendationMarkup(result);
+    applyLanguage();
     await window.SpringOfZenTracking?.track("intent_submitted", {
       raw_input: rawInput,
       matched_state: result.matched_state,
@@ -158,6 +169,7 @@ async function renderFeaturedSignature() {
   const sessions = await loadJson("assets/data/sessions.json");
   const memoryAir = sessions.find((item) => item.id === "memory_air") || sessions[0];
   container.innerHTML = `<p class="eyebrow">Consciousness Signature</p>${metricPills(memoryAir.consciousness_signature)}`;
+  applyLanguage();
 }
 
 async function renderLegacyHomeTracks() {
@@ -171,6 +183,7 @@ async function renderLegacyHomeTracks() {
       <p>${escapeHtml(daily.theme.description || "")}</p>`;
   }
   container.innerHTML = tracks.slice(0, 5).map(trackCard).join("");
+  applyLanguage();
 }
 
 async function renderTracks() {
@@ -184,6 +197,7 @@ async function renderTracks() {
   const draw = (filter) => {
     const visible = filter === "all" ? tracks : tracks.filter((track) => track.dna_family === filter);
     container.innerHTML = visible.map(trackCard).join("");
+    applyLanguage();
   };
   draw("all");
   document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -223,6 +237,7 @@ async function renderTrackDetail() {
       ${feedbackBlock}
     </div>
   </section>`;
+  applyLanguage();
 }
 
 async function renderSessionsList() {
@@ -230,6 +245,7 @@ async function renderSessionsList() {
   if (!container) return;
   const sessions = await loadJson("assets/data/sessions.json");
   container.innerHTML = sessions.map(sessionCard).join("");
+  applyLanguage();
 }
 
 async function renderSessionDetail() {
@@ -257,7 +273,8 @@ async function renderSessionDetail() {
       <p class="eyebrow">${escapeHtml(session.state)}</p>
       <h1>${escapeHtml(session.title)}</h1>
       <p class="subtitle">${escapeHtml(session.description)}</p>
-      <p>This session is built from five consciousness layers: ${session.layers.map(escapeHtml).join(", ")}.</p>
+      <p><span>This session is built from five consciousness layers:</span></p>
+      <div class="meta-row">${session.layers.map((layer) => `<span class="tag">${escapeHtml(layer)}</span>`).join("")}</div>
       <h2>Best for</h2>
       <div class="meta-row">${session.recommended_for.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
       <h2>Consciousness Signature</h2>
@@ -290,6 +307,7 @@ async function renderSessionDetail() {
       <p class="form-status" aria-live="polite"></p>
     </form>
   </section>`;
+  applyLanguage();
 
   container.querySelectorAll("[data-preview-session]").forEach((audio) => {
     audio.addEventListener("play", () => {
@@ -315,7 +333,7 @@ async function renderProductsList() {
       <p class="eyebrow">${escapeHtml(product.platform)} / ${escapeHtml(product.price_range)}</p>
       <h2>${escapeHtml(product.title)}</h2>
       <p>${escapeHtml(product.description)}</p>
-      <p class="muted">Related state: ${escapeHtml(session?.state || "Consciousness Session")}</p>
+      <p class="muted"><span>Related state:</span> ${escapeHtml(session?.state || "Consciousness Session")}</p>
       <ul>${product.includes.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
       <a class="button primary" data-product-cta="${product.id}" href="${href}">Get the Full Session Pack</a>
     </article>`;
@@ -349,6 +367,7 @@ function bindFeedbackForms() {
     };
     await window.SpringOfZenTracking?.saveFeedback(payload);
     form.querySelector(".form-status").textContent = "Thanks. Your response helps shape future sessions.";
+    applyLanguage();
     form.reset();
   });
 }
@@ -365,6 +384,7 @@ function bindEmailForms() {
         source: document.body.dataset.page || "site"
       });
       form.innerHTML = `<p class="form-status">Thanks. Your Memory Air path has been saved locally.</p>`;
+      applyLanguage();
     });
   });
 }
@@ -397,6 +417,11 @@ async function init() {
   bindFeedbackForms();
   bindEmailForms();
   bindProductTracking();
+  applyLanguage();
 }
 
 init();
+
+window.addEventListener("springofzen:languagechange", () => {
+  applyLanguage();
+});
