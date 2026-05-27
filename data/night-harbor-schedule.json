@@ -1,0 +1,29 @@
+[
+  {
+    "id": "warm-room",
+    "title": "Warm Room Opens",
+    "start": "21:30",
+    "end": "23:29",
+    "statusText": "The room is open tonight.",
+    "cta": "Click to Listen",
+    "playlistId": "warm-room-playlist"
+  },
+  {
+    "id": "night-broadcast",
+    "title": "Night Broadcast",
+    "start": "23:30",
+    "end": "01:10",
+    "statusText": "The waiter is speaking tonight.",
+    "cta": "Click to Listen",
+    "playlistId": "night-broadcast-playlist"
+  },
+  {
+    "id": "midnight-letters",
+    "title": "Midnight Letters",
+    "start": "01:11",
+    "end": "02:30",
+    "statusText": "Anonymous letters are on air.",
+    "cta": "Click to Listen",
+    "playlistId": "midnight-letters-playlist"
+  }
+]

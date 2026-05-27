@@ -414,7 +414,7 @@ async function renderNightHarbor() {
     chat.innerHTML = `<div class="waiter-message waiter"><strong>Waiter</strong><span>Welcome back. You do not have to explain everything. Just tell me what is on your mind.</span></div>`;
   }
 
-  setupNightHarborAudio(session);
+  window.NightHarborLive?.refresh?.();
 }
 
 function setupNightHarborAudio(session) {

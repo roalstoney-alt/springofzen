@@ -19,7 +19,7 @@
     </nav>
   </header>
 
-  <main class="night-harbor-page">
+  <main id="night-harbor-root" class="night-harbor-page is-quiet">
     <aside class="room-nav" aria-label="Night Harbor room navigation">
       <a href="#theRoom"><span>01</span>The Room</a>
       <a href="#tonightBroadcast"><span>02</span>Broadcast</a>
@@ -34,11 +34,11 @@
       <div class="rain-layer" aria-hidden="true"></div>
       <div class="night-hero-copy">
         <p class="eyebrow">A Quiet Digital Room</p>
-        <h1>Night Harbor</h1>
-        <p class="subtitle">The light is on. You can stay as long as you need.</p>
+        <h1 id="live-title">Night Harbor</h1>
+        <p id="live-status" class="subtitle">The light is still on. Stay for a while.</p>
         <p class="room-greeting">Welcome back.<br>The room is still open.<br>You do not have to explain everything tonight.<br>Just sit for a while.</p>
         <div class="actions">
-          <a class="button primary" href="#letterRoom">Knock the Door</a>
+          <button id="hero-listen-button" class="button primary" type="button" data-audio-action="play">Play Ambient Session</button>
           <a class="button" href="#tonightBroadcast">Listen to Tonight's Broadcast</a>
         </div>
       </div>
@@ -58,17 +58,26 @@
             <p class="eyebrow">Tonight's Mood</p>
             <h2>Spring of Zen Radio</h2>
           </div>
-          <span class="status-badge">Room Quiet</span>
+          <span id="live-badge" class="status-badge">Quiet</span>
         </div>
         <div id="nightSession"></div>
         <div class="radio-console" data-night-player>
           <p class="muted player-prompt">The room is quiet. Tap play to let the music in.</p>
+          <audio id="night-harbor-audio" preload="metadata"></audio>
+          <div id="now-playing" class="now-playing-panel" aria-live="polite">
+            <img id="track-cover" alt="">
+            <div>
+              <p class="eyebrow">Now Playing</p>
+              <div id="track-title">The harbor is quiet</div>
+              <div id="track-artist">Spring of Zen</div>
+            </div>
+          </div>
           <div class="player-controls">
             <button class="button" type="button" data-audio-action="previous">Previous</button>
-            <button class="button primary" type="button" data-audio-action="play">Play</button>
-            <button class="button" type="button" data-audio-action="pause">Pause</button>
-            <button class="button" type="button" data-audio-action="stop">Stop</button>
-            <button class="button" type="button" data-audio-action="next">Next</button>
+            <button id="listen-button" class="button primary" type="button" data-audio-action="play">Play Ambient Session</button>
+            <button id="pause-button" class="button" type="button" data-audio-action="pause">Pause</button>
+            <button id="stop-button" class="button" type="button" data-audio-action="stop">Stop</button>
+            <button id="next-button" class="button" type="button" data-audio-action="next">Next</button>
           </div>
           <div class="waveform" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -90,7 +99,7 @@
             <p class="eyebrow">Tonight's Broadcast</p>
             <h2>Midnight radio for the room.</h2>
           </div>
-          <span class="status-badge on-air">On Air</span>
+          <span class="status-badge on-air" data-live-window-badge>On Air</span>
         </div>
         <div id="broadcastText"></div>
         <button class="button" type="button" data-audio-action="play">Listen to Broadcast</button>
@@ -165,5 +174,6 @@
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/tracking.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/night-harbor-live.js"></script>
 </body>
 </html>

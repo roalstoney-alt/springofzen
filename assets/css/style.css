@@ -371,6 +371,16 @@ audio { width: 100%; margin: 16px 0 0; }
   width: min(1220px, calc(100% - 36px));
   padding-bottom: 132px;
 }
+.night-harbor-page.is-live .night-hero::after,
+.night-harbor-page.is-playing .night-hero::after {
+  background:
+    radial-gradient(circle at 74% 28%, rgba(243, 214, 162, 0.2), transparent 14rem),
+    linear-gradient(90deg, rgba(5, 6, 8, 0.9), rgba(5, 6, 8, 0.28) 58%, rgba(5, 6, 8, 0.74));
+}
+.night-harbor-page.is-playing .harbor-signal span,
+.harbor-light-pulse {
+  animation: harborLightPulse 2.8s ease-in-out infinite;
+}
 .room-nav {
   position: fixed;
   z-index: 9;
@@ -447,7 +457,7 @@ audio { width: 100%; margin: 16px 0 0; }
   position: relative;
   z-index: 2;
   max-width: 760px;
-  padding: clamp(28px, 6vw, 72px);
+  padding: clamp(28px, 6vw, 72px) clamp(28px, 6vw, 72px) clamp(190px, 20vw, 240px);
 }
 .night-hero h1 {
   color: var(--text-main);
@@ -557,6 +567,14 @@ audio { width: 100%; margin: 16px 0 0; }
   background: var(--soft-gold);
   border-color: var(--soft-gold);
 }
+.status-badge.on-air-glow,
+.is-live #live-badge,
+.is-playing #live-badge {
+  color: #130b04;
+  background: var(--soft-gold);
+  border-color: var(--soft-gold);
+  box-shadow: 0 0 0 4px rgba(243, 214, 162, 0.1), 0 0 34px rgba(243, 214, 162, 0.42);
+}
 .radio-console {
   position: relative;
   z-index: 1;
@@ -565,6 +583,31 @@ audio { width: 100%; margin: 16px 0 0; }
   margin-top: 22px;
   padding-top: 18px;
   border-top: 1px solid var(--glass-border);
+}
+.now-playing-panel {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(201, 138, 58, 0.18);
+  background: rgba(0, 0, 0, 0.2);
+}
+.now-playing-panel img {
+  width: 84px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid var(--glass-border);
+  background: rgba(245, 234, 215, 0.05);
+}
+#track-title {
+  color: var(--text-main);
+  font-size: clamp(19px, 2.2vw, 28px);
+  line-height: 1.18;
+}
+#track-artist {
+  color: var(--text-muted);
+  margin-top: 6px;
 }
 .player-controls {
   display: flex;
@@ -590,7 +633,9 @@ audio { width: 100%; margin: 16px 0 0; }
 .waveform span:nth-child(2), .waveform span:nth-child(6) { height: 46%; }
 .waveform span:nth-child(3), .waveform span:nth-child(5) { height: 72%; }
 .waveform span:nth-child(4) { height: 90%; }
-.night-audio-playing .waveform span {
+.night-audio-playing .waveform span,
+.waveform-active span,
+.is-playing .waveform span {
   animation: waveformPulse 1.4s ease-in-out infinite;
 }
 .night-audio-playing .waveform span:nth-child(2) { animation-delay: 0.12s; }
@@ -656,6 +701,16 @@ input[type="range"] {
   gap: 10px;
   align-items: start;
 }
+.schedule-list span.active-live-slot {
+  border-color: rgba(243, 214, 162, 0.42);
+  color: var(--text-main);
+}
+.schedule-list span.active-live-slot em {
+  color: #130b04;
+  background: var(--soft-gold);
+  border-color: var(--soft-gold);
+  box-shadow: 0 0 24px rgba(243, 214, 162, 0.24);
+}
 .schedule-list strong {
   display: inline-block;
   min-width: 62px;
@@ -696,7 +751,7 @@ input[type="range"] {
   left: 50%;
   bottom: 8px;
   transform: translateX(-50%);
-  width: min(920px, calc(100% - 28px));
+  width: min(760px, calc(100% - 28px));
   display: grid;
   grid-template-columns: minmax(180px, 1fr) auto minmax(120px, 0.34fr);
   gap: 14px;
@@ -727,6 +782,11 @@ input[type="range"] {
   cursor: pointer;
 }
 .bottom-radio button:hover { background: rgba(201, 138, 58, 0.16); }
+.is-playing + .bottom-radio,
+.night-audio-playing .bottom-radio {
+  border-color: rgba(243, 214, 162, 0.34);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.46), 0 0 34px rgba(243, 214, 162, 0.16);
+}
 @keyframes roomZoom {
   from { transform: scale(1.04); }
   to { transform: scale(1.1); }
@@ -742,6 +802,10 @@ input[type="range"] {
 @keyframes waveformPulse {
   0%, 100% { transform: scaleY(0.62); opacity: 0.42; }
   50% { transform: scaleY(1.08); opacity: 0.9; }
+}
+@keyframes harborLightPulse {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 36px rgba(243, 214, 162, 0.24); }
+  50% { opacity: 0.95; box-shadow: 0 0 70px rgba(243, 214, 162, 0.52); }
 }
 @media (max-width: 1380px) {
   .room-nav {
