@@ -1,45 +1,52 @@
 {
   "warm-room-playlist": [
     {
-      "title": "Memory Air - Warm Room",
+      "title": "Lotus Wish - Warm Room",
       "artist": "Spring of Zen",
-      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v01_preview.mp3",
-      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v01.jpg",
-      "type": "consciousness-session"
-    },
-    {
-      "title": "Sacred Water - Low Table",
-      "artist": "Spring of Zen",
-      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v02_preview.mp3",
-      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v02.jpg",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_lotus_wish.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_lotus_wish.png",
       "type": "consciousness-session"
     }
   ],
   "night-broadcast-playlist": [
     {
-      "title": "Tonight's Broadcast - The Light Is On",
-      "artist": "The Waiter of Night Harbor",
-      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v01_preview.mp3",
-      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v01.jpg",
+      "title": "Dreaming - Night Broadcast",
+      "artist": "Spring of Zen",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_dreaming.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_dreaming.png",
       "type": "broadcast"
     }
   ],
   "midnight-letters-playlist": [
     {
-      "title": "Midnight Letters - Stay A While",
-      "artist": "The Waiter of Night Harbor",
-      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-22/NWA_20260522_v04_preview.mp3",
-      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v04.jpg",
+      "title": "静泉心定 - Midnight Letters",
+      "artist": "Spring of Zen",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_jqxd.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_jqxd.png",
       "type": "letters"
     }
   ],
   "quiet-playlist": [
     {
-      "title": "Night Water - Ambient Session",
+      "title": "Lotus Wish - Warm Room",
       "artist": "Spring of Zen",
-      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/previews/2026-05-21/V35_20260521_v01_preview.mp3",
-      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-21/V35_20260521_v01.jpg",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_lotus_wish.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_lotus_wish.png",
       "type": "consciousness-session"
+    },
+    {
+      "title": "Dreaming - Night Broadcast",
+      "artist": "Spring of Zen",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_dreaming.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_dreaming.png",
+      "type": "broadcast"
+    },
+    {
+      "title": "静泉心定 - Midnight Letters",
+      "artist": "Spring of Zen",
+      "src": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/audio/night-harbor/2026-05-27/NH_20260527_jqxd.mp3",
+      "cover": "https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/night-harbor/2026-05-27/NH_20260527_jqxd.png",
+      "type": "letters"
     }
   ]
 }
