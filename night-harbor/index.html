@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Night Harbor — Spring of Zen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A quiet digital room for late-night reflection, memory, and emotional reset.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-page="night-harbor">
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span>Spring of Zen</span><small>Night Harbor</small></a>
+    <nav>
+      <a href="../sessions.html">Sessions</a>
+      <a href="../night-harbor/">Night Harbor</a>
+      <a href="../products.html">Products</a>
+      <a href="../lab.html">Lab</a>
+      <a href="../about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="night-harbor-page">
+    <section class="night-hero">
+      <video class="night-visual" src="../output_10min_smooth.mp4" autoplay muted loop playsinline poster="https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v01.jpg"></video>
+      <div class="night-hero-copy">
+        <p class="eyebrow">Every Night / The Light Is On</p>
+        <h1>Night Harbor</h1>
+        <p class="subtitle">A quiet digital room for late-night reflection, memory, and emotional reset.</p>
+        <div class="actions">
+          <a class="button primary" href="#letterRoom">Knock the Door</a>
+          <a class="button" href="#tonightBroadcast">Tonight's Broadcast</a>
+        </div>
+      </div>
+      <div class="harbor-signal" aria-hidden="true"><span></span></div>
+    </section>
+
+    <section class="harbor-grid">
+      <article class="harbor-card ambient-player" id="ambientPlayer">
+        <p class="eyebrow">Current Consciousness Session</p>
+        <div id="nightSession"></div>
+      </article>
+
+      <article class="harbor-card broadcast-card" id="tonightBroadcast">
+        <p class="eyebrow">Tonight's Broadcast</p>
+        <div id="broadcastText"></div>
+      </article>
+    </section>
+
+    <section class="harbor-grid">
+      <article class="harbor-card" id="letterRoom">
+        <p class="eyebrow">Anonymous Letter</p>
+        <h2>Leave one sentence at the harbor.</h2>
+        <form class="night-letter-form" data-night-letter>
+          <select name="mood" aria-label="Mood">
+            <option value="quiet">Quiet</option>
+            <option value="lonely">Lonely</option>
+            <option value="tired">Tired</option>
+            <option value="remembering">Remembering</option>
+            <option value="hopeful">Hopeful</option>
+          </select>
+          <textarea name="letter" placeholder="Write anonymously. A memory, a feeling, a sentence you cannot say in daylight." required></textarea>
+          <button class="button primary" type="submit">Send Into the Harbor</button>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </article>
+
+      <article class="harbor-card waiter-room">
+        <p class="eyebrow">Talk to the Waiter</p>
+        <h2>The late room answers softly.</h2>
+        <div class="waiter-chat" id="waiterChat" aria-live="polite"></div>
+        <form class="waiter-form" data-waiter-form>
+          <input name="message" autocomplete="off" placeholder="Tell the waiter what brought you here tonight">
+          <button class="button" type="submit">Ask</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="harbor-grid">
+      <article class="harbor-card">
+        <p class="eyebrow">Live Schedule</p>
+        <div class="schedule-list">
+          <span><strong>21:30</strong> Warm Room Opens</span>
+          <span><strong>23:30</strong> Night Broadcast</span>
+          <span><strong>01:11</strong> Midnight Letters</span>
+        </div>
+      </article>
+
+      <article class="harbor-card">
+        <p class="eyebrow">Clip Archive</p>
+        <div id="clipArchive" class="clip-list"></div>
+      </article>
+    </section>
+
+    <section class="harbor-safety">
+      <p>Spring of Zen is an emotional reflection and listening space, not medical or crisis support. If you are in immediate danger, contact local emergency services or someone you trust.</p>
+    </section>
+  </main>
+
+  <script src="../assets/js/supabase-client.js"></script>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/tracking.js"></script>
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

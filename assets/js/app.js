@@ -55,6 +55,11 @@ async function loadDailyTheme() {
   return loadJson("assets/data/daily_theme.json");
 }
 
+function rootPath(path) {
+  const prefix = document.body.dataset.page === "night-harbor" ? "../" : "";
+  return `${prefix}${path}`;
+}
+
 function trackCard(track) {
   return `<article class="session-card" data-family="${escapeHtml(track.dna_family)}">
     <img src="${track.cover_url}" alt="${escapeHtml(track.title)} cover">
@@ -351,6 +356,106 @@ async function renderLab() {
   </article>`).join("");
 }
 
+async function renderNightHarbor() {
+  if (document.body.dataset.page !== "night-harbor") return;
+  const [broadcasts, clips, sessions] = await Promise.all([
+    loadJson(rootPath("data/broadcasts.json")),
+    loadJson(rootPath("data/night-clips.json")),
+    loadJson(rootPath("data/sessions.json"))
+  ]);
+  const session = sessions.find((item) => item.id === "night_water") || sessions[0];
+  const broadcast = broadcasts[0];
+  const sessionContainer = document.querySelector("#nightSession");
+  const broadcastContainer = document.querySelector("#broadcastText");
+  const clipContainer = document.querySelector("#clipArchive");
+  const chat = document.querySelector("#waiterChat");
+
+  if (sessionContainer) {
+    sessionContainer.innerHTML = `<div class="night-session">
+      <img src="${session.cover}" alt="${escapeHtml(session.title)} cover">
+      <div>
+        <h2>${escapeHtml(session.title)}</h2>
+        <p>${escapeHtml(session.description)}</p>
+        <audio controls preload="metadata" src="${session.preview_audio}" data-preview-session="${session.id}"></audio>
+        <div class="meta-row">${session.recommended_for.slice(0, 3).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      </div>
+    </div>`;
+  }
+
+  if (broadcastContainer && broadcast) {
+    broadcastContainer.innerHTML = `<h2>${escapeHtml(broadcast.title)}</h2>
+      <p class="muted">${escapeHtml(broadcast.date)} / ${escapeHtml(broadcast.time)}</p>
+      <p>${escapeHtml(broadcast.text)}</p>`;
+  }
+
+  if (clipContainer) {
+    clipContainer.innerHTML = clips.map((clip) => {
+      const link = clip.url
+        ? `<a class="button" href="${clip.url}">${escapeHtml(clip.platform)}</a>`
+        : `<span class="tag">${escapeHtml(clip.status)}</span>`;
+      return `<div class="clip-item">
+        <h3>${escapeHtml(clip.title)}</h3>
+        <p>${escapeHtml(clip.note || "")}</p>
+        ${link}
+      </div>`;
+    }).join("");
+  }
+
+  if (chat) {
+    chat.innerHTML = `<div class="waiter-message waiter"><strong>Waiter</strong><span>Welcome back. The room is quiet tonight. Tell me one thing you are carrying, and I will keep the light low.</span></div>`;
+  }
+
+  document.querySelectorAll("[data-preview-session]").forEach((audio) => {
+    audio.addEventListener("play", () => {
+      window.SpringOfZenTracking?.track("night_harbor_audio_played", {
+        session_id: audio.dataset.previewSession,
+        source: "night_harbor"
+      });
+    }, { once: true });
+  });
+}
+
+function bindNightHarbor() {
+  const letterForm = document.querySelector("[data-night-letter]");
+  if (letterForm) {
+    letterForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(letterForm);
+      const payload = {
+        session_id: "night_harbor_letter",
+        user_intent: data.get("mood") || "",
+        effect_rating: 0,
+        selected_effects: [data.get("mood") || "quiet"],
+        free_text_feedback: data.get("letter") || "",
+        email: ""
+      };
+      await window.SpringOfZenTracking?.saveFeedback(payload);
+      letterForm.querySelector(".form-status").textContent = "Your letter is in the harbor. The light stays on.";
+      letterForm.reset();
+      applyLanguage();
+    });
+  }
+
+  const waiterForm = document.querySelector("[data-waiter-form]");
+  const chat = document.querySelector("#waiterChat");
+  if (waiterForm && chat) {
+    waiterForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(waiterForm);
+      const message = String(data.get("message") || "").trim();
+      if (!message) return;
+      chat.insertAdjacentHTML("beforeend", `<div class="waiter-message guest"><strong>You</strong><span>${escapeHtml(message)}</span></div>`);
+      chat.insertAdjacentHTML("beforeend", `<div class="waiter-message waiter"><strong>Waiter</strong><span>I hear you. Let it become smaller for one breath. Stay as long as you need; nothing here asks you to perform.</span></div>`);
+      chat.scrollTop = chat.scrollHeight;
+      await window.SpringOfZenTracking?.track("night_harbor_waiter_message", {
+        source: "night_harbor",
+        message_length: message.length
+      });
+      waiterForm.reset();
+    });
+  }
+}
+
 function bindFeedbackForms() {
   document.addEventListener("submit", async (event) => {
     const form = event.target.closest("[data-feedback-form]");
@@ -412,11 +517,13 @@ async function init() {
     renderSessionsList(),
     renderSessionDetail(),
     renderProductsList(),
-    renderLab()
+    renderLab(),
+    renderNightHarbor()
   ]);
   bindFeedbackForms();
   bindEmailForms();
   bindProductTracking();
+  bindNightHarbor();
   applyLanguage();
 }
 
