@@ -20,72 +20,123 @@
   </header>
 
   <main class="night-harbor-page">
+    <aside class="room-nav" aria-label="Night Harbor room navigation">
+      <a href="#theRoom"><span>01</span>The Room</a>
+      <a href="#tonightBroadcast"><span>02</span>Broadcast</a>
+      <a href="#letterRoom"><span>03</span>Letters</a>
+      <a href="#waiterRoom"><span>04</span>Waiter</a>
+      <a href="#liveStream"><span>05</span>Live</a>
+      <a href="#clipSection"><span>06</span>Clips</a>
+    </aside>
+
     <section class="night-hero">
       <video class="night-visual" src="../output_10min_smooth.mp4" autoplay muted loop playsinline poster="https://pub-13e8508d2575471ab6806565d1da8b84.r2.dev/covers/2026-05-22/NWA_20260522_v01.jpg"></video>
+      <div class="rain-layer" aria-hidden="true"></div>
       <div class="night-hero-copy">
-        <p class="eyebrow">Every Night / The Light Is On</p>
+        <p class="eyebrow">A Quiet Digital Room</p>
         <h1>Night Harbor</h1>
-        <p class="subtitle">A quiet digital room for late-night reflection, memory, and emotional reset.</p>
+        <p class="subtitle">The light is on. You can stay as long as you need.</p>
+        <p class="room-greeting">Welcome back.<br>The room is still open.<br>You do not have to explain everything tonight.<br>Just sit for a while.</p>
         <div class="actions">
           <a class="button primary" href="#letterRoom">Knock the Door</a>
-          <a class="button" href="#tonightBroadcast">Tonight's Broadcast</a>
+          <a class="button" href="#tonightBroadcast">Listen to Tonight's Broadcast</a>
         </div>
       </div>
+      <aside class="floating-waiter-card">
+        <p class="eyebrow">The Waiter Is Here</p>
+        <strong>Welcome back.</strong>
+        <span>What can I get you tonight?</span>
+        <a href="#waiterRoom">Knock the Door</a>
+      </aside>
       <div class="harbor-signal" aria-hidden="true"><span></span></div>
     </section>
 
-    <section class="harbor-grid">
-      <article class="harbor-card ambient-player" id="ambientPlayer">
-        <p class="eyebrow">Current Consciousness Session</p>
+    <section id="theRoom" class="harbor-grid harbor-grid-featured">
+      <article class="harbor-card ambient-player large-radio-card" id="ambientPlayer">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Tonight's Mood</p>
+            <h2>Spring of Zen Radio</h2>
+          </div>
+          <span class="status-badge">Room Quiet</span>
+        </div>
         <div id="nightSession"></div>
+        <div class="radio-console" data-night-player>
+          <p class="muted player-prompt">The room is quiet. Tap play to let the music in.</p>
+          <div class="player-controls">
+            <button class="button" type="button" data-audio-action="previous">Previous</button>
+            <button class="button primary" type="button" data-audio-action="play">Play</button>
+            <button class="button" type="button" data-audio-action="pause">Pause</button>
+            <button class="button" type="button" data-audio-action="stop">Stop</button>
+            <button class="button" type="button" data-audio-action="next">Next</button>
+          </div>
+          <div class="waveform" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="progress-row">
+            <span data-audio-current>00:00</span>
+            <input type="range" min="0" max="100" value="0" data-audio-progress aria-label="Playback progress">
+            <span data-audio-duration>00:00</span>
+          </div>
+          <label class="volume-row">Volume
+            <input type="range" min="0" max="1" step="0.01" value="0.25" data-audio-volume>
+          </label>
+        </div>
       </article>
 
       <article class="harbor-card broadcast-card" id="tonightBroadcast">
-        <p class="eyebrow">Tonight's Broadcast</p>
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">Tonight's Broadcast</p>
+            <h2>Midnight radio for the room.</h2>
+          </div>
+          <span class="status-badge on-air">On Air</span>
+        </div>
         <div id="broadcastText"></div>
+        <button class="button" type="button" data-audio-action="play">Listen to Broadcast</button>
       </article>
     </section>
 
     <section class="harbor-grid">
       <article class="harbor-card" id="letterRoom">
         <p class="eyebrow">Anonymous Letter</p>
-        <h2>Leave one sentence at the harbor.</h2>
+        <h2>Write a letter in the quiet bar.</h2>
         <form class="night-letter-form" data-night-letter>
           <select name="mood" aria-label="Mood">
-            <option value="quiet">Quiet</option>
-            <option value="lonely">Lonely</option>
+            <option value="rainy">Rainy</option>
+            <option value="empty">Empty</option>
             <option value="tired">Tired</option>
-            <option value="remembering">Remembering</option>
             <option value="hopeful">Hopeful</option>
+            <option value="floating">Floating</option>
           </select>
-          <textarea name="letter" placeholder="Write anonymously. A memory, a feeling, a sentence you cannot say in daylight." required></textarea>
-          <button class="button primary" type="submit">Send Into the Harbor</button>
+          <textarea name="letter" placeholder="Write your letter here...&#10;It can be anything." required></textarea>
+          <button class="button primary" type="submit">Drop the Letter</button>
           <p class="form-status" aria-live="polite"></p>
         </form>
       </article>
 
-      <article class="harbor-card waiter-room">
+      <article class="harbor-card waiter-room" id="waiterRoom">
         <p class="eyebrow">Talk to the Waiter</p>
         <h2>The late room answers softly.</h2>
         <div class="waiter-chat" id="waiterChat" aria-live="polite"></div>
         <form class="waiter-form" data-waiter-form>
-          <input name="message" autocomplete="off" placeholder="Tell the waiter what brought you here tonight">
+          <input name="message" autocomplete="off" placeholder="Type your message...">
           <button class="button" type="submit">Ask</button>
         </form>
       </article>
     </section>
 
     <section class="harbor-grid">
-      <article class="harbor-card">
+      <article class="harbor-card" id="liveStream">
         <p class="eyebrow">Live Schedule</p>
         <div class="schedule-list">
-          <span><strong>21:30</strong> Warm Room Opens</span>
-          <span><strong>23:30</strong> Night Broadcast</span>
-          <span><strong>01:11</strong> Midnight Letters</span>
+          <span><strong>21:30</strong><em>Live</em> Warm Room Opens<small>The light turns on, the music begins.</small></span>
+          <span><strong>23:30</strong><em>Upcoming</em> Night Broadcast<small>Stories, letters, and midnight thoughts.</small></span>
+          <span><strong>01:11</strong><em>Replay</em> Midnight Letters<small>Your words. Our quiet conversation.</small></span>
         </div>
       </article>
 
-      <article class="harbor-card">
+      <article class="harbor-card" id="clipSection">
         <p class="eyebrow">Clip Archive</p>
         <div id="clipArchive" class="clip-list"></div>
       </article>
@@ -95,6 +146,20 @@
       <p>Spring of Zen is an emotional reflection and listening space, not medical or crisis support. If you are in immediate danger, contact local emergency services or someone you trust.</p>
     </section>
   </main>
+
+  <div class="bottom-radio" data-bottom-radio>
+    <div>
+      <strong>Spring of Zen Radio</strong>
+      <span>Live from Night Harbor</span>
+    </div>
+    <div class="bottom-radio-controls">
+      <button type="button" data-audio-action="previous">Prev</button>
+      <button type="button" data-audio-action="play">Play</button>
+      <button type="button" data-audio-action="pause">Pause</button>
+      <button type="button" data-audio-action="next">Next</button>
+    </div>
+    <input type="range" min="0" max="1" step="0.01" value="0.25" data-audio-volume aria-label="Mini player volume">
+  </div>
 
   <script src="../assets/js/supabase-client.js"></script>
   <script src="../assets/js/i18n.js"></script>

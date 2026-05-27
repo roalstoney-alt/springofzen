@@ -95,6 +95,12 @@ function formUrl(track) {
   return configured;
 }
 
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
+  const rounded = Math.floor(seconds);
+  return `${String(Math.floor(rounded / 60)).padStart(2, "0")}:${String(rounded % 60).padStart(2, "0")}`;
+}
+
 function recommendationMarkup(result) {
   const session = result.session;
   const product = result.product;
@@ -374,18 +380,19 @@ async function renderNightHarbor() {
     sessionContainer.innerHTML = `<div class="night-session">
       <img src="${session.cover}" alt="${escapeHtml(session.title)} cover">
       <div>
+        <p class="eyebrow">Consciousness Session</p>
         <h2>${escapeHtml(session.title)}</h2>
         <p>${escapeHtml(session.description)}</p>
-        <audio controls preload="metadata" src="${session.preview_audio}" data-preview-session="${session.id}"></audio>
         <div class="meta-row">${session.recommended_for.slice(0, 3).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
       </div>
     </div>`;
   }
 
   if (broadcastContainer && broadcast) {
-    broadcastContainer.innerHTML = `<h2>${escapeHtml(broadcast.title)}</h2>
-      <p class="muted">${escapeHtml(broadcast.date)} / ${escapeHtml(broadcast.time)}</p>
-      <p>${escapeHtml(broadcast.text)}</p>`;
+    broadcastContainer.innerHTML = `<p class="eyebrow">${escapeHtml(broadcast.status || "On Air")}</p>
+      <h2>${escapeHtml(broadcast.title)}</h2>
+      <p class="muted">${escapeHtml(broadcast.date)} / ${escapeHtml(broadcast.time)} / ${escapeHtml(broadcast.speaker || "Night Harbor")}</p>
+      <blockquote>${escapeHtml(broadcast.text)}</blockquote>`;
   }
 
   if (clipContainer) {
@@ -394,6 +401,8 @@ async function renderNightHarbor() {
         ? `<a class="button" href="${clip.url}">${escapeHtml(clip.platform)}</a>`
         : `<span class="tag">${escapeHtml(clip.status)}</span>`;
       return `<div class="clip-item">
+        ${clip.thumbnail ? `<img src="${escapeHtml(clip.thumbnail)}" alt="${escapeHtml(clip.title)} thumbnail">` : ""}
+        <p class="eyebrow">${escapeHtml(clip.platform)} / ${escapeHtml(clip.date || "")}</p>
         <h3>${escapeHtml(clip.title)}</h3>
         <p>${escapeHtml(clip.note || "")}</p>
         ${link}
@@ -402,17 +411,122 @@ async function renderNightHarbor() {
   }
 
   if (chat) {
-    chat.innerHTML = `<div class="waiter-message waiter"><strong>Waiter</strong><span>Welcome back. The room is quiet tonight. Tell me one thing you are carrying, and I will keep the light low.</span></div>`;
+    chat.innerHTML = `<div class="waiter-message waiter"><strong>Waiter</strong><span>Welcome back. You do not have to explain everything. Just tell me what is on your mind.</span></div>`;
   }
 
-  document.querySelectorAll("[data-preview-session]").forEach((audio) => {
-    audio.addEventListener("play", () => {
-      window.SpringOfZenTracking?.track("night_harbor_audio_played", {
-        session_id: audio.dataset.previewSession,
-        source: "night_harbor"
+  setupNightHarborAudio(session);
+}
+
+function setupNightHarborAudio(session) {
+  if (!session?.preview_audio || window.__nightHarborAudioReady) return;
+  window.__nightHarborAudioReady = true;
+  const audio = new Audio(session.preview_audio);
+  audio.loop = true;
+  audio.preload = "metadata";
+  audio.volume = 0;
+  const targetVolume = { value: 0.25 };
+  let fadeTimer = null;
+  const body = document.body;
+  const playButtons = document.querySelectorAll('[data-audio-action="play"]');
+  const pauseButtons = document.querySelectorAll('[data-audio-action="pause"]');
+  const progressInputs = document.querySelectorAll("[data-audio-progress]");
+  const volumeInputs = document.querySelectorAll("[data-audio-volume]");
+  const currentLabels = document.querySelectorAll("[data-audio-current]");
+  const durationLabels = document.querySelectorAll("[data-audio-duration]");
+  const prompt = document.querySelector(".player-prompt");
+
+  function setStatus(isPlaying) {
+    body.classList.toggle("night-audio-playing", isPlaying);
+    playButtons.forEach((button) => { button.textContent = isPlaying ? "Playing" : "Play"; });
+    if (prompt) {
+      prompt.textContent = isPlaying
+        ? "Spring of Zen Radio is playing low in the room."
+        : "The room is quiet. Tap play to let the music in.";
+    }
+  }
+
+  function fadeTo(volume, after) {
+    clearInterval(fadeTimer);
+    const start = audio.volume;
+    const steps = 18;
+    let tick = 0;
+    fadeTimer = setInterval(() => {
+      tick += 1;
+      audio.volume = Math.max(0, Math.min(1, start + ((volume - start) * tick / steps)));
+      if (tick >= steps) {
+        clearInterval(fadeTimer);
+        audio.volume = volume;
+        after?.();
+      }
+    }, 45);
+  }
+
+  async function playAudio() {
+    try {
+      await audio.play();
+      fadeTo(targetVolume.value);
+      setStatus(true);
+      await window.SpringOfZenTracking?.track("night_harbor_audio_played", {
+        session_id: session.id,
+        source: "night_harbor_radio"
       });
-    }, { once: true });
+    } catch (error) {
+      if (prompt) prompt.textContent = "The room is quiet. Tap play to let the music in.";
+    }
+  }
+
+  function pauseAudio() {
+    fadeTo(0, () => {
+      audio.pause();
+      setStatus(false);
+    });
+  }
+
+  function stopAudio() {
+    fadeTo(0, () => {
+      audio.pause();
+      audio.currentTime = 0;
+      setStatus(false);
+    });
+  }
+
+  document.querySelectorAll("[data-audio-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = button.dataset.audioAction;
+      if (action === "play") playAudio();
+      if (action === "pause") pauseAudio();
+      if (action === "stop") stopAudio();
+      if (action === "previous" || action === "next") {
+        if (prompt) prompt.textContent = "One room loop is available tonight. More stations are coming.";
+      }
+    });
   });
+
+  volumeInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      targetVolume.value = Number(input.value);
+      volumeInputs.forEach((other) => { if (other !== input) other.value = input.value; });
+      if (!audio.paused) audio.volume = targetVolume.value;
+    });
+  });
+
+  progressInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      if (!Number.isFinite(audio.duration)) return;
+      audio.currentTime = (Number(input.value) / 100) * audio.duration;
+    });
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
+    durationLabels.forEach((label) => { label.textContent = formatTime(audio.duration); });
+  });
+  audio.addEventListener("timeupdate", () => {
+    currentLabels.forEach((label) => { label.textContent = formatTime(audio.currentTime); });
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+      progressInputs.forEach((input) => { input.value = String((audio.currentTime / audio.duration) * 100); });
+    }
+  });
+  audio.addEventListener("pause", () => setStatus(false));
 }
 
 function bindNightHarbor() {
@@ -430,7 +544,7 @@ function bindNightHarbor() {
         email: ""
       };
       await window.SpringOfZenTracking?.saveFeedback(payload);
-      letterForm.querySelector(".form-status").textContent = "Your letter is in the harbor. The light stays on.";
+      letterForm.querySelector(".form-status").textContent = "Your letter has been left at the harbor. The light will keep it safe tonight.";
       letterForm.reset();
       applyLanguage();
     });

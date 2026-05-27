@@ -1,17 +1,21 @@
 [
   {
     "id": "nh_clip_001",
-    "title": "Night Harbor Opening Signal",
+    "title": "The light is still on",
     "platform": "YouTube Shorts",
     "url": "",
+    "thumbnail": "",
+    "date": "2026-05-27",
     "status": "manual upload pending",
     "note": "Paste the published short URL here after tonight's clip is posted."
   },
   {
     "id": "nh_clip_002",
-    "title": "Midnight Letter Fragment",
+    "title": "If you cannot sleep",
     "platform": "TikTok",
     "url": "",
+    "thumbnail": "",
+    "date": "2026-05-27",
     "status": "manual upload pending",
     "note": "Use one sentence from the broadcast as the caption hook."
   }
