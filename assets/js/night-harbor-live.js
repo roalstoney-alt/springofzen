@@ -16,10 +16,15 @@
     return document.body.dataset.page === "night-harbor" ? `../${path}` : path;
   }
 
+  function freshJsonPath(path) {
+    const separator = path.includes("?") ? "&" : "?";
+    return `${path}${separator}v=20260527-night-harbor`;
+  }
+
   async function loadNightHarborData() {
     const [scheduleResponse, playlistResponse] = await Promise.all([
       fetch(rootPath("data/night-harbor-schedule.json")),
-      fetch(rootPath("data/night-harbor-playlists.json"))
+      fetch(freshJsonPath(rootPath("data/night-harbor-playlists.json")), { cache: "no-store" })
     ]);
     if (!scheduleResponse.ok) throw new Error("Unable to load Night Harbor schedule");
     if (!playlistResponse.ok) throw new Error("Unable to load Night Harbor playlists");
