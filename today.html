@@ -4,10 +4,11 @@
   <title>Today&apos;s Harbor — SpringOfZen</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The daily SpringOfZen Harbor: one observation, one reflection, one session, and one feedback question.">
+  <meta name="description" content="An adaptive SpringOfZen Human Harbor gateway for pause, recovery, attention, and return.">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/harbor.css">
 </head>
-<body data-page="today">
+<body data-page="today" data-gate="mountain">
   <header class="site-header">
     <a class="brand" href="index.html"><span>SpringOfZen</span><small>Human Harbor</small></a>
     <nav>
@@ -19,64 +20,110 @@
     </nav>
   </header>
 
-  <main>
-    <section class="today-hero">
-      <p class="eyebrow">Today&apos;s Harbor · May 29, 2026</p>
-      <h1>Before asking what you should do, ask what state you are in.</h1>
-      <p class="subtitle">The Agent Era returns time to humans, but returned time can still become noise. Today&apos;s Harbor is a small place to notice your state before the world assigns you one.</p>
-    </section>
-
-    <section class="today-layout">
-      <article class="observation-panel">
-        <p class="eyebrow">Observation</p>
-        <h2>Abundance does not automatically create direction.</h2>
-        <p>When tools become faster, the human nervous system does not automatically become clearer. A person can receive more options, more answers, more generated plans, and still feel strangely lost.</p>
-        <p>This is why the first practice of SpringOfZen is not productivity. It is state recognition. Before we ask agents to help us move, we ask what kind of human is about to move.</p>
-        <p>Today, pause long enough to name the weather inside your attention. Crowded, tender, numb, bright, restless, open, tired, ready. The name is not a diagnosis. It is a doorway.</p>
-      </article>
-
-      <aside class="harbor-session-card">
-        <p class="eyebrow">Harbor Session</p>
-        <h2>Clear Water Attention</h2>
-        <dl>
-          <div><dt>Theme</dt><dd>Agent Era</dd></div>
-          <div><dt>State</dt><dd>Mental crowding to quiet direction</dd></div>
-          <div><dt>Length</dt><dd>8-12 minutes</dd></div>
-        </dl>
-        <p>Soft water room, sparse bell distance, slow breath-space, and one spoken question: what deserves your attention now?</p>
-        <a class="button primary" href="sessions.html">Choose a Session</a>
+  <main class="harbor-gateway">
+    <section class="adaptive-hero" aria-labelledby="gateHeadline">
+      <div class="adaptive-hero-bg" aria-hidden="true"></div>
+      <div class="adaptive-hero-copy">
+        <p class="eyebrow" data-gate-kicker>SpringOfZen</p>
+        <h1 id="gateHeadline" data-gate-headline>You&apos;ve found a quiet place.</h1>
+        <p class="subtitle" data-gate-subcopy>In a noisy world. A harbor for your mind. A space to return to yourself.</p>
+        <div class="actions">
+          <a class="button primary" href="#state-gates" data-gate-primary data-track-event="cta_clicked">Enter Harbor</a>
+          <a class="button" href="night-harbor/" data-gate-secondary data-track-event="cta_clicked">Listen Tonight</a>
+        </div>
+      </div>
+      <aside class="gate-panel" aria-label="Harbor gate selector">
+        <p class="eyebrow">Choose your harbor</p>
+        <strong data-gate-name>Mountain Harbor</strong>
+        <div class="gate-switcher" data-gate-switcher></div>
       </aside>
     </section>
 
-    <section class="reflection-strip">
-      <div>
-        <p class="eyebrow">Reflection Prompt</p>
-        <h2>What state are you bringing into the next hour?</h2>
+    <section id="state-gates" class="gateway-section">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">What brings you here today?</p>
+          <h2>Choose the doorway that matches your state.</h2>
+        </div>
       </div>
-      <form class="feedback-form">
-        <textarea placeholder="Write one honest sentence. No performance required."></textarea>
-        <button class="button primary" type="submit">Hold This Reflection</button>
-      </form>
+      <div class="state-entry-grid">
+        <a href="sessions.html" data-state="anxious" data-track-event="state_card_clicked">
+          <span>I feel anxious</span>
+          <small>Find a calmer rhythm.</small>
+        </a>
+        <a href="sessions.html" data-state="sleep" data-track-event="state_card_clicked">
+          <span>I can&apos;t sleep</span>
+          <small>Move toward soft night safety.</small>
+        </a>
+        <a href="#today-observation" data-state="lost" data-track-event="state_card_clicked">
+          <span>I feel lost</span>
+          <small>Begin with one clear question.</small>
+        </a>
+        <a href="sessions.html" data-state="focus" data-track-event="state_card_clicked">
+          <span>I want to focus</span>
+          <small>Reduce noise around attention.</small>
+        </a>
+        <a href="#join-experiment" data-state="create" data-track-event="state_card_clicked">
+          <span>I want to create</span>
+          <small>Protect the human center.</small>
+        </a>
+        <a href="night-harbor/" data-state="stay" data-track-event="state_card_clicked">
+          <span>I just need a place to stay</span>
+          <small>Enter the room slowly.</small>
+        </a>
+      </div>
     </section>
 
-    <section class="distribution-grid">
-      <article>
-        <p class="eyebrow">Poster Prompt</p>
-        <p>Minimal atmospheric harbor at dawn, still water, one warm window, human-scale silence, SpringOfZen branding, 1080x1350.</p>
+    <section id="today-observation" class="gateway-section today-observation-card">
+      <div>
+        <p class="eyebrow">Today&apos;s Observation · <span data-today-date>2026-05-29</span></p>
+        <h2 data-today-title>AI can give us time</h2>
+        <p data-today-body>AI can give us time, but it can&apos;t tell us how to live. That part is still our choice.</p>
+        <a class="text-link" href="today/2026-05-29.md" data-today-cta data-track-event="cta_clicked">Read More</a>
+      </div>
+    </section>
+
+    <section class="gateway-section harbor-feature-grid">
+      <article class="night-preview-card">
+        <p class="eyebrow">Night Harbor</p>
+        <h2 data-night-title>Drifting in the Stillness</h2>
+        <p class="session-time" data-night-time>8:00 PM - 2:00 AM</p>
+        <p data-night-description>A slow harbor session for those who need to return to themselves.</p>
+        <audio controls preload="metadata" data-night-audio></audio>
+        <div class="actions">
+          <a class="button primary" href="night-harbor/" data-track-event="cta_clicked">Enter Night Harbor</a>
+        </div>
       </article>
       <article>
-        <p class="eyebrow">Short Video Script</p>
-        <p>Question: What state are you in before you ask AI for help? Tension: more answers can still leave you lost. Observation: direction begins with state recognition. CTA: enter Today&apos;s Harbor.</p>
+        <p class="eyebrow">Recovery Dynamics Lab</p>
+        <h2>How do humans recover in the Agent Era?</h2>
+        <p>We study how humans recover, focus, and find meaning when intelligent systems can move faster than attention can metabolize.</p>
+        <a class="button" href="lab.html" data-track-event="cta_clicked">Explore Lab</a>
       </article>
-      <article>
-        <p class="eyebrow">Feedback Question</p>
-        <p>After today&apos;s pause, do you feel more clear, more rested, more connected, or unchanged?</p>
-      </article>
+    </section>
+
+    <section id="join-experiment" class="gateway-section join-experiment">
+      <div>
+        <p class="eyebrow">Join the Experiment</p>
+        <h2>Help shape the first Human Harbor.</h2>
+        <p>SpringOfZen is looking for people who return, leave honest state notes, and help us learn what actually restores attention.</p>
+      </div>
+      <div class="join-actions">
+        <a class="button primary" href="about.html" data-track-event="cta_clicked">Become a Harbor Resident</a>
+        <a class="button" href="deep-listener.html" data-track-event="cta_clicked">Leave a State Note</a>
+        <a class="button" href="today/2026-05-29.md" data-track-event="cta_clicked">Follow the 30-Day Experiment</a>
+      </div>
     </section>
   </main>
 
+  <footer class="harbor-footer">
+    <p>SpringOfZen uses lightweight local preferences to remember your chosen harbor. No sensitive personal data is required to enter.</p>
+  </footer>
+
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/analytics-lite.js"></script>
+  <script src="assets/js/harbor-gateway.js"></script>
   <script src="assets/js/tracking.js"></script>
 </body>
 </html>

@@ -1,0 +1,74 @@
+{
+  "mountain": {
+    "name": "Mountain Harbor",
+    "kicker": "SpringOfZen",
+    "headline": "You've found a quiet place.",
+    "subcopy": "In a noisy world. A harbor for your mind. A space to return to yourself.",
+    "primaryCta": "Enter Harbor",
+    "secondaryCta": "Listen Tonight",
+    "primaryHref": "#state-gates",
+    "secondaryHref": "night-harbor/",
+    "background": "assets/img/gates/mountain.webp",
+    "theme": "soft"
+  },
+  "cyber": {
+    "name": "Cyber Harbor",
+    "kicker": "Human Harbor for the Agent Era",
+    "headline": "When machines become faster, humans need somewhere slower.",
+    "subcopy": "A living gateway for attention, state, and direction in the Agent Era.",
+    "primaryCta": "Explore the Question",
+    "secondaryCta": "Enter Harbor",
+    "primaryHref": "#today-observation",
+    "secondaryHref": "#state-gates",
+    "background": "assets/img/gates/cyber.webp",
+    "theme": "dark"
+  },
+  "garden": {
+    "name": "Garden Harbor",
+    "kicker": "A Place to Return",
+    "headline": "Some answers wait in a quieter garden.",
+    "subcopy": "A soft space for recovery, creation, and slow attention.",
+    "primaryCta": "Choose Your Space",
+    "secondaryCta": "Begin Session",
+    "primaryHref": "#state-gates",
+    "secondaryHref": "sessions.html",
+    "background": "assets/img/gates/garden.webp",
+    "theme": "warm"
+  },
+  "ocean": {
+    "name": "Ocean Harbor",
+    "kicker": "Before the Next Crossing",
+    "headline": "The world is changing. You do not have to drift alone.",
+    "subcopy": "Find a harbor before you sail into the unknown.",
+    "primaryCta": "Start the Journey",
+    "secondaryCta": "Read Today's Observation",
+    "primaryHref": "#join-experiment",
+    "secondaryHref": "#today-observation",
+    "background": "assets/img/gates/ocean.webp",
+    "theme": "deep"
+  },
+  "recovery": {
+    "name": "Recovery Harbor",
+    "kicker": "What brings you here today?",
+    "headline": "Choose the state you want to move through.",
+    "subcopy": "A gentle place to pause, breathe, listen, and return.",
+    "primaryCta": "Choose Your State",
+    "secondaryCta": "Begin Recovery",
+    "primaryHref": "#state-gates",
+    "secondaryHref": "sessions.html",
+    "background": "assets/img/gates/recovery.webp",
+    "theme": "calm"
+  },
+  "manifesto": {
+    "name": "Manifesto Harbor",
+    "kicker": "SpringOfZen is an experiment",
+    "headline": "Where should human attention go when machines can do almost everything else?",
+    "subcopy": "Read the Human Harbor Manifesto and join the first circle of observers.",
+    "primaryCta": "Read the Manifesto",
+    "secondaryCta": "Join the Experiment",
+    "primaryHref": "about.html",
+    "secondaryHref": "#join-experiment",
+    "background": "assets/img/gates/manifesto.webp",
+    "theme": "paper"
+  }
+}
