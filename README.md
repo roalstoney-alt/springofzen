@@ -20,6 +20,15 @@ data/                   Night Harbor schedules, clips, sessions, broadcasts
 exports/                Generated audio exports kept outside normal publishing flow
 ```
 
+## Strategy Documents
+
+The core operating documents live in `docs/strategy/`:
+
+- `90days.md` - 90-day operating system and success metrics
+- `content-engine.md` - Codex Harbor Operator workflow
+- `human-harbor-manifesto-v1.md` - public philosophy and positioning
+- `north-star.md` - build/no-build rule
+
 ## North Star
 
 Every feature, article, image, video, audio session, experiment, and agent must answer one question:
