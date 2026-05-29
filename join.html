@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Join — SpringOfZen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Become a SpringOfZen Harbor Resident and leave a state note.">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="join">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span>SpringOfZen</span><small>Human Harbor</small></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="today.html">Harbor</a>
+      <a href="sessions.html">Sessions</a>
+      <a href="journal.html">Journal</a>
+      <a href="manifesto.html">Manifesto</a>
+      <a href="join.html">Join</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-intro">
+      <p class="eyebrow">Harbor Residents</p>
+      <h1>A resident is someone who returns.</h1>
+      <p>We are not building followers. We are building a circle of people who come back voluntarily, leave reflections, and help the Harbor become more human.</p>
+    </section>
+
+    <section class="section-grid">
+      <article>
+        <span class="index-mark">01</span>
+        <h2>Return voluntarily.</h2>
+        <p>Come back when you need stillness, a question, a session, or a place to stay for a moment.</p>
+      </article>
+      <article>
+        <span class="index-mark">02</span>
+        <h2>Leave honest reflections.</h2>
+        <p>A Harbor Resident does not need to perform. One truthful sentence is enough.</p>
+      </article>
+    </section>
+
+    <section id="state-note" class="feedback-panel">
+      <div>
+        <p class="eyebrow">State Note</p>
+        <h2>Before: how do you feel? After: did anything shift?</h2>
+        <p class="muted">This first version saves your note locally in this browser. It is a quiet practice, not a public performance.</p>
+      </div>
+      <form class="feedback-form" data-feedback-form data-session-id="harbor_state_note">
+        <textarea name="user_intent" placeholder="Before session: how do you feel?"></textarea>
+        <textarea name="free_text_feedback" placeholder="After session: did anything shift?"></textarea>
+        <input name="email" type="email" placeholder="email optional">
+        <button class="button primary" type="submit">Hold This State Note</button>
+        <p class="form-status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="email-band">
+      <div>
+        <p class="eyebrow">Return Tomorrow</p>
+        <h2>The Harbor becomes real through return.</h2>
+      </div>
+      <form class="email-form" data-email-form>
+        <input name="email" type="email" placeholder="you@example.com" required>
+        <button class="button primary" type="submit">Become a Resident</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/tracking.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
