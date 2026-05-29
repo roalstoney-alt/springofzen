@@ -8,23 +8,25 @@
   function getVariant() {
     const params = new URLSearchParams(window.location.search);
     const explicit = params.get("variant");
-    if (explicit === "a" || explicit === "b") return explicit;
+    if (explicit === "room" || explicit === "dock") return explicit;
+    if (explicit === "a") return "room";
+    if (explicit === "b") return "dock";
     try {
       const saved = window.localStorage.getItem(VARIANT_KEY);
-      if (saved === "a" || saved === "b") return saved;
-      const chosen = Math.random() > 0.5 ? "b" : "a";
+      if (saved === "room" || saved === "dock") return saved;
+      const chosen = Math.random() > 0.5 ? "dock" : "room";
       window.localStorage.setItem(VARIANT_KEY, chosen);
       return chosen;
     } catch (error) {
-      return "a";
+      return "room";
     }
   }
 
   function applyVariant() {
     const variant = getVariant();
     document.body.dataset.homeVariant = variant;
-    document.querySelectorAll("[data-variant-a]").forEach((node) => {
-      node.textContent = node.dataset[`variant${variant.toUpperCase()}`];
+    document.querySelectorAll("[data-variant-room]").forEach((node) => {
+      node.textContent = node.dataset[`variant${variant.charAt(0).toUpperCase()}${variant.slice(1)}`];
     });
     window.SpringOfZenTracking?.track("home_variant_seen", { variant });
     window.SpringOfZenI18n?.apply();
@@ -35,7 +37,7 @@
     if (active) {
       gain?.gain.setTargetAtTime(0, audioContext.currentTime, 0.5);
       button.setAttribute("aria-pressed", "false");
-      button.textContent = window.SpringOfZenI18n?.t("Sound Off") || "Sound Off";
+      button.textContent = window.SpringOfZenI18n?.t("Sound") || "Sound";
       return;
     }
 
@@ -43,16 +45,16 @@
     oscillator = oscillator || audioContext.createOscillator();
     gain = gain || audioContext.createGain();
     oscillator.type = "sine";
-    oscillator.frequency.value = 82;
+    oscillator.frequency.value = 74;
     gain.gain.value = 0;
     oscillator.connect(gain).connect(audioContext.destination);
     if (!oscillator.started) {
       oscillator.start();
       oscillator.started = true;
     }
-    gain.gain.setTargetAtTime(0.028, audioContext.currentTime, 0.8);
+    gain.gain.setTargetAtTime(0.018, audioContext.currentTime, 1.8);
     button.setAttribute("aria-pressed", "true");
-    button.textContent = window.SpringOfZenI18n?.t("Sound On") || "Sound On";
+    button.textContent = window.SpringOfZenI18n?.t("Listen") || "Listen";
     window.SpringOfZenTracking?.track("home_sound_enabled", { source: "home" });
   }
 
@@ -85,19 +87,18 @@
       event.preventDefault();
       const data = new FormData(form);
       const payload = {
-        version: `homepage_v4_${document.body.dataset.homeVariant || "a"}`,
+        version: `homepage_v5_${document.body.dataset.homeVariant || "room"}`,
         first_impression: data.get("first_impression") || "",
         one_word: data.get("one_word") || "",
         would_return: data.get("would_return") || "",
         what_should_change: data.get("what_should_change") || "",
-        felt_like_a_place: Number(data.get("felt_like_a_place") || 0),
         timestamp: new Date().toISOString()
       };
       const notes = readNotes();
       notes.push(payload);
       writeNotes(notes);
       await window.SpringOfZenTracking?.track("harbor_note_left", payload);
-      form.querySelector(".form-status").textContent = "Your note is held here.";
+      form.querySelector(".form-status").textContent = "Your note stays with the Harbor.";
       window.SpringOfZenI18n?.apply();
       form.reset();
     });

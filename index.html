@@ -1,96 +1,90 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>SpringOfZen — The light is still on</title>
+  <title>SpringOfZen - The light is still on</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SpringOfZen is a quiet place to enter, listen, leave a note, and return.">
+  <meta name="description" content="A quiet room for pause, listening, and return.">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/home.css">
 </head>
-<body data-page="home" data-home-variant="a">
+<body data-page="home" data-home-variant="room">
   <header class="site-header home-header">
-    <a class="brand" href="index.html"><span>SpringOfZen</span><small>Human Harbor</small></a>
-    <nav>
-      <a href="index.html">Home</a>
+    <a class="brand" href="index.html"><span>SpringOfZen</span></a>
+    <nav aria-label="Main navigation">
       <a href="today.html">Harbor</a>
-      <a href="sessions.html">Sessions</a>
       <a href="journal.html">Journal</a>
       <a href="manifesto.html">Manifesto</a>
-      <a href="join.html">Join</a>
     </nav>
   </header>
 
-  <main class="home-v4">
-    <section class="entrance-hero" aria-labelledby="homeHeroLine">
-      <video class="entrance-video" src="output_10min_smooth.mp4" autoplay muted loop playsinline></video>
-      <div class="entrance-mist" aria-hidden="true"></div>
-      <div class="entrance-copy">
-        <p class="eyebrow">SpringOfZen</p>
-        <h1 id="homeHeroLine" data-variant-a="The light is still on." data-variant-b="A quiet place, if you need one.">The light is still on.</h1>
-        <p class="subtitle" data-variant-a="Enter quietly." data-variant-b="Music, memory, and small observations for those who need to slow down.">Enter quietly.</p>
-        <div class="actions">
-          <a class="button primary" href="today.html">Enter</a>
-          <button class="button sound-toggle" type="button" data-sound-toggle aria-pressed="false">Sound Off</button>
+  <main class="home-v5">
+    <section class="arrival" aria-labelledby="arrivalLine">
+      <video class="arrival-video" src="output_10min_smooth.mp4" autoplay muted loop playsinline></video>
+      <div class="arrival-place" aria-hidden="true">
+        <span class="door-line"></span>
+        <span class="lamp-light"></span>
+        <span class="waterline"></span>
+        <span class="window-light"></span>
+      </div>
+      <div class="arrival-mist" aria-hidden="true"></div>
+      <div class="arrival-grain" aria-hidden="true"></div>
+      <div class="arrival-copy">
+        <p class="room-mark">SpringOfZen</p>
+        <h1 id="arrivalLine" data-variant-room="The light is still on." data-variant-dock="Someone left the door open.">The light is still on.</h1>
+        <p class="arrival-subtitle" data-variant-room="Come in quietly." data-variant-dock="Stay as long as you need.">Come in quietly.</p>
+        <div class="arrival-actions">
+          <a class="door-button" href="today.html">Enter</a>
+          <button class="sound-button" type="button" data-sound-toggle aria-pressed="false">Sound</button>
         </div>
       </div>
-      <a class="scroll-cue" href="#tonight-harbor" aria-label="Continue">Stay</a>
+      <a class="stay-cue" href="#tonight-harbor">Stay</a>
     </section>
 
-    <section id="tonight-harbor" class="home-river">
-      <div>
-        <p class="eyebrow">Tonight&apos;s Harbor</p>
-        <h2>The Harbor opens tonight.</h2>
-        <p>A slow room for those still awake. No need to explain everything. Just listen for a while.</p>
+    <section id="tonight-harbor" class="tonight-room">
+      <div class="tonight-copy">
+        <p class="quiet-label">Tonight's Harbor</p>
+        <h2>A slow room for those still awake.</h2>
       </div>
-      <a class="button primary" href="night-harbor/">Listen Tonight</a>
+      <a class="paper-button" href="night-harbor/">Listen</a>
     </section>
 
-    <section class="home-observation">
-      <p class="eyebrow">Today&apos;s Observation</p>
-      <h2>AI can give us time, but it cannot tell us how to live.</h2>
-      <p>That part is still our choice.</p>
-      <a class="text-link" href="today.html">Enter Today&apos;s Harbor</a>
+    <section class="today-observation" aria-labelledby="observationTitle">
+      <p class="quiet-label">Today's Observation</p>
+      <h2 id="observationTitle">
+        <span>AI can give us time.</span>
+        <span>But it cannot tell us</span>
+        <span>what to do with the silence.</span>
+      </h2>
     </section>
 
-    <section id="harbor-note" class="harbor-note">
-      <div>
-        <p class="eyebrow">Leave a Harbor Note</p>
-        <h2>What did this place feel like?</h2>
-      </div>
-      <form class="harbor-note-form" data-harbor-note>
+    <section id="harbor-note" class="note-room" aria-labelledby="noteTitle">
+      <div class="desk-light" aria-hidden="true"></div>
+      <form class="note-card" data-harbor-note>
+        <p class="quiet-label">Harbor Note</p>
+        <h2 id="noteTitle">Leave a note for the room.</h2>
+        <p class="note-subcopy">A few words are enough.</p>
         <textarea name="first_impression" placeholder="What did this place feel like?"></textarea>
-        <input name="one_word" placeholder="One word">
-        <select name="would_return" aria-label="Would you come back?">
-          <option value="">Would you come back?</option>
+        <input name="one_word" placeholder="One word.">
+        <select name="would_return" aria-label="Would you return?">
+          <option value="">Would you return?</option>
           <option value="yes">Yes</option>
           <option value="maybe">Maybe</option>
           <option value="no">No</option>
         </select>
-        <textarea name="what_should_change" placeholder="What should be quieter, warmer, or more alive?"></textarea>
-        <label class="place-scale">Did it feel like a real place?
-          <input name="felt_like_a_place" type="range" min="1" max="10" value="7">
-        </label>
-        <button class="button primary" type="submit">Leave Note</button>
+        <textarea name="what_should_change" placeholder="What should become quieter, warmer, or more alive?"></textarea>
+        <button class="paper-button" type="submit">Leave Note</button>
         <p class="form-status" aria-live="polite"></p>
       </form>
     </section>
 
-    <section class="home-gates">
-      <p class="eyebrow">Choose Your Harbor</p>
-      <div class="home-gate-links">
-        <a href="today.html?gate=mountain">Mountain</a>
-        <a href="today.html?gate=cyber">Cyber</a>
-        <a href="today.html?gate=garden">Garden</a>
-        <a href="today.html?gate=ocean">Ocean</a>
-        <a href="today.html?gate=recovery">Recovery</a>
-        <a href="today.html?gate=manifesto">Manifesto</a>
+    <section class="hidden-paths" aria-labelledby="pathsTitle">
+      <h2 id="pathsTitle">Hidden paths</h2>
+      <div class="path-doors">
+        <a href="journal.html">Journal</a>
+        <a href="manifesto.html">Manifesto</a>
+        <a href="observatory.html">Observatory</a>
       </div>
-    </section>
-
-    <section class="home-deeper">
-      <a href="manifesto.html">Manifesto</a>
-      <a href="observatory.html">Observatory</a>
     </section>
   </main>
 

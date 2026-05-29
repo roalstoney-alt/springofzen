@@ -65,8 +65,7 @@ function trackCard(track) {
     <img src="${track.cover_url}" alt="${escapeHtml(track.title)} cover">
     <div class="session-card-body">
       <div class="meta-row">
-        <span class="tag">${escapeHtml(track.track_id)}</span>
-        <span class="tag">${escapeHtml(track.mutation_role || track.dna_family)}</span>
+        <span class="tag">${escapeHtml(track.daily_theme || "Previous night")}</span>
         <span class="tag">${escapeHtml(track.duration)}</span>
       </div>
       <h2>${escapeHtml(track.title)}</h2>
@@ -82,10 +81,20 @@ function parameterList(parameters = {}) {
     .join("");
 }
 
+function trackListeningNotes(track) {
+  return [
+    ["Room", track.daily_theme || "Previous night"],
+    ["Length", track.duration || ""],
+    ["Feeling", (track.tags || []).slice(0, 2).join(" / ") || "quiet"]
+  ]
+    .map(([key, value]) => `<span class="metric"><strong>${escapeHtml(key)}</strong>${escapeHtml(value)}</span>`)
+    .join("");
+}
+
 function archiveLinks(track) {
-  const links = [`<a class="tag" href="${track.audio_url}">MP3 playback</a>`];
-  if (track.wav_url) links.push(`<a class="tag" href="${track.wav_url}">WAV archive</a>`);
-  if (track.midi_url) links.push(`<a class="tag" href="${track.midi_url}">MIDI archive</a>`);
+  const links = [`<a class="tag" href="${track.audio_url}">Listen</a>`];
+  if (track.wav_url) links.push(`<a class="tag" href="${track.wav_url}">Full audio</a>`);
+  if (track.midi_url) links.push(`<a class="tag" href="${track.midi_url}">Source sketch</a>`);
   return links.join("");
 }
 
@@ -189,8 +198,8 @@ async function renderLegacyHomeTracks() {
   if (!container) return;
   const [tracks, daily] = await Promise.all([loadTracks(), loadDailyTheme()]);
   if (themeContainer && daily.theme) {
-    themeContainer.innerHTML = `<p class="eyebrow">Latest DNA Theme</p>
-      <h2>${escapeHtml(daily.theme.name || "Daily DNA")}</h2>
+    themeContainer.innerHTML = `<p class="eyebrow">Latest Listening Room</p>
+      <h2>${escapeHtml(daily.theme.name || "Daily Harbor")}</h2>
       <p>${escapeHtml(daily.theme.description || "")}</p>`;
   }
   container.innerHTML = tracks.slice(0, 5).map(trackCard).join("");
@@ -203,7 +212,7 @@ async function renderTracks() {
   const [tracks, daily] = await Promise.all([loadTracks(), loadDailyTheme()]);
   const intro = document.querySelector("#tracksIntro");
   if (intro && daily.theme) {
-    intro.textContent = `Latest theme: ${daily.theme.name}. ${daily.theme.description}`;
+    intro.textContent = `Latest room: ${daily.theme.name}. ${daily.theme.description}`;
   }
   const draw = (filter) => {
     const visible = filter === "all" ? tracks : tracks.filter((track) => track.dna_family === filter);
@@ -237,14 +246,14 @@ async function renderTrackDetail() {
       <div class="meta-row">${archiveLinks(track)}</div>
     </div>
     <div class="session-copy">
-      <p class="eyebrow">${escapeHtml(track.track_id)} / ${escapeHtml(track.dna_family)}</p>
+      <p class="eyebrow">Previous Night</p>
       <h1>${escapeHtml(track.title)}</h1>
       <p class="subtitle">${escapeHtml(track.description)}</p>
       <p class="muted">${escapeHtml(track.daily_theme || "")}</p>
-      <h2>Structure Parameters</h2>
-      <div class="signature-panel compact">${parameterList(track.parameters)}</div>
+      <h2>Listening Notes</h2>
+      <div class="signature-panel compact">${trackListeningNotes(track)}</div>
       <div class="meta-row">${(track.tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-      <h2>Feedback</h2>
+      <h2>Harbor Note</h2>
       ${feedbackBlock}
     </div>
   </section>`;
@@ -284,19 +293,19 @@ async function renderSessionDetail() {
       <p class="eyebrow">${escapeHtml(session.state)}</p>
       <h1>${escapeHtml(session.title)}</h1>
       <p class="subtitle">${escapeHtml(session.description)}</p>
-      <p><span>This session is built from five consciousness layers:</span></p>
+      <p><span>This room is made from five quiet layers:</span></p>
       <div class="meta-row">${session.layers.map((layer) => `<span class="tag">${escapeHtml(layer)}</span>`).join("")}</div>
       <h2>Best for</h2>
       <div class="meta-row">${session.recommended_for.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
-      <h2>Consciousness Signature</h2>
+      <h2>Room Notes</h2>
       <div class="signature-panel compact">${metricPills(session.consciousness_signature)}</div>
     </div>
   </section>
   <section id="feedback" class="feedback-panel">
     <div>
-      <p class="eyebrow">Feedback Loop</p>
-      <h2>How did this session affect you?</h2>
-      <p>Your response helps build Structure to Consciousness Mapping.</p>
+      <p class="eyebrow">Harbor Note</p>
+      <h2>Leave a note for the room.</h2>
+      <p>A few words are enough.</p>
     </div>
     <form class="feedback-form" data-feedback-form data-session-id="${session.id}">
       <input name="user_intent" placeholder="What state were you trying to enter?">
@@ -314,7 +323,7 @@ async function renderSessionDetail() {
       </div>
       <textarea name="free_text_feedback" placeholder="What changed in your body, attention, or emotion?"></textarea>
       <input name="email" type="email" placeholder="email optional">
-      <button class="button primary" type="submit">Submit Feedback</button>
+      <button class="button primary" type="submit">Leave Note</button>
       <p class="form-status" aria-live="polite"></p>
     </form>
   </section>`;
@@ -380,7 +389,7 @@ async function renderNightHarbor() {
     sessionContainer.innerHTML = `<div class="night-session">
       <img src="${session.cover}" alt="${escapeHtml(session.title)} cover">
       <div>
-        <p class="eyebrow">Consciousness Session</p>
+        <p class="eyebrow">Tonight's Room</p>
         <h2>${escapeHtml(session.title)}</h2>
         <p>${escapeHtml(session.description)}</p>
         <div class="meta-row">${session.recommended_for.slice(0, 3).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
@@ -585,7 +594,7 @@ function bindFeedbackForms() {
       email: data.get("email") || ""
     };
     await window.SpringOfZenTracking?.saveFeedback(payload);
-    form.querySelector(".form-status").textContent = "Thanks. Your response helps shape future sessions.";
+    form.querySelector(".form-status").textContent = "Your note stays with the Harbor.";
     applyLanguage();
     form.reset();
   });
