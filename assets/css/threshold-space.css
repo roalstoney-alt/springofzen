@@ -1,0 +1,576 @@
+:root {
+  --threshold-ink: #0d0e10;
+  --threshold-charcoal: #141619;
+  --threshold-lamp: #e5ad67;
+  --threshold-mist: #8a8d93;
+  --threshold-ivory: #e2e4e9;
+  --threshold-editorial: Georgia, "Playfair Display", serif;
+  --threshold-interface: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body[data-page="home"] {
+  background: var(--threshold-ink);
+  color: var(--threshold-ivory);
+  font-family: var(--threshold-interface);
+}
+
+body[data-page="home"]::before {
+  display: none;
+}
+
+.threshold-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--threshold-ink);
+}
+
+.threshold-world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 68% 34%, rgba(229, 173, 103, 0.1), transparent 17rem),
+    linear-gradient(180deg, rgba(20, 22, 25, 0.66), rgba(13, 14, 16, 0.98) 76%),
+    linear-gradient(90deg, rgba(13, 14, 16, 0.98), rgba(20, 22, 25, 0.46) 54%, rgba(13, 14, 16, 0.96));
+}
+
+.threshold-video,
+.threshold-lake,
+.threshold-inn,
+.threshold-lamp,
+.threshold-window,
+.threshold-mist,
+.threshold-grain {
+  position: absolute;
+}
+
+.threshold-video {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.1;
+  filter: saturate(0.38) contrast(1.08) brightness(0.5);
+  transform: scale(1.06);
+  animation: thresholdRoomShift 48s ease-in-out infinite alternate;
+}
+
+.threshold-lake {
+  left: -12vw;
+  right: -12vw;
+  bottom: 10vh;
+  height: 25vh;
+  z-index: 2;
+  background:
+    repeating-linear-gradient(177deg, rgba(226, 228, 233, 0.075) 0 1px, transparent 1px 24px),
+    linear-gradient(180deg, transparent, rgba(7, 18, 24, 0.66), rgba(13, 14, 16, 0.94));
+  opacity: 0.5;
+  transform: rotate(-1deg);
+  animation: thresholdWater 16s ease-in-out infinite alternate;
+}
+
+.threshold-inn {
+  right: clamp(36px, 13vw, 210px);
+  bottom: 23vh;
+  z-index: 3;
+  width: min(24vw, 280px);
+  height: min(54vh, 520px);
+  border: 1px solid rgba(229, 173, 103, 0.13);
+  border-bottom: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(229, 173, 103, 0.08) 64%, transparent),
+    linear-gradient(180deg, rgba(20, 22, 25, 0.1), rgba(13, 14, 16, 0.58));
+  box-shadow: inset 20px 0 80px rgba(0, 0, 0, 0.42);
+}
+
+@keyframes thresholdLampBreathing {
+  0% { opacity: 0.32; filter: blur(38px); }
+  50% { opacity: 0.54; filter: blur(62px); }
+  100% { opacity: 0.32; filter: blur(38px); }
+}
+
+.threshold-lamp {
+  top: 30%;
+  left: 58%;
+  z-index: 4;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, var(--threshold-lamp) 0%, transparent 68%);
+  animation: thresholdLampBreathing 8s ease-in-out infinite;
+}
+
+.threshold-window {
+  right: clamp(82px, 17vw, 260px);
+  bottom: 39vh;
+  z-index: 5;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(239, 197, 119, 0.9);
+  box-shadow:
+    0 0 34px 16px rgba(229, 173, 103, 0.2),
+    0 0 100px 42px rgba(229, 173, 103, 0.1);
+}
+
+.threshold-mist {
+  inset: -14%;
+  z-index: 6;
+  background:
+    repeating-linear-gradient(104deg, rgba(226, 228, 233, 0.035) 0 1px, transparent 1px 34px),
+    radial-gradient(circle at 18% 42%, rgba(138, 141, 147, 0.11), transparent 24rem);
+  opacity: 0.38;
+  animation: thresholdMist 34s linear infinite;
+}
+
+.threshold-grain {
+  inset: 0;
+  z-index: 7;
+  background-image: radial-gradient(circle, rgba(226, 228, 233, 0.12) 0 0.6px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.055;
+  mix-blend-mode: screen;
+}
+
+.threshold-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px clamp(18px, 4vw, 58px);
+  border: 0;
+  background: linear-gradient(180deg, rgba(13, 14, 16, 0.42), transparent);
+  backdrop-filter: none;
+  opacity: 0.72;
+}
+
+.threshold-logo {
+  color: rgba(226, 228, 233, 0.66);
+  font-family: var(--threshold-editorial);
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.threshold-links {
+  display: flex;
+  gap: clamp(18px, 3vw, 34px);
+  color: rgba(226, 228, 233, 0.36);
+  font-size: 12px;
+}
+
+.threshold-links a {
+  text-decoration: none;
+}
+
+.threshold-links a:hover {
+  color: rgba(226, 228, 233, 0.78);
+}
+
+.threshold-nav .language-switcher {
+  border-color: rgba(226, 228, 233, 0.12);
+  background: rgba(13, 14, 16, 0.12);
+}
+
+.threshold-nav .language-switcher button {
+  color: rgba(226, 228, 233, 0.52);
+  padding: 7px 9px;
+}
+
+.threshold-nav .language-switcher button.active {
+  background: rgba(229, 173, 103, 0.66);
+  color: #15110c;
+}
+
+.threshold-main {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.threshold-screen {
+  position: relative;
+  min-height: 100vh;
+  padding: 16vh clamp(18px, 5vw, 76px) 8vh;
+}
+
+.threshold-whisper {
+  position: absolute;
+  left: clamp(24px, 7vw, 108px);
+  bottom: 31vh;
+  max-width: 270px;
+  margin: 0;
+  color: rgba(226, 228, 233, 0);
+  font-family: var(--threshold-editorial);
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.45;
+  animation: whisperArrive 1200ms ease forwards;
+  animation-delay: 2s;
+}
+
+.threshold-doors {
+  position: absolute;
+  inset: 13vh clamp(18px, 6vw, 96px) 10vh;
+}
+
+.threshold-door {
+  --door-x: 50%;
+  --door-y: 50%;
+  --door-delay: 2400ms;
+  position: absolute;
+  left: var(--door-x);
+  top: var(--door-y);
+  width: clamp(150px, 18vw, 230px);
+  min-height: 118px;
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  padding: 18px 18px 16px;
+  color: rgba(226, 228, 233, 0.66);
+  text-decoration: none;
+  border: 1px solid rgba(226, 228, 233, 0.09);
+  background:
+    linear-gradient(180deg, rgba(20, 22, 25, 0.02), rgba(20, 22, 25, 0.2)),
+    rgba(13, 14, 16, 0.12);
+  opacity: 0;
+  transform: translate(-50%, -50%) translateY(12px);
+  animation: doorAppear 900ms ease forwards;
+  animation-delay: var(--door-delay);
+}
+
+.threshold-door::before {
+  content: "";
+  position: absolute;
+  inset: 16px 16px auto;
+  height: 42px;
+  opacity: 0.55;
+}
+
+.threshold-door[data-door="sound"]::before {
+  background: repeating-linear-gradient(90deg, rgba(229, 173, 103, 0.34) 0 1px, transparent 1px 12px);
+  mask-image: linear-gradient(180deg, transparent, black 45%, transparent);
+}
+
+.threshold-door[data-door="market"]::before {
+  background:
+    radial-gradient(circle at 20% 54%, rgba(226, 228, 233, 0.24) 0 2px, transparent 3px),
+    radial-gradient(circle at 54% 24%, rgba(226, 228, 233, 0.18) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 66%, rgba(229, 173, 103, 0.22) 0 2px, transparent 3px),
+    linear-gradient(110deg, transparent 0 30%, rgba(226, 228, 233, 0.18) 31% 32%, transparent 33% 100%);
+}
+
+.threshold-door[data-door="landscape"]::before {
+  border: 1px solid rgba(226, 228, 233, 0.16);
+  background: linear-gradient(135deg, transparent 45%, rgba(229, 173, 103, 0.18) 46% 52%, transparent 53%);
+}
+
+.threshold-door[data-door="ai"]::before {
+  background:
+    linear-gradient(90deg, rgba(117, 137, 156, 0.08), rgba(117, 137, 156, 0.22), rgba(117, 137, 156, 0.04)),
+    repeating-linear-gradient(0deg, transparent 0 9px, rgba(226, 228, 233, 0.08) 10px);
+}
+
+.threshold-door[data-door="skill"]::before {
+  border-bottom: 1px solid rgba(229, 173, 103, 0.22);
+  box-shadow: 22px 10px 0 -8px rgba(226, 228, 233, 0.18), 58px 5px 0 -7px rgba(226, 228, 233, 0.14);
+}
+
+.threshold-door[data-door="sentence"]::before {
+  background:
+    linear-gradient(180deg, rgba(232, 215, 178, 0.22), rgba(232, 215, 178, 0.1)),
+    repeating-linear-gradient(0deg, transparent 0 12px, rgba(13, 14, 16, 0.18) 13px);
+}
+
+.threshold-door:hover,
+.threshold-door:focus-visible {
+  color: rgba(226, 228, 233, 0.94);
+  border-color: rgba(229, 173, 103, 0.36);
+  background: rgba(20, 22, 25, 0.26);
+  outline: 0;
+}
+
+.threshold-door strong {
+  font-family: var(--threshold-editorial);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.threshold-door span {
+  max-width: 21ch;
+  color: rgba(226, 228, 233, 0.48);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.roomtone-button {
+  position: absolute;
+  right: clamp(22px, 5vw, 72px);
+  bottom: clamp(24px, 5vh, 58px);
+  border: 0;
+  border-bottom: 1px solid rgba(226, 228, 233, 0.16);
+  background: transparent;
+  color: rgba(226, 228, 233, 0.48);
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 0;
+}
+
+.roomtone-button[aria-pressed="true"] {
+  color: rgba(229, 173, 103, 0.92);
+}
+
+.threshold-page {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 14vh clamp(22px, 7vw, 110px);
+}
+
+.observation-leaf {
+  justify-items: start;
+}
+
+.observation-leaf .page-kicker {
+  margin: 0 0 18px;
+  color: rgba(226, 228, 233, 0.42);
+  font-size: 13px;
+}
+
+.observation-leaf blockquote {
+  margin: 0;
+  max-width: 760px;
+  color: rgba(226, 228, 233, 0.86);
+  font-family: var(--threshold-editorial);
+  font-size: clamp(34px, 5.5vw, 72px);
+  font-weight: 400;
+  line-height: 1.18;
+}
+
+.note-card-surface {
+  width: min(720px, 100%);
+  padding: clamp(28px, 5vw, 58px);
+  color: #20180f;
+  background:
+    linear-gradient(145deg, rgba(232, 215, 178, 0.96), rgba(199, 174, 130, 0.9)),
+    #d7c197;
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.36),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  transform: rotate(-0.25deg);
+}
+
+.note-card-surface h2 {
+  margin: 0;
+  color: #20180f;
+  font-family: var(--threshold-editorial);
+  font-size: clamp(30px, 4.8vw, 50px);
+  font-weight: 400;
+}
+
+.note-card-surface p {
+  color: rgba(32, 24, 15, 0.62);
+}
+
+.minimal-paper-form {
+  display: grid;
+  gap: 28px;
+  margin-top: 30px;
+}
+
+.minimal-paper-form label {
+  display: grid;
+  gap: 12px;
+}
+
+.minimal-paper-form span,
+.return-field legend {
+  color: rgba(32, 24, 15, 0.64);
+}
+
+.line-input,
+.line-textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(32, 24, 15, 0.28);
+  border-radius: 0;
+  background: transparent;
+  color: #20180f;
+  font: inherit;
+  padding: 8px 0 10px;
+}
+
+.line-textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.line-input:focus,
+.line-textarea:focus {
+  outline: 0;
+  border-bottom-color: rgba(32, 24, 15, 0.62);
+}
+
+.return-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.return-field legend {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.return-field input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.return-field label {
+  border-bottom: 1px solid rgba(32, 24, 15, 0.2);
+  cursor: pointer;
+  padding: 3px 0 5px;
+}
+
+.return-field input:checked + label {
+  border-bottom-color: rgba(32, 24, 15, 0.75);
+  color: #20180f;
+}
+
+.paper-submit {
+  justify-self: start;
+  border: 0;
+  border-bottom: 1px solid rgba(32, 24, 15, 0.54);
+  background: transparent;
+  color: #20180f;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 0;
+}
+
+.form-status {
+  min-height: 22px;
+  margin: 0;
+  color: rgba(32, 24, 15, 0.62);
+}
+
+@keyframes thresholdRoomShift {
+  from { transform: scale(1.06) translate3d(0, 0, 0); }
+  to { transform: scale(1.11) translate3d(-1.2%, 0.8%, 0); }
+}
+
+@keyframes thresholdWater {
+  from { opacity: 0.34; transform: rotate(-1deg) translateX(0); }
+  to { opacity: 0.58; transform: rotate(-1deg) translateX(-24px); }
+}
+
+@keyframes thresholdMist {
+  from { transform: translate3d(0, -12px, 0); }
+  to { transform: translate3d(-52px, 26px, 0); }
+}
+
+@keyframes whisperArrive {
+  from { opacity: 0; color: rgba(226, 228, 233, 0); transform: translateY(8px); }
+  to { opacity: 1; color: rgba(226, 228, 233, 0.58); transform: translateY(0); }
+}
+
+@keyframes doorAppear {
+  to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
+}
+
+@media (max-width: 860px) {
+  .threshold-nav {
+    padding: 18px;
+  }
+
+  .threshold-links {
+    display: none;
+  }
+
+  .threshold-screen {
+    min-height: auto;
+    padding: 118px 18px 74px;
+  }
+
+  .threshold-whisper {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: 320px;
+    margin: 0 0 28px;
+  }
+
+  .threshold-doors {
+    position: relative;
+    inset: auto;
+    display: grid;
+    gap: 12px;
+    padding-top: 52vh;
+  }
+
+  .threshold-door {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    min-height: 104px;
+    transform: translateY(12px);
+    animation-name: mobileDoorAppear;
+  }
+
+  .roomtone-button {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin-top: 26px;
+  }
+
+  .threshold-inn {
+    right: -32px;
+    bottom: 42vh;
+    width: 180px;
+    height: 290px;
+  }
+
+  .threshold-lamp {
+    left: 42%;
+    top: 24%;
+    width: 230px;
+    height: 230px;
+  }
+
+  .threshold-window {
+    right: 74px;
+    bottom: 53vh;
+  }
+
+  .threshold-lake {
+    bottom: 38vh;
+  }
+
+  .threshold-page {
+    min-height: 92vh;
+    padding: 86px 20px;
+  }
+
+  .note-card-surface {
+    transform: none;
+    padding: 28px 22px;
+  }
+}
+
+@keyframes mobileDoorAppear {
+  to { opacity: 1; transform: translateY(0); }
+}

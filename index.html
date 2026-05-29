@@ -1,104 +1,74 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>SpringOfZen - The light is still on</title>
+  <title>SpringOfZen - Threshold</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A quiet room for pause, listening, and return.">
+  <meta name="description" content="A threshold space with quiet doors for listening, looking, study, craft, and return.">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/threshold-space.css">
 </head>
-<body data-page="home" data-home-variant="room">
-  <div class="harbor-viewport-wrapper">
-    <div class="ambient-spatial-background" aria-hidden="true">
-      <video class="ambient-room-video" src="output_10min_smooth.mp4" autoplay muted loop playsinline></video>
-      <div class="lamp-glow-effect"></div>
-      <div class="mist-drift-overlay"></div>
-      <div class="water-reflection"></div>
-      <div class="room-threshold"></div>
-      <div class="film-grain"></div>
+<body data-page="home">
+  <div class="threshold-shell">
+    <div class="threshold-world" aria-hidden="true">
+      <video class="threshold-video" src="output_10min_smooth.mp4" autoplay muted loop playsinline></video>
+      <div class="threshold-lake"></div>
+      <div class="threshold-inn"></div>
+      <div class="threshold-lamp"></div>
+      <div class="threshold-window"></div>
+      <div class="threshold-mist"></div>
+      <div class="threshold-grain"></div>
     </div>
 
-    <header class="site-header harbor-minimal-nav">
-      <a class="logo" href="index.html">SpringOfZen</a>
-      <nav class="subtle-links" aria-label="Main navigation">
-        <a href="today.html">Harbor</a>
+    <header class="site-header threshold-nav">
+      <a class="threshold-logo" href="index.html">SpringOfZen</a>
+      <nav class="threshold-links" aria-label="Quiet paths">
+        <a href="sessions.html">Sound</a>
+        <a href="observatory.html">Observatory</a>
         <a href="journal.html">Journal</a>
-        <a href="manifesto.html">Manifesto</a>
       </nav>
     </header>
 
-    <main class="harbor-story-flow">
-      <section id="arrival" class="fullscreen-panel centered" aria-labelledby="arrivalLine">
-        <div class="poetic-cluster">
-          <h1 id="arrivalLine" class="poetic-headline" data-variant-room="The light is still on." data-variant-dock="Someone left the door open.">The light is still on.</h1>
-          <p class="poetic-subcopy" data-variant-room="Come in quietly." data-variant-dock="Stay as long as you need.">Come in quietly.</p>
-          <button class="action-btn-minimal" type="button" data-advance-harbor>Enter</button>
-        </div>
-        <div class="sound-toggle-zone">
-          <button id="soundBtn" class="text-toggle-btn" type="button" data-sound-toggle aria-pressed="false">Listen</button>
-        </div>
+    <main class="threshold-main">
+      <section id="threshold" class="threshold-screen" aria-labelledby="thresholdWhisper">
+        <p id="thresholdWhisper" class="threshold-whisper">No need to explain why you came.</p>
+        <div class="threshold-doors" data-threshold-doors aria-label="Choose a door"></div>
+        <button id="soundBtn" class="roomtone-button" type="button" aria-pressed="false">Listen to the room</button>
       </section>
 
-      <section id="tonight" class="fullscreen-panel hidden-initially" aria-labelledby="tonightTitle">
-        <div class="room-session-container">
-          <h2 id="tonightTitle" class="section-title-quiet">Tonight's Harbor</h2>
-          <p class="section-desc-poetic">A slow room for those still awake.</p>
-          <div class="audio-interaction-surface">
-            <a class="harbor-play-trigger" href="night-harbor/">[ Listen Tonight ]</a>
-          </div>
-          <div class="historical-nodes">
-            <span class="node-label">Previous Nights</span>
-          </div>
-        </div>
+      <section id="observation" class="threshold-page observation-leaf" aria-labelledby="observationTitle">
+        <p class="page-kicker">One sentence</p>
+        <blockquote id="observationTitle">
+          AI can give us time.<br><br>
+          But it cannot tell us<br>
+          what to do with the silence.
+        </blockquote>
       </section>
 
-      <section id="observation" class="fullscreen-panel" aria-labelledby="observationTitle">
-        <div class="observation-paper">
-          <p class="section-title-quiet">Today's Observation</p>
-          <blockquote id="observationTitle" class="human-observation">
-            AI can give us time.<br><br>
-            But it cannot tell us<br>
-            what to do with the silence.
-          </blockquote>
-        </div>
-      </section>
-
-      <section id="harbor-note" class="fullscreen-panel" aria-labelledby="noteTitle">
+      <section id="harbor-note" class="threshold-page desk-note" aria-labelledby="noteTitle">
         <div class="note-card-surface">
-          <h3 id="noteTitle" class="card-title">Leave a note for the room.</h3>
-          <p class="card-subtitle">A few words are enough.</p>
-
+          <h2 id="noteTitle">Leave a note for the room.</h2>
+          <p>A few words are enough.</p>
           <form id="harborNoteForm" class="minimal-paper-form" data-harbor-note>
-            <div class="form-row-line">
-              <label for="placeFeel">What did this place feel like?</label>
-              <input id="placeFeel" name="first_impression" type="text" placeholder="One word..." class="line-input">
-            </div>
-            <div class="form-row-line">
-              <span>Would you return?</span>
-              <div class="custom-radio-group">
-                <input type="radio" id="ret-yes" name="would_return" value="yes">
-                <label for="ret-yes">Yes</label>
-                <input type="radio" id="ret-no" name="would_return" value="no">
-                <label for="ret-no">No</label>
-              </div>
-            </div>
-            <div class="form-row-line">
-              <label for="placeChange">What should become quieter, warmer, or more alive?</label>
-              <textarea id="placeChange" name="what_should_change" placeholder="Write freely..." class="line-textarea"></textarea>
-            </div>
-            <button type="submit" class="action-btn-submit">Leave Note</button>
+            <label>
+              <span>What did this place feel like?</span>
+              <input name="first_impression" type="text" placeholder="One word..." class="line-input">
+            </label>
+            <fieldset class="return-field">
+              <legend>Would you return?</legend>
+              <input type="radio" id="ret-yes" name="would_return" value="yes">
+              <label for="ret-yes">Yes</label>
+              <input type="radio" id="ret-no" name="would_return" value="no">
+              <label for="ret-no">No</label>
+            </fieldset>
+            <label>
+              <span>What should become quieter, warmer, or more alive?</span>
+              <textarea name="what_should_change" placeholder="Write freely..." class="line-textarea"></textarea>
+            </label>
+            <button type="submit" class="paper-submit">Leave Note</button>
             <p class="form-status" aria-live="polite"></p>
           </form>
-        </div>
-      </section>
-
-      <section id="journal" class="fullscreen-panel hidden-path-panel" aria-labelledby="pathsTitle">
-        <div class="path-door-cluster">
-          <h2 id="pathsTitle" class="section-title-quiet">Hidden paths</h2>
-          <a href="journal.html">Journal</a>
-          <a id="manifesto" href="manifesto.html">Manifesto</a>
-          <a href="observatory.html">Observatory</a>
         </div>
       </section>
     </main>
@@ -107,6 +77,6 @@
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/tracking.js"></script>
-  <script src="assets/js/home-state.js"></script>
+  <script src="assets/js/threshold-space.js"></script>
 </body>
 </html>

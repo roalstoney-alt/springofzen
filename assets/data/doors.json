@@ -1,0 +1,74 @@
+[
+  {
+    "id": "sound",
+    "label": "For those who came to listen",
+    "short": "Sound",
+    "href": "sessions.html",
+    "state": "stillness",
+    "parameters": {
+      "stillness": 9,
+      "warmth": 7,
+      "memory": 7
+    }
+  },
+  {
+    "id": "market",
+    "label": "For those watching hidden motion",
+    "short": "Motion",
+    "href": "observatory.html#market",
+    "state": "curiosity",
+    "parameters": {
+      "curiosity": 9,
+      "mystery": 8,
+      "hope": 4
+    }
+  },
+  {
+    "id": "landscape",
+    "label": "For those who followed a light",
+    "short": "View",
+    "href": "harbor.html",
+    "state": "beauty",
+    "parameters": {
+      "beauty": 9,
+      "warmth": 8,
+      "return_desire": 8
+    }
+  },
+  {
+    "id": "ai",
+    "label": "For those studying the age of agents",
+    "short": "Agents",
+    "href": "journal.html#agent-era",
+    "state": "future",
+    "parameters": {
+      "curiosity": 9,
+      "mystery": 6,
+      "hope": 6
+    }
+  },
+  {
+    "id": "skill",
+    "label": "For those building quietly",
+    "short": "Craft",
+    "href": "skills.html",
+    "state": "craft",
+    "parameters": {
+      "focus": 8,
+      "belonging": 6,
+      "return_desire": 7
+    }
+  },
+  {
+    "id": "sentence",
+    "label": "For those who only need one sentence",
+    "short": "One sentence",
+    "href": "today.html",
+    "state": "insight",
+    "parameters": {
+      "stillness": 7,
+      "memory": 8,
+      "hope": 5
+    }
+  }
+]
