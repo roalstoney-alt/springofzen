@@ -1,0 +1,16 @@
+{
+  "parameters": [
+    "stillness",
+    "warmth",
+    "mystery",
+    "belonging",
+    "beauty",
+    "curiosity",
+    "memory",
+    "hope",
+    "sacredness",
+    "return_desire"
+  ],
+  "scale": "0-10",
+  "usage": "Used internally to tune public experiences. Do not display raw parameter tables on public pages."
+}

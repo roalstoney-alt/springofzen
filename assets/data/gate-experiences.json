@@ -1,0 +1,134 @@
+{
+  "mountain": {
+    "gate": "mountain",
+    "public_name": "Mountain Harbor",
+    "slogan": "The light is still on.",
+    "state_intent": "stillness and memory",
+    "visual_direction": "Misty mountain lake, small pavilion, soft lantern, quiet dock.",
+    "sound_direction": "Water, distant bell, low warm drone, very slow melodic fragments.",
+    "motion_direction": "Mist drift, water shimmer, lantern breathing.",
+    "emotional_parameters": {
+      "stillness": 9,
+      "warmth": 7,
+      "mystery": 7,
+      "belonging": 8,
+      "beauty": 8,
+      "curiosity": 4,
+      "memory": 7,
+      "hope": 4,
+      "sacredness": 5,
+      "return_desire": 8
+    },
+    "best_sources": ["youtube", "music", "night_harbor"]
+  },
+  "cyber": {
+    "gate": "cyber",
+    "public_name": "Cyber Harbor",
+    "slogan": "When machines move faster, find somewhere slower.",
+    "state_intent": "future shock to slower attention",
+    "visual_direction": "Quiet cyber city, one human-lit room inside the machine world.",
+    "sound_direction": "Soft synth, distant data pulse, slow breathing rhythm.",
+    "motion_direction": "Neon mist and slow light pulse.",
+    "emotional_parameters": {
+      "stillness": 6,
+      "warmth": 5,
+      "mystery": 8,
+      "belonging": 5,
+      "beauty": 8,
+      "curiosity": 9,
+      "memory": 2,
+      "hope": 6,
+      "sacredness": 3,
+      "return_desire": 6
+    },
+    "best_sources": ["tiktok", "ai", "agent_era"]
+  },
+  "garden": {
+    "gate": "garden",
+    "public_name": "Garden Harbor",
+    "slogan": "Some answers wait in a quieter garden.",
+    "state_intent": "warmth, creation, and recovery",
+    "visual_direction": "Warm mountain villa, garden courtyard, dusk, soft lamps.",
+    "sound_direction": "Wind, leaves, distant piano, quiet room tone.",
+    "motion_direction": "Curtain movement, leaves, warm light flicker.",
+    "emotional_parameters": {
+      "stillness": 8,
+      "warmth": 9,
+      "mystery": 5,
+      "belonging": 8,
+      "beauty": 9,
+      "curiosity": 5,
+      "memory": 6,
+      "hope": 7,
+      "sacredness": 3,
+      "return_desire": 8
+    },
+    "best_sources": ["instagram", "xiaohongshu", "creative"]
+  },
+  "ocean": {
+    "gate": "ocean",
+    "public_name": "Ocean Harbor",
+    "slogan": "Find a harbor before the next crossing.",
+    "state_intent": "transition, courage, and horizon",
+    "visual_direction": "Moonlit ocean, dock, boat, lighthouse.",
+    "sound_direction": "Low waves, distant horn, slow strings.",
+    "motion_direction": "Ocean shimmer, lighthouse sweep.",
+    "emotional_parameters": {
+      "stillness": 7,
+      "warmth": 5,
+      "mystery": 7,
+      "belonging": 6,
+      "beauty": 8,
+      "curiosity": 7,
+      "memory": 4,
+      "hope": 8,
+      "sacredness": 4,
+      "return_desire": 7
+    },
+    "best_sources": ["founders", "creators", "transformation"]
+  },
+  "recovery": {
+    "gate": "recovery",
+    "public_name": "Recovery Harbor",
+    "slogan": "Stay here for a moment.",
+    "state_intent": "sleep, calm, focus, and return",
+    "visual_direction": "Moonlit room, water outside, soft curtain.",
+    "sound_direction": "Breath-paced ambience, soft water, low pad.",
+    "motion_direction": "Breathing light, slow curtain.",
+    "emotional_parameters": {
+      "stillness": 9,
+      "warmth": 8,
+      "mystery": 3,
+      "belonging": 8,
+      "beauty": 7,
+      "curiosity": 3,
+      "memory": 5,
+      "hope": 5,
+      "sacredness": 2,
+      "return_desire": 8
+    },
+    "best_sources": ["google", "sleep", "anxiety", "focus"]
+  },
+  "manifesto": {
+    "gate": "manifesto",
+    "public_name": "Manifesto Harbor",
+    "slogan": "What should humans do with the time machines return?",
+    "state_intent": "meaning and civilization questions",
+    "visual_direction": "Quiet study, paper, stone, warm light.",
+    "sound_direction": "Room tone, faint pen, soft ambient.",
+    "motion_direction": "Lamp glow, dust particles, slow paper movement.",
+    "emotional_parameters": {
+      "stillness": 6,
+      "warmth": 5,
+      "mystery": 5,
+      "belonging": 5,
+      "beauty": 7,
+      "curiosity": 8,
+      "memory": 3,
+      "hope": 6,
+      "sacredness": 4,
+      "return_desire": 6
+    },
+    "best_sources": ["x", "medium", "github", "long_form"]
+  }
+}

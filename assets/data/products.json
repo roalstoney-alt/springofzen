@@ -5,7 +5,14 @@
     "platform": "Etsy",
     "price_range": "$9-$19",
     "description": "A downloadable consciousness session pack for sleep, low tension, and bedtime safety.",
-    "includes": ["MP3 version", "WAV version", "Loop version", "Session artwork", "Listening guide", "DNA description"],
+    "includes": [
+      "MP3 version",
+      "WAV version",
+      "Loop version",
+      "Session artwork",
+      "Listening guide",
+      "Listening note"
+    ],
     "etsy_url": "",
     "related_session_id": "lotus_sleep"
   },
@@ -15,7 +22,14 @@
     "platform": "Etsy",
     "price_range": "$9-$19",
     "description": "A downloadable consciousness session pack for floating memory and night reflection.",
-    "includes": ["MP3 version", "WAV version", "Loop version", "Session artwork", "Listening guide", "DNA description"],
+    "includes": [
+      "MP3 version",
+      "WAV version",
+      "Loop version",
+      "Session artwork",
+      "Listening guide",
+      "Listening note"
+    ],
     "etsy_url": "",
     "related_session_id": "memory_air"
   },
@@ -25,7 +39,14 @@
     "platform": "Etsy",
     "price_range": "$9-$19",
     "description": "A spacious session pack for sacred stillness, human voice air, and water-like quiet.",
-    "includes": ["MP3 version", "WAV version", "Loop version", "Session artwork", "Listening guide", "DNA description"],
+    "includes": [
+      "MP3 version",
+      "WAV version",
+      "Loop version",
+      "Session artwork",
+      "Listening guide",
+      "Listening note"
+    ],
     "etsy_url": "",
     "related_session_id": "sacred_water"
   },
@@ -35,7 +56,14 @@
     "platform": "Etsy",
     "price_range": "$9-$19",
     "description": "A cooling sound environment for overthinking, stress, and emotional reset.",
-    "includes": ["MP3 version", "WAV version", "Loop version", "Session artwork", "Listening guide", "DNA description"],
+    "includes": [
+      "MP3 version",
+      "WAV version",
+      "Loop version",
+      "Session artwork",
+      "Listening guide",
+      "Listening note"
+    ],
     "etsy_url": "",
     "related_session_id": "night_water"
   },
@@ -45,7 +73,14 @@
     "platform": "Etsy",
     "price_range": "$9-$19",
     "description": "A steady attention pack with low-distraction pulse and soft ambient focus.",
-    "includes": ["MP3 version", "WAV version", "Loop version", "Session artwork", "Listening guide", "DNA description"],
+    "includes": [
+      "MP3 version",
+      "WAV version",
+      "Loop version",
+      "Session artwork",
+      "Listening guide",
+      "Listening note"
+    ],
     "etsy_url": "",
     "related_session_id": "underwater_pulse"
   }

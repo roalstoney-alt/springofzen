@@ -1,0 +1,18 @@
+{
+  "homepage": {
+    "variant_a": {
+      "headline": "The light is still on.",
+      "subcopy": "Enter quietly.",
+      "cta": "Enter"
+    },
+    "variant_b": {
+      "headline": "A quiet place, if you need one.",
+      "subcopy": "Music, memory, and small observations for those who need to slow down.",
+      "cta": "Enter"
+    }
+  },
+  "night_harbor": {
+    "empty_state": "The Harbor opens tonight.",
+    "room_line": "The light is still on."
+  }
+}
