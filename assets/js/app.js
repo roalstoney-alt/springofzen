@@ -20,7 +20,9 @@ function labelFromKey(key) {
 
 function metricPills(signature = {}) {
   return Object.entries(signature)
-    .map(([key, value]) => `<span class="metric"><strong>${escapeHtml(window.SpringOfZenI18n?.t(labelFromKey(key)) || labelFromKey(key))}</strong>${escapeHtml(value)}</span>`)
+    .filter(([, value]) => Number(value) >= 7)
+    .slice(0, 3)
+    .map(([key]) => `<span class="metric"><strong>${escapeHtml(window.SpringOfZenI18n?.t(labelFromKey(key)) || labelFromKey(key))}</strong></span>`)
     .join("");
 }
 
@@ -44,7 +46,7 @@ function sessionCard(session) {
 function productCta(product) {
   if (!product) return "";
   const href = product.etsy_url || `products.html#${product.id}`;
-  return `<a class="button" data-product-cta="${product.id}" href="${href}">Full Session Pack</a>`;
+  return `<a class="button" data-product-cta="${product.id}" href="${href}">Tonight's session</a>`;
 }
 
 async function loadTracks() {
@@ -188,7 +190,7 @@ async function renderFeaturedSignature() {
   if (!container) return;
   const sessions = await loadJson("assets/data/sessions.json");
   const memoryAir = sessions.find((item) => item.id === "memory_air") || sessions[0];
-  container.innerHTML = `<p class="eyebrow">Consciousness Signature</p>${metricPills(memoryAir.consciousness_signature)}`;
+  container.innerHTML = `<p class="eyebrow">Mood family</p>${metricPills(memoryAir.consciousness_signature)}`;
   applyLanguage();
 }
 
@@ -355,7 +357,7 @@ async function renderProductsList() {
       <p>${escapeHtml(product.description)}</p>
       <p class="muted"><span>Related state:</span> ${escapeHtml(session?.state || "Consciousness Session")}</p>
       <ul>${product.includes.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-      <a class="button primary" data-product-cta="${product.id}" href="${href}">Get the Full Session Pack</a>
+      <a class="button primary" data-product-cta="${product.id}" href="${href}">Tonight's session</a>
     </article>`;
   }).join("");
 }
