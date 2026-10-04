@@ -169,6 +169,7 @@ a { color: inherit; }
   gap: 18px;
 }
 .hero-actions > span { color: var(--muted); font-size: 13px; }
+.pilot-link { color: var(--ink); font-size: 14px; font-weight: 800; text-underline-offset: 4px; }
 .primary-button, .secondary-button, .back-button, .quiet-button, .small-button {
   border: 0;
   cursor: pointer;

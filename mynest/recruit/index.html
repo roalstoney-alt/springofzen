@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17243f">
+  <title>Join the MyNest 14-day pilot</title>
+  <meta name="description" content="A private, structured 14-day own-room transition pilot for families with children aged 2.5–6.">
+  <link rel="stylesheet" href="recruit.css?v=20261005">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the pilot screener</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="MyNest home"><strong>MyNest</strong><span>from Spring of Zen</span></a>
+    <span class="pilot-chip">Cohort 001 · 10 families</span>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">14-day room-transition pilot · ages 2½–6</p>
+        <h1>Before changing the whole room, find out what your child is resisting.</h1>
+        <p class="lede">We are recruiting ten families who are already preparing to help a child use their own room. The pilot begins with a short structured screen, not a product recommendation.</p>
+        <ul class="trust-list">
+          <li>No child name, photo, email, phone number, or exact birth date</li>
+          <li>No medical, developmental, or sleep-treatment claims</li>
+          <li>Five short check-ins: Day 0, 1, 3, 7, and 14</li>
+          <li>Participation is voluntary and can stop at any time</li>
+        </ul>
+      </div>
+      <aside class="metric-card" aria-label="Pilot summary">
+        <strong>10</strong><span>households</span>
+        <strong>14</strong><span>days</span>
+        <strong>5+</strong><span>own-room nights is the pilot success threshold</span>
+      </aside>
+    </section>
+
+    <section class="flow-card" aria-labelledby="screen-title" data-screen-section>
+      <div class="section-heading">
+        <span>1</span>
+        <div><p class="eyebrow">About two minutes</p><h2 id="screen-title">Parent screener</h2></div>
+      </div>
+      <form data-screen-form>
+        <label>How old is your child?
+          <select name="age_band" required>
+            <option value="">Choose an age band</option>
+            <option value="under-2.5">Under 2.5</option>
+            <option value="2.5-3">2.5–3</option>
+            <option value="3-4">3–4</option>
+            <option value="4-5">4–5</option>
+            <option value="5-6">5–6</option>
+            <option value="over-6">Over 6</option>
+          </select>
+        </label>
+
+        <label>Where does your child usually fall asleep?
+          <select name="sleep_location" required>
+            <option value="">Choose one</option>
+            <option value="parent_bed">Parent's bed</option>
+            <option value="parent_room_separate_bed">Separate bed in parent's room</option>
+            <option value="own_room_parent_present">Own room with parent present</option>
+            <option value="own_room_returns">Own room but returns to parent</option>
+            <option value="own_room_independent">Own room independently</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        <label>What are you trying to change?
+          <select name="transition_goal" required>
+            <option value="">Choose one</option>
+            <option value="co_sleeping_to_own_room">Move from co-sleeping to own room</option>
+            <option value="reduce_parent_presence">Reduce parent staying in the room</option>
+            <option value="reduce_returns">Reduce returns to the parent's room</option>
+            <option value="room_comfort">Help the child feel comfortable in their own room</option>
+            <option value="not_sure">Not sure</option>
+          </select>
+        </label>
+
+        <fieldset><legend>Does the child already have a safe, usable sleeping space?</legend><div class="yes-no"><label><input type="radio" name="safe_space" value="true" required> Yes</label><label><input type="radio" name="safe_space" value="false"> No</label></div></fieldset>
+        <fieldset><legend>Are you planning to attempt the transition in the next 14 days?</legend><div class="yes-no"><label><input type="radio" name="transition_next_14_days" value="true" required> Yes</label><label><input type="radio" name="transition_next_14_days" value="false"> No</label></div></fieldset>
+        <fieldset><legend>Can you complete check-ins on Day 0, 1, 3, 7, and 14?</legend><div class="yes-no"><label><input type="radio" name="follow_up_available" value="true" required> Yes</label><label><input type="radio" name="follow_up_available" value="false"> No</label></div></fieldset>
+        <fieldset><legend>Are you seeking help here for a diagnosed medical, developmental, or psychiatric condition?</legend><div class="yes-no"><label><input type="radio" name="medical_scope_request" value="true" required> Yes</label><label><input type="radio" name="medical_scope_request" value="false"> No</label></div></fieldset>
+
+        <p class="form-status" data-screen-status role="status"></p>
+        <button class="primary-button" type="submit">Check pilot eligibility <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <section class="flow-card" aria-labelledby="consent-title" data-consent-section hidden>
+      <div class="section-heading"><span>2</span><div><p class="eyebrow">Eligible for Cohort 001</p><h2 id="consent-title">Parent consent</h2></div></div>
+      <div class="consent-copy">
+        <p>MyNest is an experimental room-transition service, not medical treatment. Participation is voluntary and you may stop at any time.</p>
+        <p>We store only structured anonymous pilot data. We do not require names, contact details, photos, an exact date of birth, or free-text child information. Aggregated anonymous results may be used to improve or describe the pilot. No identifiable story will be published without separate explicit permission.</p>
+      </div>
+      <form data-consent-form>
+        <label class="consent-check"><input type="checkbox" name="pilot_consent" required><span>I am the parent or caregiver, I understand the points above, and I voluntarily consent to join MyNest Pilot Cohort 001.</span></label>
+        <p class="form-status" data-consent-status role="status"></p>
+        <button class="primary-button" type="submit">Consent and reserve our place <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <section class="flow-card" aria-labelledby="day0-title" data-day0-section hidden>
+      <div class="section-heading"><span>3</span><div><p class="eyebrow">Previous seven nights</p><h2 id="day0-title">Day 0 baseline</h2></div></div>
+      <p>Use structured answers only. This gives the pilot a starting point before diagnosis or child choice.</p>
+      <form data-day0-form>
+        <div class="two-col">
+          <label>Own-room nights in the last 7<input type="number" name="own_room_nights_last_7" min="0" max="7" required></label>
+          <label>Parent-room nights in the last 7<input type="number" name="parent_room_nights_last_7" min="0" max="7" required></label>
+        </div>
+        <label>Parent present until sleep?<select name="parent_present_until_sleep" required><option value="">Choose one</option><option value="always">Always</option><option value="sometimes">Sometimes</option><option value="no">No</option></select></label>
+        <label>Night returns to the parent?<select name="night_returns_to_parent" required><option value="">Choose one</option><option value="never">Never</option><option value="once">Once on a typical night</option><option value="multiple">Multiple times</option></select></label>
+        <label>Room-entry resistance?<select name="room_entry_resistance" required><option value="">Choose one</option><option value="yes">Willing entry</option><option value="with_resistance">Enters with resistance/support</option><option value="no">Refuses entry</option></select></label>
+        <label>Current night light?<select name="current_night_light" required><option value="">Choose one</option><option value="none">None</option><option value="dim">Dim</option><option value="bright">Bright</option></select></label>
+        <label>Current sound?<select name="current_sound" required><option value="">Choose one</option><option value="quiet">Quiet</option><option value="steady">Steady sound</option><option value="variable">Variable/noisy</option></select></label>
+        <label>Previous transition attempt?<select name="previous_transition_attempt" required><option value="">Choose one</option><option value="none">None</option><option value="once">One prior attempt</option><option value="multiple">Multiple prior attempts</option></select></label>
+        <p class="form-status" data-day0-status role="status"></p>
+        <button class="primary-button" type="submit">Start Day 0 <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <section class="result-card" data-result-section hidden>
+      <p class="eyebrow">Pilot active</p>
+      <h2 data-result-title>Your place is reserved.</h2>
+      <p data-result-copy></p>
+      <dl><div><dt>Pilot ID</dt><dd data-pilot-id>—</dd></div><div><dt>Group</dt><dd data-group>—</dd></div><div><dt>Status</dt><dd>PILOT_ACTIVE</dd></div></dl>
+      <a class="primary-button" data-continue-link href="../">Continue to MyNest <span aria-hidden="true">→</span></a>
+      <p class="small-print">Keep your anonymous pilot ID on this device. It is not derived from a name, email, phone number, address, or birthday.</p>
+    </section>
+
+    <section class="result-card muted" data-ineligible-section hidden>
+      <p class="eyebrow">Screener result</p>
+      <h2 data-ineligible-title>This cohort is not the right next step.</h2>
+      <p data-ineligible-copy></p>
+      <a href="../">Use the public MyNest room-transition guide</a>
+    </section>
+  </main>
+
+  <footer><p>MyNest is not sleep therapy or medical treatment. Never use locked doors, forced isolation, punishment, or coercive confinement.</p></footer>
+  <script src="recruit.js?v=20261005" defer></script>
+</body>
+</html>

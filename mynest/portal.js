@@ -89,6 +89,14 @@
     state.updatedAt = new Date().toISOString();
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
   };
+  const recruitmentParams = new URLSearchParams(window.location.search);
+  const recruitmentGroup = recruitmentParams.get("group");
+  const recruitmentPilotId = recruitmentParams.get("pilot");
+  if (["A", "B", "C"].includes(recruitmentGroup) && /^P-[A-Z0-9]{4}$/.test(recruitmentPilotId || "")) {
+    state.recruitmentGroup = recruitmentGroup;
+    state.recruitmentPilotId = recruitmentPilotId;
+    saveState();
+  }
 
   function structuredSnapshot(extra = {}) {
     return {
@@ -223,14 +231,15 @@
 
   function renderPlan() {
     const plan = problemPlans[state.diagnosis.problem] || problemPlans.F06;
-    const theme = themeNames[state.choice.theme] || "Chosen room";
+    const diagnosisOnly = state.recruitmentGroup === "A";
+    const theme = diagnosisOnly ? "Diagnosis only" : (themeNames[state.choice.theme] || "Chosen room");
     document.querySelector("[data-theme-name]").textContent = theme;
     document.querySelector("[data-plan-badge]").textContent = theme;
     document.querySelector("[data-plan-intro]").textContent = plan.intro;
     document.querySelector("[data-plan-cards]").innerHTML = plan.cards.map(([number, title, copy]) => `
       <article class="plan-card"><span>${number}</span><h3>${title}</h3><p>${copy}</p></article>
     `).join("");
-    const tiny = String(state.choice.tinyChoice || "").trim();
+    const tiny = diagnosisOnly ? "" : String(state.choice.tinyChoice || "").trim();
     document.querySelector("[data-parent-script]").textContent = tiny ? `${plan.script} We made a place for ${tiny}, just like you chose.` : plan.script;
   }
 
@@ -370,7 +379,7 @@
     showError("diagnosis", "");
     state.diagnosis = formObject(event.currentTarget);
     queuePilotEvent("diagnosis_saved");
-    renderStep(2);
+    renderStep(state.recruitmentGroup === "A" ? 3 : 2);
   });
 
   document.querySelector("[data-theme-form]").addEventListener("submit", (event) => {
@@ -416,6 +425,13 @@
   hydrateForm(document.querySelector("[data-theme-form]"), state.choice);
   hydrateForm(document.querySelector("[data-prepare-form]"), { ready: state.ready });
   hydrateForm(document.querySelector("[data-first-night-form]"), state.firstNight);
+
+  if (state.recruitmentGroup === "A") {
+    const choiceNav = document.querySelector('[data-step-nav="2"]');
+    if (choiceNav) choiceNav.hidden = true;
+    const planBack = document.querySelector('[data-step="3"] [data-back]');
+    if (planBack) planBack.dataset.back = "1";
+  }
 
   if (state.diagnosis?.sharing === "pilot") flushPilotEvents();
   else syncStatus("Progress saved on this device");

@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import worker, { PROHIBITED_FIELDS, resetRateLimitForTests } from "../src/index.js";
+import worker, {
+  PROHIBITED_FIELDS,
+  eligibilityForScreen,
+  resetRateLimitForTests,
+  validateRecruitment
+} from "../src/index.js";
 
 const ORIGIN = "https://www.springofzen.com";
 const ENDPOINT = `${ORIGIN}/api/mynest/pilot-events`;
@@ -53,6 +58,38 @@ function request(body, init = {}) {
     headers: { Origin: ORIGIN, "Content-Type": "application/json", ...headers },
     body: typeof body === "string" ? body : JSON.stringify(body),
   });
+}
+
+function validRecruitment(action = "screen", payload = {}) {
+  const defaults = action === "screen" ? {
+    age_band: "4-5",
+    sleep_location: "parent_bed",
+    transition_goal: "co_sleeping_to_own_room",
+    safe_space: true,
+    transition_next_14_days: true,
+    follow_up_available: true,
+    medical_scope_request: false
+  } : action === "consent" ? {
+    pilot_consent: true,
+    consent_version: "MYNEST_CONSENT_v0.1"
+  } : {
+    own_room_nights_last_7: 0,
+    parent_room_nights_last_7: 7,
+    parent_present_until_sleep: "always",
+    night_returns_to_parent: "multiple",
+    room_entry_resistance: "with_resistance",
+    current_night_light: "dim",
+    current_sound: "quiet",
+    previous_transition_attempt: "once"
+  };
+  return {
+    client_event_id: "8cf2ea61-57d3-4cd6-a023-b9b16cb4bdc8",
+    action,
+    household_id: "H-A1B2",
+    child_id: "C-C3D4",
+    pilot_id: "P-E5F6",
+    payload: { ...defaults, ...payload }
+  };
 }
 
 test.beforeEach(() => resetRateLimitForTests());
@@ -116,4 +153,34 @@ test("invalid JSON, content type, origin, and oversized body are rejected", asyn
   assert.equal((await worker.fetch(badOrigin, { MYNEST_DB: new FakeD1() })).status, 403);
   const tooLarge = request(JSON.stringify({ padding: "x".repeat(5000) }));
   assert.equal((await worker.fetch(tooLarge, { MYNEST_DB: new FakeD1() })).status, 413);
+});
+
+test("recruitment validation accepts structured screen, consent, and Day 0 payloads", () => {
+  assert.equal(validateRecruitment(validRecruitment("screen")).ok, true);
+  assert.equal(validateRecruitment(validRecruitment("consent")).ok, true);
+  assert.equal(validateRecruitment(validRecruitment("day0")).ok, true);
+});
+
+test("recruitment eligibility follows the frozen decision order", () => {
+  const base = validRecruitment("screen").payload;
+  assert.equal(eligibilityForScreen(base), "ELIGIBLE");
+  assert.equal(eligibilityForScreen({ ...base, age_band: "under-2.5" }), "NOT_CURRENT_COHORT");
+  assert.equal(eligibilityForScreen({ ...base, age_band: "over-6" }), "OUTSIDE_V0.1");
+  assert.equal(eligibilityForScreen({ ...base, safe_space: false }), "HOLD");
+  assert.equal(eligibilityForScreen({ ...base, transition_next_14_days: false }), "WAITLIST");
+  assert.equal(eligibilityForScreen({ ...base, follow_up_available: false }), "CONTENT_ONLY");
+  assert.equal(eligibilityForScreen({ ...base, medical_scope_request: true }), "OUT_OF_SCOPE");
+});
+
+test("recruitment rejects free text, unknown fields, bad consent, and invalid counts", () => {
+  const withNotes = validRecruitment("screen");
+  withNotes.payload.notes = "synthetic";
+  assert.equal(validateRecruitment(withNotes).code, "PROHIBITED_FIELD");
+
+  const unknown = validRecruitment("screen");
+  unknown.payload.surprise = true;
+  assert.equal(validateRecruitment(unknown).code, "UNKNOWN_FIELD");
+
+  assert.equal(validateRecruitment(validRecruitment("consent", { pilot_consent: false })).code, "CONSENT_REQUIRED");
+  assert.equal(validateRecruitment(validRecruitment("day0", { own_room_nights_last_7: 8 })).code, "INVALID_BASELINE_COUNT");
 });
