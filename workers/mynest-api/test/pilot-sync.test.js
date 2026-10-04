@@ -14,7 +14,8 @@ function eventFixture() {
     payload: {
       age_band: "4",
       problem_code: "F03",
-      theme: "space",
+      theme: null,
+      child_choice: "room_friend",
       own_room_nights: 0,
       verified_transition: false,
       notes: "must not leave browser",
@@ -31,6 +32,7 @@ test("normalization upgrades legacy event_id and strips free text", () => {
   assert.equal("notes" in normalized, false);
   assert.equal("notes" in normalized.payload, false);
   assert.equal("child_selected_text" in normalized.payload, false);
+  assert.equal(normalized.payload.child_choice, "room_friend");
 });
 
 test("queue delivery semantics distinguish success, permanent rejection, and retry", () => {

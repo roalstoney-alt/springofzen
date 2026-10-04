@@ -5,6 +5,7 @@
     "age_band",
     "problem_code",
     "theme",
+    "child_choice",
     "room_entry_willingness",
     "own_room_result",
     "own_room_nights",

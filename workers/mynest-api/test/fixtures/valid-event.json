@@ -8,6 +8,7 @@
     "age_band": "4",
     "problem_code": "F03",
     "theme": "space",
+    "child_choice": null,
     "room_entry_willingness": "easy",
     "own_room_result": "full",
     "own_room_nights": 2,

@@ -12,7 +12,7 @@ field before inserting into the `mynest-pilot` D1 database. No database
 credentials are exposed to the browser.
 
 The portal sends structured fields only:
-pilot code, age band, problem class, theme, room-entry signal, sleep result,
+pilot code, age band, problem class, structured child choice, room-entry signal, sleep result,
 checkpoint day, success count, and verified-transition signal. Optional notes
 and child-selected item text never leave the browser.
 

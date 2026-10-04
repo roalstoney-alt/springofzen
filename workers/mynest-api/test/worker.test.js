@@ -21,6 +21,7 @@ function validEvent(overrides = {}) {
       age_band: "4",
       problem_code: "F03",
       theme: "space",
+      child_choice: null,
       room_entry_willingness: "easy",
       own_room_result: "full",
       own_room_nights: 1,
@@ -130,6 +131,23 @@ test("unknown fields are rejected", async () => {
   const response = await worker.fetch(request(validEvent({ surprise: true })), { MYNEST_DB: new FakeD1() });
   assert.equal(response.status, 400);
   assert.equal((await response.json()).error, "UNKNOWN_FIELD");
+});
+
+test("frozen Child Choice values are accepted and arbitrary choices are rejected", () => {
+  const choiceEvent = validEvent({
+    event_type: "theme_chosen",
+    step: 2,
+    payload: { ...validEvent().payload, theme: null, child_choice: "light" }
+  });
+  assert.equal(validateRecruitment(validRecruitment("screen")).ok, true);
+  return Promise.all([
+    worker.fetch(request(choiceEvent), { MYNEST_DB: new FakeD1() }).then((response) => assert.equal(response.status, 200)),
+    worker.fetch(request({ ...choiceEvent, payload: { ...choiceEvent.payload, child_choice: "spaceship" } }), { MYNEST_DB: new FakeD1() })
+      .then(async (response) => {
+        assert.equal(response.status, 400);
+        assert.equal((await response.json()).error, "INVALID_CHILD_CHOICE");
+      })
+  ]);
 });
 
 test("all prohibited fields are rejected at both privacy boundaries", async () => {

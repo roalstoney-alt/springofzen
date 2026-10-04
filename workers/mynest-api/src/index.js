@@ -50,6 +50,7 @@ export const PAYLOAD_FIELDS = new Set([
   "age_band",
   "problem_code",
   "theme",
+  "child_choice",
   "room_entry_willingness",
   "own_room_result",
   "own_room_nights",
@@ -63,6 +64,7 @@ export const PAYLOAD_FIELDS = new Set([
 const AGE_BANDS = new Set(["2.5–3", "4", "5", "6"]);
 const PROBLEM_CODES = new Set(["F01", "F02", "F03", "F04", "F05", "F06"]);
 const THEMES = new Set(["space", "forest", "ocean"]);
+const CHILD_CHOICES = new Set(["light", "story_sound", "room_friend"]);
 const WILLINGNESS = new Set(["easy", "support", "no"]);
 const RESULTS = new Set(["full", "part", "attempt", "none"]);
 const CHECKPOINT_DAYS = new Set([1, 3, 7, 14]);
@@ -195,6 +197,7 @@ export function validateEvent(input) {
     age_band: input.payload.age_band ?? null,
     problem_code: input.payload.problem_code ?? null,
     theme: input.payload.theme ?? null,
+    child_choice: input.payload.child_choice ?? null,
     room_entry_willingness: input.payload.room_entry_willingness ?? null,
     own_room_result: input.payload.own_room_result ?? null,
     own_room_nights: input.payload.own_room_nights,
@@ -208,6 +211,7 @@ export function validateEvent(input) {
   if (!optionalEnum(payload.age_band, AGE_BANDS)) return { ok: false, code: "INVALID_AGE_BAND", message: "age_band is invalid." };
   if (!optionalEnum(payload.problem_code, PROBLEM_CODES)) return { ok: false, code: "INVALID_PROBLEM_CODE", message: "problem_code is invalid." };
   if (!optionalEnum(payload.theme, THEMES)) return { ok: false, code: "INVALID_THEME", message: "theme is invalid." };
+  if (!optionalEnum(payload.child_choice, CHILD_CHOICES)) return { ok: false, code: "INVALID_CHILD_CHOICE", message: "child_choice is invalid." };
   if (!optionalEnum(payload.room_entry_willingness, WILLINGNESS)) return { ok: false, code: "INVALID_WILLINGNESS", message: "room_entry_willingness is invalid." };
   if (!optionalEnum(payload.own_room_result, RESULTS)) return { ok: false, code: "INVALID_RESULT", message: "own_room_result is invalid." };
   if (!Number.isInteger(payload.own_room_nights) || payload.own_room_nights < 0 || payload.own_room_nights > 5) return { ok: false, code: "INVALID_NIGHT_COUNT", message: "own_room_nights must be an integer from 0 to 5." };
@@ -218,7 +222,7 @@ export function validateEvent(input) {
   if (!optionalEnum(payload.checkpoint_result, RESULTS)) return { ok: false, code: "INVALID_CHECKPOINT_RESULT", message: "checkpoint_result is invalid." };
 
   if (input.event_type === "diagnosis_saved" && (!payload.age_band || !payload.problem_code)) return { ok: false, code: "INCOMPLETE_DIAGNOSIS", message: "Diagnosis event requires age_band and problem_code." };
-  if (input.event_type === "theme_chosen" && !payload.theme) return { ok: false, code: "INCOMPLETE_THEME", message: "Theme event requires theme." };
+  if (input.event_type === "theme_chosen" && !payload.theme && !payload.child_choice) return { ok: false, code: "INCOMPLETE_CHOICE", message: "Child Choice event requires child_choice." };
   if (input.event_type === "plan_prepared" && payload.readiness_confirmed !== true) return { ok: false, code: "INCOMPLETE_READINESS", message: "Prepared event requires readiness confirmation." };
   if (input.event_type === "first_night_saved" && (!payload.room_entry_willingness || !payload.own_room_result)) return { ok: false, code: "INCOMPLETE_FIRST_NIGHT", message: "First-night event requires room entry and result." };
   if (input.event_type === "checkpoint_saved" && (!payload.checkpoint_day || !payload.checkpoint_willingness || !payload.checkpoint_result)) return { ok: false, code: "INCOMPLETE_CHECKPOINT", message: "Checkpoint event is incomplete." };
@@ -295,10 +299,10 @@ async function insertEvent(env, event) {
   const statement = env.MYNEST_DB.prepare(`
     INSERT INTO mynest_pilot_events (
       id, client_event_id, household_id, event_type, step, client_created_at,
-      age_band, problem_code, theme, room_entry_willingness, own_room_result,
+      age_band, problem_code, theme, child_choice, room_entry_willingness, own_room_result,
       own_room_nights, verified_transition, readiness_confirmed, checkpoint_day,
       checkpoint_willingness, checkpoint_result, created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(client_event_id) DO UPDATE SET client_event_id = excluded.client_event_id
     RETURNING id
   `).bind(
@@ -311,6 +315,7 @@ async function insertEvent(env, event) {
     payload.age_band,
     payload.problem_code,
     payload.theme,
+    payload.child_choice,
     payload.room_entry_willingness,
     payload.own_room_result,
     payload.own_room_nights,

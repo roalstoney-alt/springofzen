@@ -31,7 +31,7 @@
         ["2", "Name the room", "Let them give the room or tonight’s mission a name. Use it during the bedtime routine."],
         ["3", "Give one small job", "Ask them to tuck in a toy, switch on the safe light, or choose the final book."],
       ],
-      script: "You helped make this room yours. You chose the world, the special thing, and tonight’s last job. I can’t wait to hear what your room felt like in the morning."
+      script: "You helped make this room yours. You chose one thing for tonight, and I kept it safe and ready. I can’t wait to hear what your room felt like in the morning."
     },
     F04: {
       intro: "Remove one source of physical friction before asking for a bigger behavior change.",
@@ -62,7 +62,12 @@
     }
   };
 
-  const themeNames = { space: "Space", forest: "Forest", ocean: "Ocean" };
+  const choiceNames = { light: "Light", story_sound: "Story or sound", room_friend: "Room friend" };
+  const choiceGuidance = {
+    light: "Your child chooses the light style. You control brightness, placement, color temperature, flashing, electrical safety, and how long it stays on.",
+    story_sound: "Your child chooses what to hear. You control volume, device placement, duration, and whether silence is the safest choice.",
+    room_friend: "Your child chooses a room friend from approved options. You control age suitability, placement, and physical safety."
+  };
   const resultLabels = { full: "all night", part: "part of the night", attempt: "room entry", none: "no attempt" };
   const willingnessLabels = { easy: "easy entry", support: "entry with support", no: "not willing yet" };
 
@@ -102,7 +107,8 @@
     return {
       age_band: state.diagnosis?.age || null,
       problem_code: state.diagnosis?.problem || null,
-      theme: state.choice?.theme || null,
+      theme: null,
+      child_choice: state.choice?.childChoice || null,
       room_entry_willingness: state.firstNight?.willingness || null,
       own_room_result: state.firstNight?.result || null,
       own_room_nights: completedNights(),
@@ -232,15 +238,15 @@
   function renderPlan() {
     const plan = problemPlans[state.diagnosis.problem] || problemPlans.F06;
     const diagnosisOnly = state.recruitmentGroup === "A";
-    const theme = diagnosisOnly ? "Diagnosis only" : (themeNames[state.choice.theme] || "Chosen room");
-    document.querySelector("[data-theme-name]").textContent = theme;
-    document.querySelector("[data-plan-badge]").textContent = theme;
-    document.querySelector("[data-plan-intro]").textContent = plan.intro;
+    const choiceKey = state.choice.childChoice;
+    const choice = diagnosisOnly ? "Diagnosis only" : (choiceNames[choiceKey] || "One choice");
+    document.querySelector("[data-choice-name]").textContent = choice;
+    document.querySelector("[data-plan-badge]").textContent = choice;
+    document.querySelector("[data-plan-intro]").textContent = diagnosisOnly ? plan.intro : `${choiceGuidance[choiceKey] || "Keep the choice small and parent-approved."} ${plan.intro}`;
     document.querySelector("[data-plan-cards]").innerHTML = plan.cards.map(([number, title, copy]) => `
       <article class="plan-card"><span>${number}</span><h3>${title}</h3><p>${copy}</p></article>
     `).join("");
-    const tiny = diagnosisOnly ? "" : String(state.choice.tinyChoice || "").trim();
-    document.querySelector("[data-parent-script]").textContent = tiny ? `${plan.script} We made a place for ${tiny}, just like you chose.` : plan.script;
+    document.querySelector("[data-parent-script]").textContent = diagnosisOnly ? plan.script : `${plan.script} You chose the ${choice.toLowerCase()}, and I made sure it is ready for tonight.`;
   }
 
   function completedNights() {
@@ -297,10 +303,10 @@
   function renderFollowup() {
     const total = completedNights();
     const verified = hasVerifiedTransition();
-    const theme = themeNames[state.choice.theme] || "room";
+    const choice = choiceNames[state.choice.childChoice] || "No child choice";
     document.querySelector("[data-success-count]").textContent = total;
     document.querySelector("[data-summary-strip]").innerHTML = `
-      <span>${theme} theme</span>
+      <span>${choice}</span>
       <span>Age ${state.diagnosis.age || "—"}</span>
       <span>First night: ${resultLabels[state.firstNight?.result] || "not logged"}</span>
       <span>${Object.keys(state.checkpoints || {}).length}/4 checkpoints</span>
@@ -330,7 +336,7 @@
     const lines = [
       `MyNest pilot ${state.householdId}`,
       `Age band: ${state.diagnosis.age || "not set"}`,
-      `Theme: ${themeNames[state.choice.theme] || "not set"}`,
+      `Child choice: ${choiceNames[state.choice.childChoice] || "not set"}`,
       `First night: ${resultLabels[state.firstNight?.result] || "not logged"} / ${willingnessLabels[state.firstNight?.willingness] || "entry not logged"}`,
       ...CHECKPOINTS.map((day) => `Day ${day}: ${checkpointStateText(state.checkpoints?.[day])}`),
       `Own-room nights logged: ${completedNights()}`,
@@ -382,13 +388,13 @@
     renderStep(state.recruitmentGroup === "A" ? 3 : 2);
   });
 
-  document.querySelector("[data-theme-form]").addEventListener("submit", (event) => {
+  document.querySelector("[data-choice-form]").addEventListener("submit", (event) => {
     event.preventDefault();
     if (!event.currentTarget.reportValidity()) {
-      showError("theme", "Invite your child to choose one room world.");
+      showError("choice", "Invite your child to choose one approved light, sound/story, or room friend category.");
       return;
     }
-    showError("theme", "");
+    showError("choice", "");
     state.choice = formObject(event.currentTarget);
     queuePilotEvent("theme_chosen");
     renderStep(3);
@@ -422,7 +428,7 @@
 
   document.querySelector("[data-household-id]").textContent = state.householdId;
   hydrateForm(document.querySelector("[data-diagnosis-form]"), state.diagnosis);
-  hydrateForm(document.querySelector("[data-theme-form]"), state.choice);
+  hydrateForm(document.querySelector("[data-choice-form]"), state.choice);
   hydrateForm(document.querySelector("[data-prepare-form]"), { ready: state.ready });
   hydrateForm(document.querySelector("[data-first-night-form]"), state.firstNight);
 

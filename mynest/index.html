@@ -30,7 +30,7 @@
       <div class="hero-copy">
         <p class="eyebrow">A first-room transition for ages 2½–6</p>
         <h1>Their room.<br><em>Chosen together.</em></h1>
-        <p class="hero-lede">Turn bedtime resistance into one small, shared experiment. Your child chooses the world; you shape a calm, predictable path into it.</p>
+        <p class="hero-lede">Turn bedtime resistance into one small, shared experiment. Your child chooses one approved element; you shape a calm, predictable path around it.</p>
         <div class="hero-actions">
           <button class="primary-button" type="button" data-start>Build our first-night plan <span aria-hidden="true">→</span></button>
           <a class="pilot-link" href="recruit/">Join the 14-day pilot</a>
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div class="room-illustration" aria-label="An illustrated child’s room changing between space, forest, and ocean themes">
+      <div class="room-illustration" aria-label="An illustrated child’s room with a low light, a bedtime story, and a room friend">
         <div class="room-sky">
           <span class="star star-a"></span><span class="star star-b"></span><span class="star star-c"></span>
           <span class="moon"></span>
@@ -151,11 +151,11 @@
                   <span><strong>Keep it on this device</strong><small>No progress leaves this browser.</small></span>
                 </label>
               </div>
-              <p class="sharing-disclosure">Shared: pilot code, age band, barrier category, theme, room entry, and sleep outcome. Not shared: names, contact details, or free-text notes.</p>
+              <p class="sharing-disclosure">Shared: pilot code, age band, barrier category, one structured child choice, room entry, and sleep outcome. Not shared: names, contact details, or free-text notes.</p>
             </fieldset>
             <div class="form-footer">
               <p class="form-error" data-error="diagnosis" aria-live="polite"></p>
-              <button class="primary-button" type="submit">Let them choose a world <span aria-hidden="true">→</span></button>
+              <button class="primary-button" type="submit">Let them choose one thing <span aria-hidden="true">→</span></button>
             </div>
           </form>
         </section>
@@ -163,38 +163,34 @@
         <section class="step-panel" data-step="2" aria-labelledby="step2-title" hidden>
           <div class="step-intro">
             <p class="step-count">Step 2 of 5 · Child choice</p>
-            <h2 id="step2-title">Which world should their room become?</h2>
-            <p>Invite your child over for this part. Their choice is the first small act of room ownership.</p>
+            <h2 id="step2-title">What is the one thing they want to choose?</h2>
+            <p>Invite your child over. They choose one approved element; you keep control of safety, brightness, placement, volume, and timing.</p>
           </div>
-          <form data-theme-form>
+          <form data-choice-form>
             <fieldset>
-              <legend class="sr-only">Choose a room theme</legend>
+              <legend class="sr-only">Choose one room-transition element</legend>
               <div class="theme-grid">
-                <label class="theme-card theme-space">
-                  <input type="radio" name="theme" value="space" required>
-                  <span class="theme-art" aria-hidden="true"><i class="planet"></i><i class="rocket">▲</i><i class="orbit"></i></span>
-                  <span class="theme-copy"><strong>Space</strong><small>A brave little mission</small><em>Choose Space</em></span>
+                <label class="theme-card choice-light">
+                  <input type="radio" name="childChoice" value="light" required>
+                  <span class="theme-art" aria-hidden="true"><i class="choice-moon">☾</i><i class="choice-glow"></i></span>
+                  <span class="theme-copy"><strong>Choose a light</strong><small>A soft moon light, star light, warm wall light, or low bedside glow</small><em>Choose Light</em></span>
                 </label>
-                <label class="theme-card theme-forest">
-                  <input type="radio" name="theme" value="forest">
-                  <span class="theme-art" aria-hidden="true"><i class="tree one"></i><i class="tree two"></i><i class="firefly"></i></span>
-                  <span class="theme-copy"><strong>Forest</strong><small>A soft, sheltered den</small><em>Choose Forest</em></span>
+                <label class="theme-card choice-sound">
+                  <input type="radio" name="childChoice" value="story_sound">
+                  <span class="theme-art" aria-hidden="true"><i class="choice-book">⌁</i><i class="choice-wave">♪</i></span>
+                  <span class="theme-copy"><strong>Choose what to hear</strong><small>A bedtime story, parent recording, soft music, rain, ocean, or silence</small><em>Choose Story or Sound</em></span>
                 </label>
-                <label class="theme-card theme-ocean">
-                  <input type="radio" name="theme" value="ocean">
-                  <span class="theme-art" aria-hidden="true"><i class="fish">◆</i><i class="bubble one"></i><i class="bubble two"></i></span>
-                  <span class="theme-copy"><strong>Ocean</strong><small>A calm blue night</small><em>Choose Ocean</em></span>
+                <label class="theme-card choice-friend">
+                  <input type="radio" name="childChoice" value="room_friend">
+                  <span class="theme-art" aria-hidden="true"><i class="choice-friend-face">•ᴗ•</i></span>
+                  <span class="theme-copy"><strong>Choose a room friend</strong><small>A bear, rabbit, whale, astronaut, dinosaur, or another approved comfort object</small><em>Choose Room Friend</em></span>
                 </label>
               </div>
             </fieldset>
-            <div class="tiny-choice">
-              <label for="tinyChoice">One tiny thing they want in the room <span>optional</span></label>
-              <input id="tinyChoice" name="tinyChoice" maxlength="60" placeholder="e.g. my rabbit, a star light, the blue blanket">
-            </div>
             <div class="form-footer split">
               <button class="back-button" type="button" data-back="1">← Back</button>
               <div>
-                <p class="form-error" data-error="theme" aria-live="polite"></p>
+                <p class="form-error" data-error="choice" aria-live="polite"></p>
                 <button class="primary-button" type="submit">Make our plan <span aria-hidden="true">→</span></button>
               </div>
             </div>
@@ -205,10 +201,10 @@
           <div class="step-intro plan-heading">
             <div>
               <p class="step-count">Step 3 of 5 · Your tailored plan</p>
-              <h2 id="step3-title">Tonight’s <span data-theme-name>room</span> mission</h2>
+              <h2 id="step3-title">Tonight’s <span data-choice-name>one-choice</span> mission</h2>
               <p data-plan-intro>Three small actions make the new room feel safe, chosen, and predictable.</p>
             </div>
-            <span class="plan-badge" data-plan-badge>Space</span>
+            <span class="plan-badge" data-plan-badge>One choice</span>
           </div>
 
           <div class="plan-grid" data-plan-cards></div>

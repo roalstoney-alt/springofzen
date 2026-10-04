@@ -343,6 +343,19 @@ legend { margin-bottom: 15px; font-weight: 700; }
 .fish { position: absolute; z-index: 2; right: 64px; top: 88px; color: #f5bb76; font-size: 45px; font-style: normal; transform: scaleX(1.5); }
 .fish::after { content: "◀"; position: absolute; right: -24px; top: 9px; font-size: 27px; color: #e99b68; }
 .bubble { position: absolute; border: 2px solid rgba(255,255,255,.55); border-radius: 50%; }.bubble.one { left: 55px; top: 65px; width: 22px; height: 22px; }.bubble.two { left: 86px; top: 102px; width: 12px; height: 12px; }
+.choice-light .theme-art { background: radial-gradient(circle at 50% 48%, #fff4bb 0 13%, #8ca0c9 14% 28%, #34456e 62%, #18233f); }
+.choice-light .theme-art::after { background: #2b385e; }
+.choice-moon { position: absolute; z-index: 2; left: 50%; top: 44%; transform: translate(-50%, -50%); color: #fff5c7; font: 96px/1 Georgia, serif; text-shadow: 0 0 34px rgba(255,244,187,.8); }
+.choice-glow { position: absolute; left: 50%; top: 45%; width: 155px; height: 155px; transform: translate(-50%, -50%); border-radius: 50%; box-shadow: 0 0 52px rgba(255,238,152,.55); }
+.choice-sound .theme-art { background: linear-gradient(150deg, #a5b8a5, #607b79 62%, #304c52); }
+.choice-sound .theme-art::after { background: #34565a; }
+.choice-book, .choice-wave { position: absolute; z-index: 2; color: #fff7df; text-shadow: 0 8px 20px rgba(20,40,45,.25); }
+.choice-book { left: 25%; top: 38%; font: 110px/1 Georgia, serif; transform: rotate(-8deg); }
+.choice-wave { right: 23%; top: 26%; font: 82px/1 Georgia, serif; }
+.choice-friend .theme-art { background: linear-gradient(#a8c9d4, #6f9eaa 58%, #3c6b78); }
+.choice-friend .theme-art::after { background: #356976; }
+.choice-friend-face { position: absolute; z-index: 2; left: 50%; top: 48%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 145px; height: 145px; border-radius: 48% 48% 44% 44%; color: #36475a; background: #f0d1a6; font: 42px/1 ui-rounded, system-ui, sans-serif; box-shadow: 0 18px 35px rgba(22,56,66,.25); }
+.choice-friend-face::before, .choice-friend-face::after { content: ""; position: absolute; top: -18px; width: 52px; height: 60px; border-radius: 50%; background: #f0d1a6; }.choice-friend-face::before { left: 2px; transform: rotate(-24deg); }.choice-friend-face::after { right: 2px; transform: rotate(24deg); }
 .theme-copy { position: relative; z-index: 5; display: grid; padding: 20px 22px 22px; background: var(--paper); }
 .theme-copy strong { font-family: "Fraunces", Georgia, serif; font-size: 28px; }
 .theme-copy small { color: var(--muted); }
