@@ -1,0 +1,407 @@
+{
+  "project": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1",
+  "generated_at": "2026-10-05",
+  "raw_problem_records": 111,
+  "canonical_questions": [
+    {
+      "id": "MYNEST-Q-01",
+      "slug": "child-wont-sleep-alone",
+      "canonical_question": "Why won't my child sleep alone?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 12,
+      "priority_score": 625,
+      "status": "PUBLISHED",
+      "publish_gate": {
+        "real_demand_examples": 12,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-02",
+      "slug": "child-refuses-own-room",
+      "canonical_question": "Why does my child refuse their own room?",
+      "primary_problem_code": "F03",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 19,
+      "priority_score": 500,
+      "status": "PUBLISHED",
+      "publish_gate": {
+        "real_demand_examples": 19,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-03",
+      "slug": "toddler-refuses-own-room",
+      "canonical_question": "Why does my toddler refuse their own room?",
+      "primary_problem_code": "F02",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 12,
+      "priority_score": 400,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 12,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-04",
+      "slug": "child-afraid-to-sleep-alone",
+      "canonical_question": "Why is my child afraid to sleep alone?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 4,
+      "priority_score": 400,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 4,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-05",
+      "slug": "child-afraid-of-dark-at-bedtime",
+      "canonical_question": "What should I do when my child is afraid of the dark at bedtime?",
+      "primary_problem_code": "F01",
+      "first_experiment": "LIGHT",
+      "demand_examples": 10,
+      "priority_score": 625,
+      "status": "PUBLISHED",
+      "publish_gate": {
+        "real_demand_examples": 10,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-06",
+      "slug": "child-keeps-coming-to-parents-bed",
+      "canonical_question": "Why does my child keep coming to the parents' bed?",
+      "primary_problem_code": "F02",
+      "first_experiment": "ROUTINE_ONLY",
+      "demand_examples": 6,
+      "priority_score": 625,
+      "status": "PUBLISHED",
+      "publish_gate": {
+        "real_demand_examples": 6,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-07",
+      "slug": "parent-must-stay-until-child-sleeps",
+      "canonical_question": "What can I do when I must stay until my child sleeps?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 10,
+      "priority_score": 500,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 10,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-08",
+      "slug": "transition-from-cosleeping-to-own-room",
+      "canonical_question": "How can we transition from co-sleeping to an own room?",
+      "primary_problem_code": "F05",
+      "first_experiment": "ROUTINE_ONLY",
+      "demand_examples": 10,
+      "priority_score": 625,
+      "status": "PUBLISHED",
+      "publish_gate": {
+        "real_demand_examples": 10,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-09",
+      "slug": "child-has-own-room-but-wont-sleep-there",
+      "canonical_question": "Why won't my child sleep in a room they already have?",
+      "primary_problem_code": "F03",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 7,
+      "priority_score": 320,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 7,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-10",
+      "slug": "child-sleeps-alone-elsewhere-but-not-home",
+      "canonical_question": "Why does my child sleep alone elsewhere but not at home?",
+      "primary_problem_code": "F06",
+      "first_experiment": "NO_ROOM_INTERVENTION",
+      "demand_examples": 0,
+      "priority_score": 240,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-11",
+      "slug": "three-year-old-wont-sleep-alone",
+      "canonical_question": "Why won't my three-year-old sleep alone?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 5,
+      "priority_score": 320,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 5,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-12",
+      "slug": "four-year-old-wont-sleep-alone",
+      "canonical_question": "Why won't my four-year-old sleep alone?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 12,
+      "priority_score": 400,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 12,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-13",
+      "slug": "five-year-old-still-sleeps-with-parents",
+      "canonical_question": "Why does my five-year-old still sleep with us?",
+      "primary_problem_code": "F02",
+      "first_experiment": "ROUTINE_ONLY",
+      "demand_examples": 4,
+      "priority_score": 400,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 4,
+        "minimum_met": true,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-14",
+      "slug": "how-to-make-child-like-own-room",
+      "canonical_question": "How can I help my child like their own room?",
+      "primary_problem_code": "F03",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 0,
+      "priority_score": 320,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-15",
+      "slug": "first-night-in-own-room",
+      "canonical_question": "How should we prepare for the first night in an own room?",
+      "primary_problem_code": "F05",
+      "first_experiment": "ROUTINE_ONLY",
+      "demand_examples": 0,
+      "priority_score": 240,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-16",
+      "slug": "should-child-choose-bedroom-items",
+      "canonical_question": "Should a child choose something for their bedroom?",
+      "primary_problem_code": "F03",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 0,
+      "priority_score": 180,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-17",
+      "slug": "night-light-for-child-afraid-of-dark",
+      "canonical_question": "Should a child who fears the dark choose a night light?",
+      "primary_problem_code": "F01",
+      "first_experiment": "LIGHT",
+      "demand_examples": 0,
+      "priority_score": 240,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-18",
+      "slug": "bedtime-story-for-sleeping-alone",
+      "canonical_question": "Can a bedtime story support a sleeping-alone transition?",
+      "primary_problem_code": "F02",
+      "first_experiment": "STORY_OR_SOUND",
+      "demand_examples": 0,
+      "priority_score": 180,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-19",
+      "slug": "comfort-object-for-sleeping-alone",
+      "canonical_question": "Can a room friend support a sleeping-alone transition?",
+      "primary_problem_code": "F03",
+      "first_experiment": "ROOM_FRIEND",
+      "demand_examples": 0,
+      "priority_score": 180,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    },
+    {
+      "id": "MYNEST-Q-20",
+      "slug": "how-long-does-own-room-transition-take",
+      "canonical_question": "How long does an own-room transition take?",
+      "primary_problem_code": "F05",
+      "first_experiment": "ROUTINE_ONLY",
+      "demand_examples": 0,
+      "priority_score": 320,
+      "status": "HOLD",
+      "publish_gate": {
+        "real_demand_examples": 0,
+        "minimum_met": false,
+        "canonical_question_defined": true,
+        "duplicate_page": false,
+        "F01_F06_mapping_complete": true,
+        "first_experiment_defined": true,
+        "scope_boundary_present": true,
+        "CTA_exists": true
+      }
+    }
+  ]
+}

@@ -411,6 +411,8 @@ legend { margin-bottom: 15px; font-weight: 700; }
 footer { width: min(1220px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 36px; display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(23,36,63,.1); color: var(--muted); font-size: 12px; }
 footer p { margin: 0; }
 footer a { color: var(--ink); }
+.answer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem 1rem; max-width: 70rem; margin: .8rem auto; font-size: .78rem; }
+.answer-links a { color: inherit; text-underline-offset: .2em; }
 
 @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes twinkle { 50% { opacity: .35; transform: scale(.7); } }

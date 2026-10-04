@@ -1,0 +1,56 @@
+{
+  "project": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1",
+  "generated_at": "2026-10-05",
+  "external_posting": "DISABLED",
+  "policy": "Drafts require human review and platform-rule review before any manual publication.",
+  "drafts": [
+    {
+      "id": "SOC-001",
+      "platform": "Reddit",
+      "source_question": "child-wont-sleep-alone",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "draft": "A useful first distinction is when resistance starts: before entering, at lights-out, when the parent leaves, or after a later waking. Those moments point to different barriers. I would avoid changing the whole room at once; observe one moment, choose one small experiment, and keep the response consistent for several nights."
+    },
+    {
+      "id": "SOC-002",
+      "platform": "Quora",
+      "source_question": "child-refuses-own-room",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "draft": "A child can enjoy a room during the day and still resist sleeping there. That often means the barrier is not the decoration itself. Check whether the difficult moment is entering, lights-out, separation, or a night waking. Change one variable only so you can tell what actually helped."
+    },
+    {
+      "id": "SOC-003",
+      "platform": "Xiaohongshu",
+      "source_question": "child-refuses-own-room",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "draft": "儿童房已经布置好了，孩子为什么还是不肯自己睡？先别继续加东西。观察抗拒从什么时候开始：进房前、关灯时、父母离开时，还是半夜醒来后。一次只改一个变量，才知道真正的阻力在哪里。"
+    },
+    {
+      "id": "SOC-004",
+      "platform": "TikTok/Reels",
+      "source_question": "child-afraid-of-dark-at-bedtime",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "draft": "Your child may not fear the room. They may fear the exact moment the light changes—or the moment you leave. Before adding more lights, ask: when does the resistance begin? One answer. One experiment."
+    },
+    {
+      "id": "SOC-005",
+      "platform": "YouTube",
+      "source_question": "transition-from-cosleeping-to-own-room",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "outline": [
+        "Why changing everything at once hides the real barrier",
+        "Five moments to observe",
+        "What should stay familiar",
+        "One bounded Child Choice",
+        "How to record Day 1, 3, 7, and 14 without claiming success"
+      ]
+    },
+    {
+      "id": "SOC-006",
+      "platform": "Facebook parenting groups",
+      "source_question": "child-keeps-coming-to-parents-bed",
+      "status": "HUMAN_REVIEW_REQUIRED",
+      "draft": "When a child starts in their own bed but returns later, note the time, whether they are fully awake, and what they ask for. This can be a different problem from refusing the room at bedtime. A small, predictable response is easier to evaluate than changing the room and routine together."
+    }
+  ]
+}
