@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17243f">
+  <title>MyNest — Their room, chosen together</title>
+  <meta name="description" content="A gentle, parent-led first-room pilot for children ages 2.5–6, from Spring of Zen.">
+  <meta property="og:title" content="MyNest — Their room, chosen together">
+  <meta property="og:description" content="Build a gentle first-night plan and follow the transition for 14 days.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="portal.css?v=20261004">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the room plan</a>
+
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Spring of Zen home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><strong>MyNest</strong><small>from Spring of Zen</small></span>
+    </a>
+    <div class="header-actions">
+      <span class="pilot-chip">10-family pilot</span>
+      <button class="quiet-button" type="button" data-reset hidden>Start over</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" data-intro>
+      <div class="hero-copy">
+        <p class="eyebrow">A first-room transition for ages 2½–6</p>
+        <h1>Their room.<br><em>Chosen together.</em></h1>
+        <p class="hero-lede">Turn bedtime resistance into one small, shared experiment. Your child chooses the world; you shape a calm, predictable path into it.</p>
+        <div class="hero-actions">
+          <button class="primary-button" type="button" data-start>Build our first-night plan <span aria-hidden="true">→</span></button>
+          <span>About 4 minutes · no account needed</span>
+        </div>
+        <div class="trust-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3m-11 0h12v10H6z"/></svg>
+          <p><strong>Private by design.</strong> We do not ask for your child’s name, photo, email, or exact birth date. If you choose pilot sharing, only structured answers are sent—never your optional notes.</p>
+        </div>
+      </div>
+
+      <div class="room-illustration" aria-label="An illustrated child’s room changing between space, forest, and ocean themes">
+        <div class="room-sky">
+          <span class="star star-a"></span><span class="star star-b"></span><span class="star star-c"></span>
+          <span class="moon"></span>
+        </div>
+        <div class="window-scene"><span></span><i></i><i></i><i></i></div>
+        <div class="bed"><span class="pillow"></span><span class="blanket"></span></div>
+        <div class="night-light"><span></span></div>
+        <div class="soft-toy"><span></span><i></i><i></i></div>
+        <p>“I helped make this room mine.”</p>
+      </div>
+    </section>
+
+    <section class="journey" data-journey hidden>
+      <div class="journey-head">
+        <div>
+          <p class="eyebrow">Your family’s room experiment</p>
+          <h1>One gentle step at a time.</h1>
+        </div>
+        <div class="household-id" title="A random, non-identifying pilot code">
+          <span>Pilot code</span>
+          <strong data-household-id>—</strong>
+        </div>
+      </div>
+
+      <nav class="progress" aria-label="Pilot progress">
+        <button type="button" data-step-nav="1" aria-current="step"><span>1</span><b>Listen</b></button>
+        <i></i>
+        <button type="button" data-step-nav="2" disabled><span>2</span><b>Choose</b></button>
+        <i></i>
+        <button type="button" data-step-nav="3" disabled><span>3</span><b>Prepare</b></button>
+        <i></i>
+        <button type="button" data-step-nav="4" disabled><span>4</span><b>First night</b></button>
+        <i></i>
+        <button type="button" data-step-nav="5" disabled><span>5</span><b>Follow up</b></button>
+      </nav>
+
+      <div class="step-shell">
+        <section class="step-panel is-active" data-step="1" aria-labelledby="step1-title">
+          <div class="step-intro">
+            <p class="step-count">Step 1 of 5 · Parent check-in</p>
+            <h2 id="step1-title">What feels hardest right now?</h2>
+            <p>Choose the closest fit. There is no wrong answer, and you can change it later.</p>
+          </div>
+          <form data-diagnosis-form>
+            <fieldset class="age-fieldset">
+              <legend>How old is your child?</legend>
+              <div class="segmented">
+                <label><input type="radio" name="age" value="2.5–3" required><span>2½–3</span></label>
+                <label><input type="radio" name="age" value="4"><span>4</span></label>
+                <label><input type="radio" name="age" value="5"><span>5</span></label>
+                <label><input type="radio" name="age" value="6"><span>6</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>At bedtime, the biggest barrier is…</legend>
+              <div class="choice-list">
+                <label>
+                  <input type="radio" name="problem" value="F01" required>
+                  <span class="choice-icon darkness" aria-hidden="true">☾</span>
+                  <span><strong>The room feels too dark or scary</strong><small>Shadows, sounds, or imagined things feel big.</small></span>
+                  <i></i>
+                </label>
+                <label>
+                  <input type="radio" name="problem" value="F02">
+                  <span class="choice-icon separation" aria-hidden="true">∞</span>
+                  <span><strong>Being apart feels difficult</strong><small>They need a parent close to settle or stay asleep.</small></span>
+                  <i></i>
+                </label>
+                <label>
+                  <input type="radio" name="problem" value="F03">
+                  <span class="choice-icon ownership" aria-hidden="true">⌂</span>
+                  <span><strong>The room does not feel like theirs</strong><small>There is little excitement, choice, or ownership.</small></span>
+                  <i></i>
+                </label>
+                <label>
+                  <input type="radio" name="problem" value="F04">
+                  <span class="choice-icon friction" aria-hidden="true">◐</span>
+                  <span><strong>Something in the room gets in the way</strong><small>Temperature, noise, bedding, light, or layout feels off.</small></span>
+                  <i></i>
+                </label>
+                <label>
+                  <input type="radio" name="problem" value="F05">
+                  <span class="choice-icon routine" aria-hidden="true">↻</span>
+                  <span><strong>The bedtime rhythm keeps changing</strong><small>The steps or boundaries are hard to predict.</small></span>
+                  <i></i>
+                </label>
+                <label>
+                  <input type="radio" name="problem" value="F06">
+                  <span class="choice-icon unsure" aria-hidden="true">?</span>
+                  <span><strong>We are not sure yet</strong><small>It may not be about the room, or several things overlap.</small></span>
+                  <i></i>
+                </label>
+              </div>
+            </fieldset>
+            <fieldset class="sharing-fieldset">
+              <legend>How should this experiment be saved?</legend>
+              <div class="sharing-options">
+                <label>
+                  <input type="radio" name="sharing" value="pilot" required>
+                  <span><strong>Join the anonymous pilot</strong><small>Save on this device and share structured progress with the Spring of Zen pilot team.</small></span>
+                  <i>Recommended</i>
+                </label>
+                <label>
+                  <input type="radio" name="sharing" value="local">
+                  <span><strong>Keep it on this device</strong><small>No progress leaves this browser.</small></span>
+                </label>
+              </div>
+              <p class="sharing-disclosure">Shared: pilot code, age band, barrier category, theme, room entry, and sleep outcome. Not shared: names, contact details, or free-text notes.</p>
+            </fieldset>
+            <div class="form-footer">
+              <p class="form-error" data-error="diagnosis" aria-live="polite"></p>
+              <button class="primary-button" type="submit">Let them choose a world <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </section>
+
+        <section class="step-panel" data-step="2" aria-labelledby="step2-title" hidden>
+          <div class="step-intro">
+            <p class="step-count">Step 2 of 5 · Child choice</p>
+            <h2 id="step2-title">Which world should their room become?</h2>
+            <p>Invite your child over for this part. Their choice is the first small act of room ownership.</p>
+          </div>
+          <form data-theme-form>
+            <fieldset>
+              <legend class="sr-only">Choose a room theme</legend>
+              <div class="theme-grid">
+                <label class="theme-card theme-space">
+                  <input type="radio" name="theme" value="space" required>
+                  <span class="theme-art" aria-hidden="true"><i class="planet"></i><i class="rocket">▲</i><i class="orbit"></i></span>
+                  <span class="theme-copy"><strong>Space</strong><small>A brave little mission</small><em>Choose Space</em></span>
+                </label>
+                <label class="theme-card theme-forest">
+                  <input type="radio" name="theme" value="forest">
+                  <span class="theme-art" aria-hidden="true"><i class="tree one"></i><i class="tree two"></i><i class="firefly"></i></span>
+                  <span class="theme-copy"><strong>Forest</strong><small>A soft, sheltered den</small><em>Choose Forest</em></span>
+                </label>
+                <label class="theme-card theme-ocean">
+                  <input type="radio" name="theme" value="ocean">
+                  <span class="theme-art" aria-hidden="true"><i class="fish">◆</i><i class="bubble one"></i><i class="bubble two"></i></span>
+                  <span class="theme-copy"><strong>Ocean</strong><small>A calm blue night</small><em>Choose Ocean</em></span>
+                </label>
+              </div>
+            </fieldset>
+            <div class="tiny-choice">
+              <label for="tinyChoice">One tiny thing they want in the room <span>optional</span></label>
+              <input id="tinyChoice" name="tinyChoice" maxlength="60" placeholder="e.g. my rabbit, a star light, the blue blanket">
+            </div>
+            <div class="form-footer split">
+              <button class="back-button" type="button" data-back="1">← Back</button>
+              <div>
+                <p class="form-error" data-error="theme" aria-live="polite"></p>
+                <button class="primary-button" type="submit">Make our plan <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="step-panel" data-step="3" aria-labelledby="step3-title" hidden>
+          <div class="step-intro plan-heading">
+            <div>
+              <p class="step-count">Step 3 of 5 · Your tailored plan</p>
+              <h2 id="step3-title">Tonight’s <span data-theme-name>room</span> mission</h2>
+              <p data-plan-intro>Three small actions make the new room feel safe, chosen, and predictable.</p>
+            </div>
+            <span class="plan-badge" data-plan-badge>Space</span>
+          </div>
+
+          <div class="plan-grid" data-plan-cards></div>
+
+          <aside class="say-this">
+            <span aria-hidden="true">“</span>
+            <div>
+              <p class="eyebrow">Try saying this</p>
+              <blockquote data-parent-script></blockquote>
+            </div>
+          </aside>
+
+          <form data-prepare-form>
+            <fieldset class="ready-list">
+              <legend>Before lights-out, confirm together:</legend>
+              <label><input type="checkbox" name="ready" value="comfort"><span>My child chose one comfort item</span><i>✓</i></label>
+              <label><input type="checkbox" name="ready" value="light"><span>We agreed on the light and door position</span><i>✓</i></label>
+              <label><input type="checkbox" name="ready" value="return"><span>They know exactly when I will check back</span><i>✓</i></label>
+            </fieldset>
+            <div class="form-footer split">
+              <button class="back-button" type="button" data-back="2">← Back</button>
+              <div>
+                <p class="form-error" data-error="prepare" aria-live="polite"></p>
+                <button class="primary-button" type="submit">We’re ready for tonight <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="step-panel" data-step="4" aria-labelledby="step4-title" hidden>
+          <div class="step-intro">
+            <p class="step-count">Step 4 of 5 · First-night check-in</p>
+            <h2 id="step4-title">How did the first night go?</h2>
+            <p>An attempt counts. This is information, not a test your child can fail.</p>
+          </div>
+          <form data-first-night-form>
+            <div class="metric-form">
+              <fieldset>
+                <legend>Did they enter their room willingly?</legend>
+                <div class="option-pills">
+                  <label><input type="radio" name="willingness" value="easy" required><span>Yes, easily</span></label>
+                  <label><input type="radio" name="willingness" value="support"><span>With support</span></label>
+                  <label><input type="radio" name="willingness" value="no"><span>Not tonight</span></label>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>What happened after lights-out?</legend>
+                <div class="result-options">
+                  <label><input type="radio" name="result" value="full" required><span><strong>All night in their room</strong><small>A full own-room night</small></span><i>★</i></label>
+                  <label><input type="radio" name="result" value="part"><span><strong>Part of the night</strong><small>They made an own-room attempt</small></span><i>◒</i></label>
+                  <label><input type="radio" name="result" value="attempt"><span><strong>Entered, but did not sleep there</strong><small>The room-entry step happened</small></span><i>→</i></label>
+                  <label><input type="radio" name="result" value="none"><span><strong>We paused the plan</strong><small>No attempt tonight—and that is okay</small></span><i>·</i></label>
+                </div>
+              </fieldset>
+              <label class="notes-field">One thing you noticed <span>optional</span><textarea name="note" maxlength="280" rows="3" placeholder="What helped? What felt hard?"></textarea></label>
+            </div>
+            <div class="form-footer split">
+              <button class="back-button" type="button" data-back="3">← Review plan</button>
+              <div>
+                <p class="form-error" data-error="firstNight" aria-live="polite"></p>
+                <button class="primary-button" type="submit">Save our first night <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="step-panel" data-step="5" aria-labelledby="step5-title" hidden>
+          <div class="step-intro followup-heading">
+            <div>
+              <p class="step-count">Step 5 of 5 · Day 1 / 3 / 7 / 14</p>
+              <h2 id="step5-title">Watch the pattern, not one night.</h2>
+              <p>Return on each checkpoint. MyNest keeps the plan and progress on this device.</p>
+            </div>
+            <div class="outcome-ring" data-outcome-ring><strong data-success-count>0</strong><span>own-room<br>nights logged</span></div>
+          </div>
+
+          <div class="summary-strip" data-summary-strip></div>
+          <div class="checkpoint-list" data-checkpoint-list></div>
+
+          <div class="outcome-card" data-outcome-card>
+            <span class="outcome-icon" aria-hidden="true">↗</span>
+            <div>
+              <p class="eyebrow">Pilot signal</p>
+              <h3 data-outcome-title>The experiment is underway.</h3>
+              <p data-outcome-copy>Keep the room predictable and celebrate each willing entry.</p>
+            </div>
+          </div>
+
+          <div class="followup-actions">
+            <button class="secondary-button" type="button" data-copy-summary>Copy progress summary</button>
+            <button class="quiet-button" type="button" data-reset>Start a new experiment</button>
+            <p data-copy-status aria-live="polite"></p>
+          </div>
+
+          <details class="safety-note">
+            <summary>When the room may not be the whole story</summary>
+            <p>If bedtime distress is intense, persistent, or connected to pain, breathing, nightmares, a major life change, or safety concerns, pause the experiment and talk with a qualified pediatric or child-development professional. MyNest is a planning tool, not medical advice.</p>
+          </details>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>MyNest</strong> · An experimental room by <a href="../index.html">Spring of Zen</a> · <span data-sync-status>Progress saved on this device</span></p>
+    <p>Demand first → product second</p>
+  </footer>
+
+  <template id="checkpointTemplate">
+    <article class="checkpoint">
+      <button class="checkpoint-head" type="button" aria-expanded="false">
+        <span class="checkpoint-day"></span>
+        <span class="checkpoint-state">Not checked in</span>
+        <i aria-hidden="true">+</i>
+      </button>
+      <form class="checkpoint-form" hidden>
+        <fieldset>
+          <legend>How did this checkpoint feel?</legend>
+          <div class="checkpoint-fields">
+            <label><span>Room entry</span><select name="willingness" required><option value="">Choose…</option><option value="easy">Easy</option><option value="support">With support</option><option value="no">Not willing</option></select></label>
+            <label><span>Own-room result</span><select name="result" required><option value="">Choose…</option><option value="full">All night</option><option value="part">Part of night</option><option value="attempt">Entered only</option><option value="none">No attempt</option></select></label>
+            <label><span>Quick note</span><input name="note" maxlength="100" placeholder="Optional"></label>
+          </div>
+        </fieldset>
+        <button class="small-button" type="submit">Save checkpoint</button>
+      </form>
+    </article>
+  </template>
+
+  <script src="backend-config.js?v=20261004"></script>
+  <script src="portal.js?v=20261004-backend"></script>
+</body>
+</html>

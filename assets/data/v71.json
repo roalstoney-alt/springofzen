@@ -147,6 +147,15 @@
         "href": "night-harbor/"
       },
       {
+        "id": "mynest",
+        "name": "MyNest",
+        "status": "open",
+        "atmosphere": "A parent-led room transition for children ages 2.5–6, built around choice, safety, and small experiments.",
+        "visual_identity": "Warm night light, child-chosen worlds, gentle checkpoints.",
+        "curator": "Spring of Zen · 10-family pilot",
+        "href": "mynest/"
+      },
+      {
         "id": "memory-air",
         "name": "Memory Air",
         "status": "future",
