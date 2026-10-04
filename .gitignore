@@ -20,3 +20,8 @@ __pycache__/
 # temp
 tmp/
 temp/
+
+# Node and Wrangler local state
+node_modules/
+.wrangler/
+.dev.vars

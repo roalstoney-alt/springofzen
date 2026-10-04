@@ -1,0 +1,20 @@
+{
+  "client_event_id": "a6a784c4-e644-4c17-86a6-63c77bb0d6be",
+  "household_id": "NEST-T3ST",
+  "event_type": "checkpoint_saved",
+  "step": 5,
+  "client_created_at": "2026-10-04T13:00:00.000Z",
+  "payload": {
+    "age_band": "4",
+    "problem_code": "F03",
+    "theme": "space",
+    "room_entry_willingness": "easy",
+    "own_room_result": "full",
+    "own_room_nights": 2,
+    "verified_transition": true,
+    "readiness_confirmed": true,
+    "checkpoint_day": 7,
+    "checkpoint_willingness": "easy",
+    "checkpoint_result": "full"
+  }
+}

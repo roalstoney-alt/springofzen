@@ -90,13 +90,6 @@
     localStorage.setItem(STORE_KEY, JSON.stringify(state));
   };
 
-  function backendConfig() {
-    const config = window.MYNEST_BACKEND || {};
-    const url = String(config.supabaseUrl || "").replace(/\/$/, "");
-    const anonKey = String(config.supabaseAnonKey || "");
-    return { url, anonKey, configured: /^https:\/\/.+\.supabase\.co$/.test(url) && anonKey.length > 40 };
-  }
-
   function structuredSnapshot(extra = {}) {
     return {
       age_band: state.diagnosis?.age || null,
@@ -128,7 +121,7 @@
     if (state.diagnosis?.sharing !== "pilot" || !ALLOWED_EVENT_TYPES.has(eventType)) return;
     state.pendingEvents ||= [];
     state.pendingEvents.push({
-      event_id: createEventId(),
+      client_event_id: createEventId(),
       household_id: state.householdId,
       event_type: eventType,
       step: state.step,
@@ -141,47 +134,31 @@
   }
 
   async function postPilotEvent(event) {
-    const config = backendConfig();
-    if (!config.configured) return false;
-    try {
-      const response = await fetch(`${config.url}/rest/v1/mynest_pilot_events?on_conflict=event_id`, {
-        method: "POST",
-        headers: {
-          apikey: config.anonKey,
-          Authorization: `Bearer ${config.anonKey}`,
-          "Content-Type": "application/json",
-          Prefer: "resolution=ignore-duplicates,return=minimal"
-        },
-        body: JSON.stringify(event)
-      });
-      return response.ok;
-    } catch {
-      return false;
-    }
+    const endpoint = window.MYNEST_BACKEND?.endpoint || "/api/mynest/pilot-events";
+    if (!window.MyNestPilotSync) return { action: "retry", status: 0 };
+    return window.MyNestPilotSync.send(event, { endpoint });
   }
 
   let flushing = false;
   async function flushPilotEvents() {
     if (flushing || state.diagnosis?.sharing !== "pilot") return;
-    const config = backendConfig();
-    if (!config.configured) {
-      syncStatus("Anonymous pilot sharing selected · central connection pending");
-      return;
-    }
     flushing = true;
     syncStatus("Syncing anonymous pilot progress…");
-    const pending = [...(state.pendingEvents || [])];
-    for (const event of pending) {
-      const sent = await postPilotEvent(event);
-      if (!sent) {
+    let discarded = false;
+    while ((state.pendingEvents || []).length > 0) {
+      const event = state.pendingEvents[0];
+      const result = await postPilotEvent(event);
+      if (result.action === "retry") {
         syncStatus("Saved on this device · secure sync will retry");
         flushing = false;
         return;
       }
-      state.pendingEvents = (state.pendingEvents || []).filter((item) => item.event_id !== event.event_id);
+      if (result.action === "discard") discarded = true;
+      const clientEventId = event.client_event_id || event.event_id;
+      state.pendingEvents = (state.pendingEvents || []).filter((item) => (item.client_event_id || item.event_id) !== clientEventId);
       saveState();
     }
-    syncStatus("Anonymous pilot progress securely synced");
+    syncStatus(discarded ? "Progress synced · one invalid local event was removed" : "Anonymous pilot progress securely synced");
     flushing = false;
   }
 
@@ -442,6 +419,7 @@
 
   if (state.diagnosis?.sharing === "pilot") flushPilotEvents();
   else syncStatus("Progress saved on this device");
+  window.addEventListener("online", flushPilotEvents);
 
   if (localStorage.getItem(STORE_KEY)) openJourney();
 })();

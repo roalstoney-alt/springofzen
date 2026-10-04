@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mynest-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-04",
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "www.springofzen.com/api/mynest/*",
+      "zone_name": "springofzen.com"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "MYNEST_DB",
+      "database_name": "mynest-pilot",
+      "database_id": "9c148b18-98e5-472a-b393-e31432ccda1d",
+      "migrations_dir": "../../migrations/mynest"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "springofzen-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test workers/mynest-api/test/*.test.js",
+    "mynest:dev": "wrangler dev --config workers/mynest-api/wrangler.jsonc",
+    "mynest:deploy": "wrangler deploy --config workers/mynest-api/wrangler.jsonc"
+  },
+  "devDependencies": {
+    "wrangler": "4.147.0"
+  },
+  "packageManager": "pnpm@11.19.0"
+}
