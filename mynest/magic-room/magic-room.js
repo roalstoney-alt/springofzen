@@ -2,13 +2,24 @@
   "use strict";
 
   const STORE_KEY = "mynest_magic_room_v01";
-  const worlds = window.MYNEST_WORLDS;
-  const body = document.body;
-  const stage = document.querySelector("[data-projection-stage]");
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const allowedStates = new Set(worlds.ocean.state_order);
+  const body = document.body;
+  const stage = document.querySelector("[data-room-stage]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const qaEvents = [];
+  const wakeTimers = [];
   let audioEngine = null;
-  let shareTimer = null;
+  let wakeStarted = false;
+  let restTimer = null;
+  let feedbackTimer = null;
+  let shellsFound = new Set();
+
+  window.MYNEST_LOCAL_QA_EVENTS = qaEvents;
+
+  function logLocal(type) {
+    qaEvents.push(Object.freeze({ type, at: new Date().toISOString() }));
+    window.dispatchEvent(new CustomEvent("mynest:local-qa", { detail: { type } }));
+  }
 
   function randomCode(length = 6) {
     const bytes = new Uint8Array(length);
@@ -17,15 +28,7 @@
   }
 
   function initialState() {
-    return {
-      version: "0.1",
-      magic_pilot_id: `MR-${randomCode()}`,
-      world: "ocean",
-      engine_state: "entry",
-      calibration: { x: 100, y: 100, brightness: 82 },
-      character_x: 50,
-      observations: {}
-    };
+    return { version: "0.2", magic_pilot_id: `MR-${randomCode()}`, world: "ocean", observations: {} };
   }
 
   function readState() {
@@ -34,76 +37,48 @@
   }
 
   let state = readState();
-  function saveState() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
-
-  function setParticles() {
-    const field = document.querySelector("[data-particles]");
-    field.innerHTML = "";
-    for (let index = 0; index < 24; index += 1) {
-      const particle = document.createElement("i");
-      particle.className = "particle";
-      particle.style.left = `${(index * 37) % 101}%`;
-      particle.style.setProperty("--size", `${6 + (index % 5) * 5}px`);
-      particle.style.setProperty("--alpha", String(.14 + (index % 4) * .08));
-      particle.style.setProperty("--duration", `${12 + (index % 7) * 2}s`);
-      particle.style.setProperty("--delay", `${-(index % 11)}s`);
-      field.append(particle);
-    }
+  function saveState() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+    catch { /* Local persistence is optional; the experience remains usable. */ }
   }
 
-  function currentWorld() { return worlds[state.world] || worlds.ocean; }
+  function queueWake(delay, callback) {
+    wakeTimers.push(window.setTimeout(callback, delay));
+  }
 
-  function renderWorld() {
-    const world = currentWorld();
-    body.dataset.world = state.world;
-    document.documentElement.style.setProperty("--world-0", world.palette[0]);
-    document.documentElement.style.setProperty("--world-1", world.palette[1]);
-    document.documentElement.style.setProperty("--world-2", world.palette[2]);
-    document.documentElement.style.setProperty("--world-3", world.palette[3]);
-    document.querySelector("[data-world-label]").textContent = `${world.label} · ${world.name}`;
-    document.querySelector("[data-daily-event]").textContent = world.daily_events[0];
-    document.querySelector("[data-return-trigger]").textContent = world.return_trigger;
-    document.querySelector("[data-moment-name]").textContent = world.share_moment.name;
-    document.querySelector("[data-moment-copy]").textContent = world.share_moment.prompt;
-    document.querySelectorAll("[data-world-button]").forEach((button) => {
-      const active = button.dataset.worldButton === state.world;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", String(active));
+  function clearWakeTimers() {
+    while (wakeTimers.length) window.clearTimeout(wakeTimers.pop());
+  }
+
+  function wakeRoom(immediate = false) {
+    if (wakeStarted && !immediate) return;
+    clearWakeTimers();
+    wakeStarted = true;
+    const times = reducedMotion ? [0, 600, 1300, 2100, 2800] : immediate ? [0, 600, 1500, 2600, 5200] : [0, 1500, 3200, 5000, 8900];
+    queueWake(times[0], () => { body.classList.add("wake-ripple"); logLocal("OCEAN_WOKE"); });
+    queueWake(times[1], () => body.classList.add("wake-water"));
+    queueWake(times[2], () => body.classList.add("wake-life"));
+    queueWake(times[3], () => { body.classList.add("milo-entered"); logLocal("MILO_SEEN"); });
+    queueWake(times[4], () => {
+      body.classList.add("ocean-ready");
+      document.querySelector("[data-touch-hint]").textContent = "Touch the bed, lamp, shelf, or Milo.";
     });
-    renderEngineState();
-    setParticles();
-    saveState();
   }
 
-  function renderEngineState() {
-    const world = currentWorld();
-    const [title, copy] = world.states[state.engine_state] || world.states.entry;
-    body.dataset.state = state.engine_state;
-    document.querySelector("[data-state-title]").textContent = title;
-    document.querySelector("[data-state-copy]").textContent = copy;
-    const phrase = document.querySelector("[data-bedtime-phrase]");
-    phrase.hidden = !["wind_down", "sleep"].includes(state.engine_state);
-    phrase.textContent = world.bedtime_phrase;
-    document.querySelector("[data-awaken]").hidden = state.engine_state !== "entry";
-    document.querySelector("[data-interaction-controls]").hidden = state.engine_state !== "interact";
-    document.querySelectorAll("[data-state-button]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.stateButton === state.engine_state)));
-    stage.style.setProperty("--character-x", `${state.character_x}%`);
-    if (audioEngine) audioEngine.setMode(state.world, state.engine_state);
-    saveState();
-  }
-
-  function setWorld(worldKey) {
-    if (!worlds[worldKey]) return;
-    state.world = worldKey;
-    state.engine_state = "entry";
-    state.character_x = 50;
-    renderWorld();
-  }
-
-  function setEngineState(nextState) {
-    if (!allowedStates.has(nextState)) return;
-    state.engine_state = nextState;
-    renderEngineState();
+  function pulseTone(frequency = 118, duration = 1.15) {
+    if (!audioEngine) return;
+    const { context, master } = audioEngine;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(frequency * .74, context.currentTime + duration);
+    gain.gain.setValueAtTime(0, context.currentTime);
+    gain.gain.linearRampToValueAtTime(.09, context.currentTime + .16);
+    gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + duration);
+    oscillator.connect(gain).connect(master);
+    oscillator.start();
+    oscillator.stop(context.currentTime + duration);
   }
 
   function createAudioEngine() {
@@ -111,93 +86,104 @@
     if (!AudioContext) return null;
     const context = new AudioContext();
     const master = context.createGain();
-    master.gain.value = .035;
+    master.gain.value = .16;
     master.connect(context.destination);
-
     const low = context.createOscillator();
     const high = context.createOscillator();
     const lowGain = context.createGain();
     const highGain = context.createGain();
     const filter = context.createBiquadFilter();
-    low.type = "sine";
-    high.type = "sine";
-    low.frequency.value = 82;
-    high.frequency.value = 164;
-    lowGain.gain.value = .55;
-    highGain.gain.value = .12;
-    filter.type = "lowpass";
-    filter.frequency.value = 420;
-    low.connect(lowGain).connect(filter);
-    high.connect(highGain).connect(filter);
-    filter.connect(master);
-    low.start();
-    high.start();
-
-    return {
-      context,
-      master,
-      low,
-      high,
-      setMode(worldKey, engineState) {
-        const bases = { ocean: [82, 164], forest: [98, 196], space: [55, 110] }[worldKey];
-        const calm = engineState === "sleep" ? .012 : engineState === "wind_down" ? .022 : .035;
-        const now = context.currentTime;
-        low.frequency.setTargetAtTime(bases[0], now, .8);
-        high.frequency.setTargetAtTime(bases[1], now, .8);
-        master.gain.setTargetAtTime(calm, now, 1.2);
-      },
-      stop() {
-        const now = context.currentTime;
-        master.gain.setTargetAtTime(0, now, .25);
-        window.setTimeout(() => context.close(), 700);
-      }
-    };
+    low.type = "sine"; high.type = "sine";
+    low.frequency.value = 72; high.frequency.value = 145;
+    lowGain.gain.value = .12; highGain.gain.value = .025;
+    filter.type = "lowpass"; filter.frequency.value = 360;
+    low.connect(lowGain).connect(filter); high.connect(highGain).connect(filter); filter.connect(master);
+    low.start(); high.start();
+    return { context, master, low, high, setRest(resting) {
+      const now = context.currentTime;
+      low.frequency.setTargetAtTime(resting ? 55 : 72, now, 1.3);
+      high.frequency.setTargetAtTime(resting ? 110 : 145, now, 1.3);
+      master.gain.setTargetAtTime(resting ? .08 : .16, now, 1.5);
+    }, stop() {
+      master.gain.setTargetAtTime(.001, context.currentTime, .25);
+      window.setTimeout(() => context.close(), 700);
+    } };
   }
 
   async function toggleAudio() {
     const button = document.querySelector("[data-audio]");
     if (audioEngine) {
-      audioEngine.stop();
-      audioEngine = null;
-      button.textContent = "Sound off";
+      audioEngine.stop(); audioEngine = null;
+      button.querySelector("b").textContent = "Sound off";
       button.setAttribute("aria-pressed", "false");
       return;
     }
     audioEngine = createAudioEngine();
     if (!audioEngine) return;
     await audioEngine.context.resume();
-    audioEngine.setMode(state.world, state.engine_state);
-    button.textContent = "Sound on";
+    audioEngine.setRest(body.dataset.mode === "rest");
+    button.querySelector("b").textContent = "Sound on";
     button.setAttribute("aria-pressed", "true");
+    pulseTone(132, .8);
   }
 
-  function applyCalibration() {
-    const calibration = state.calibration || initialState().calibration;
-    document.documentElement.style.setProperty("--fit-x", calibration.x / 100);
-    document.documentElement.style.setProperty("--fit-y", calibration.y / 100);
-    document.documentElement.style.setProperty("--brightness", calibration.brightness / 100);
-    document.querySelectorAll("[data-calibration]").forEach((input) => { input.value = calibration[input.dataset.calibration]; });
+  function clearResponseClasses() {
+    body.classList.remove("bed-response", "lamp-response", "shelf-response", "milo-response");
   }
 
-  function runShareMoment() {
-    if (shareTimer) return;
-    const countdown = document.querySelector("[data-share-countdown]");
-    const number = countdown.querySelector("strong");
-    let remaining = currentWorld().share_moment.duration_seconds;
-    countdown.hidden = false;
-    number.textContent = String(remaining);
-    body.classList.add("is-share-moment");
-    shareTimer = window.setInterval(() => {
-      remaining -= 1;
-      number.textContent = String(Math.max(remaining, 0));
-      if (remaining <= 0) {
-        window.clearInterval(shareTimer);
-        shareTimer = null;
-        countdown.hidden = true;
-        body.classList.remove("is-share-moment");
-        renderEngineState();
-      }
-    }, 1000);
+  function triggerResponse(type) {
+    if (!body.classList.contains("ocean-ready")) wakeRoom(true);
+    clearResponseClasses();
+    window.clearTimeout(feedbackTimer);
+    body.classList.add(`${type}-response`);
+    const eventNames = { bed: "BED_CLICKED", lamp: "LAMP_CLICKED", shelf: "SHELF_CLICKED", milo: "MILO_CLICKED" };
+    logLocal(eventNames[type]);
+    if (type === "milo") pulseTone(126, 1.25);
+    if (type === "lamp") pulseTone(220, .7);
+    feedbackTimer = window.setTimeout(clearResponseClasses, type === "shelf" ? 7000 : 5600);
+  }
+
+  function setMode(mode) {
+    if (!["explore", "story", "rest"].includes(mode)) return;
+    body.dataset.mode = mode;
+    body.classList.remove("rest-complete");
+    window.clearTimeout(restTimer);
+    document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mode === mode)));
+    if (mode === "story") {
+      shellsFound = new Set(); body.classList.remove("story-complete");
+      document.querySelectorAll("[data-shell]").forEach((shell) => shell.classList.remove("is-found"));
+      document.querySelector("[data-story-count]").textContent = "Find three moon shells";
+    }
+    if (mode === "rest") {
+      logLocal("REST_STARTED");
+      restTimer = window.setTimeout(() => body.classList.add("rest-complete"), reducedMotion ? 1800 : 9000);
+    }
+    if (audioEngine) audioEngine.setRest(mode === "rest");
+  }
+
+  function findShell(button) {
+    if (body.dataset.mode !== "story" || shellsFound.has(button.dataset.shell)) return;
+    shellsFound.add(button.dataset.shell);
+    button.classList.add("is-found");
+    pulseTone(240 + shellsFound.size * 42, .5);
+    const remaining = 3 - shellsFound.size;
+    document.querySelector("[data-story-count]").textContent = remaining ? `${remaining} moon shell${remaining === 1 ? "" : "s"} left` : "All three moon shells found";
+    if (!remaining) body.classList.add("story-complete");
+  }
+
+  function playMagicMoment() {
+    if (body.classList.contains("magic-moment")) return;
+    logLocal("MAGIC_MOMENT_PLAYED");
+    setMode("explore");
+    clearResponseClasses();
+    document.querySelector("[data-ocean-experience]").scrollIntoView({ behavior: "auto" });
+    body.classList.remove("wake-ripple", "wake-water", "wake-life", "milo-entered", "ocean-ready");
+    void body.offsetWidth;
+    body.classList.add("magic-moment");
+    window.setTimeout(() => {
+      body.classList.remove("magic-moment");
+      body.classList.add("wake-water", "wake-life", "milo-entered", "ocean-ready");
+    }, reducedMotion ? 3600 : 10400);
   }
 
   function formPayload(form) {
@@ -209,8 +195,7 @@
       else if (element.value === "true" || element.value === "false") payload[element.name] = element.value === "true";
       else payload[element.name] = element.value;
     }
-    payload.world = state.world;
-    payload.character = currentWorld().lead.toLowerCase().replace(/\s+/g, "_");
+    payload.world = "ocean"; payload.character = "milo";
     return payload;
   }
 
@@ -221,34 +206,23 @@
       for (const [name, value] of Object.entries(values)) {
         const element = form.elements.namedItem(name);
         if (!element) continue;
-        if (element.type === "checkbox") element.checked = Boolean(value);
-        else element.value = String(value);
+        if (element.type === "checkbox") element.checked = Boolean(value); else element.value = String(value);
       }
     }
   }
 
   function setObserverStatus(message, error = false) {
     const node = document.querySelector("[data-observer-status]");
-    node.textContent = message;
-    node.style.color = error ? "#ffad99" : "var(--world-3)";
+    node.textContent = message; node.style.color = error ? "#ffad99" : "#9fe2d7";
   }
 
   async function saveObservation(action, form) {
     const payload = formPayload(form);
-    state.observations[action] = payload;
-    saveState();
-    const consent = document.querySelector("[data-pilot-consent]").checked;
-    if (!consent) {
-      setObserverStatus(`${action.replace("_", " ")} saved on this device. Nothing was sent.`);
-      return;
+    state.observations[action] = payload; saveState();
+    if (!document.querySelector("[data-pilot-consent]").checked) {
+      setObserverStatus(`${action.replace("_", " ")} saved on this device. Nothing was sent.`); return;
     }
-    const result = await window.MyNestMagicRoomSync.send({
-      client_event_id: crypto.randomUUID(),
-      action,
-      magic_pilot_id: state.magic_pilot_id,
-      pilot_consent: true,
-      payload
-    });
+    const result = await window.MyNestMagicRoomSync.send({ client_event_id: crypto.randomUUID(), action, magic_pilot_id: state.magic_pilot_id, pilot_consent: true, payload });
     if (result.ok) setObserverStatus(`${action.replace("_", " ")} saved and anonymously synced.`);
     else setObserverStatus(result.body?.message || "Unable to sync. The observation remains on this device.", true);
   }
@@ -259,58 +233,44 @@
   }
 
   function populateCharacters() {
-    const names = ["none", ...new Set(Object.values(worlds).flatMap((world) => [world.lead, ...world.support]).map((name) => name.toLowerCase().replace(/\s+/g, "_")))];
+    const worlds = window.MYNEST_WORLDS || {};
+    const names = ["none", ...new Set(Object.values(worlds).flatMap((world) => [world.lead, ...(world.support || [])]).filter(Boolean).map((name) => name.toLowerCase().replace(/\s+/g, "_")))];
     document.querySelectorAll("[data-character-select]").forEach((select) => {
       select.innerHTML = names.map((name) => `<option value="${name}">${name === "none" ? "No preference" : name.replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase())}</option>`).join("");
     });
   }
 
-  document.querySelectorAll("[data-world-button]").forEach((button) => button.addEventListener("click", () => setWorld(button.dataset.worldButton)));
-  document.querySelectorAll("[data-state-button]").forEach((button) => button.addEventListener("click", () => setEngineState(button.dataset.stateButton)));
-  document.querySelector("[data-awaken]").addEventListener("click", () => setEngineState("awaken"));
+  stage.addEventListener("pointermove", (event) => {
+    if (!body.classList.contains("ocean-ready") || body.dataset.mode === "rest") return;
+    const bounds = stage.getBoundingClientRect();
+    const x = Math.max(8, Math.min(92, ((event.clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.max(18, Math.min(78, ((event.clientY - bounds.top) / bounds.height) * 100));
+    stage.style.setProperty("--pointer-x", `${x}%`); stage.style.setProperty("--pointer-y", `${y}%`);
+  });
+  document.querySelector("[data-wake]").addEventListener("click", () => wakeRoom(true));
   document.querySelector("[data-audio]").addEventListener("click", toggleAudio);
-  document.querySelector("[data-fullscreen]").addEventListener("click", async () => {
-    if (document.fullscreenElement) await document.exitFullscreen();
-    else await document.documentElement.requestFullscreen();
-  });
-  document.querySelectorAll("[data-move]").forEach((button) => button.addEventListener("click", () => {
-    state.character_x = Math.max(22, Math.min(78, state.character_x + (button.dataset.move === "left" ? -12 : 12)));
-    renderEngineState();
-  }));
-  document.querySelectorAll("[data-calibration]").forEach((input) => input.addEventListener("input", () => {
-    state.calibration[input.dataset.calibration] = Number(input.value);
-    applyCalibration();
-    saveState();
-  }));
-  document.querySelector("[data-calibration-toggle]").addEventListener("click", (event) => {
-    const grid = document.querySelector("[data-calibration-grid]");
-    grid.hidden = !grid.hidden;
-    event.currentTarget.textContent = grid.hidden ? "Show grid" : "Hide grid";
-  });
-  document.querySelector("[data-share-moment]").addEventListener("click", runShareMoment);
+  document.querySelector("[data-milo]").addEventListener("click", () => triggerResponse("milo"));
+  document.querySelectorAll("[data-room-zone]").forEach((button) => button.addEventListener("click", () => triggerResponse(button.dataset.roomZone)));
+  document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
+  document.querySelectorAll("[data-shell]").forEach((button) => button.addEventListener("click", () => findShell(button)));
+  document.querySelector("[data-magic-moment]").addEventListener("click", playMagicMoment);
   document.querySelector("[data-observer-open]").addEventListener("click", () => { document.querySelector("[data-observer-panel]").hidden = false; });
   document.querySelector("[data-observer-close]").addEventListener("click", () => { document.querySelector("[data-observer-panel]").hidden = true; });
   document.querySelectorAll("[data-observation-tab]").forEach((button) => button.addEventListener("click", () => showObservationTab(button.dataset.observationTab)));
   document.querySelectorAll("[data-observation-form]").forEach((form) => form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-    const button = form.querySelector("button[type='submit']");
-    button.disabled = true;
-    await saveObservation(form.dataset.observationForm, form);
-    button.disabled = false;
+    event.preventDefault(); if (!form.reportValidity()) return;
+    const button = form.querySelector("button[type='submit']"); button.disabled = true;
+    await saveObservation(form.dataset.observationForm, form); button.disabled = false;
   }));
   document.querySelector("[data-export]").addEventListener("click", async () => {
-    const exportData = { project: "MYNEST_MAGIC_ROOM_PILOT_v0.1", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
+    const exportData = { project: "MYNEST_OCEAN_REAL_ROOM_REDIRECT_v0.2", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
     try { await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)); setObserverStatus("Anonymous observation JSON copied."); }
-    catch { setObserverStatus("Clipboard access was blocked. Use your browser's local storage export instead.", true); }
+    catch { setObserverStatus("Clipboard access was blocked. Observations remain on this device.", true); }
   });
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !document.fullscreenElement) document.querySelector("[data-observer-panel]").hidden = true;
-  });
+  window.addEventListener("keydown", (event) => { if (event.key === "Escape") document.querySelector("[data-observer-panel]").hidden = true; });
 
-  populateCharacters();
-  hydrateObservationForms();
+  populateCharacters(); hydrateObservationForms();
   document.querySelector("[data-magic-pilot-id]").textContent = state.magic_pilot_id;
-  applyCalibration();
-  renderWorld();
+  saveState(); logLocal("ROOM_LOADED");
+  queueWake(reducedMotion ? 300 : 1200, () => wakeRoom());
 })();

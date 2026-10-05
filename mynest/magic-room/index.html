@@ -2,217 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#061a38">
-  <title>MyNest Magic Room L0 Prototype</title>
-  <meta name="description" content="A local-first L0 projection prototype for the MyNest child-owned responsive room pilot.">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b2038">
+  <title>MyNest Ocean — My Room. My World.</title>
+  <meta name="description" content="Watch a real child's room wake into MyNest Ocean, meet Milo, explore the room, and settle into Moon Ocean.">
   <meta name="robots" content="noindex,nofollow">
   <link rel="canonical" href="https://www.springofzen.com/mynest/magic-room/">
-  <link rel="stylesheet" href="magic-room.css?v=20261005-v01">
+  <link rel="preload" href="assets/ocean-room-base-v02.jpg" as="image">
+  <link rel="stylesheet" href="magic-room.css?v=20261005-v02">
 </head>
-<body data-world="ocean" data-state="entry">
-  <a class="skip-link" href="#room-stage">Skip to the world</a>
-
-  <header class="topbar">
-    <a class="brand" href="/mynest/" aria-label="MyNest home"><strong>MyNest</strong><span>Magic Room · L0</span></a>
-    <div class="top-actions">
-      <span class="safety-chip">No camera · no recording · no rapid flashing</span>
-      <button type="button" class="control-button" data-audio aria-pressed="false">Sound off</button>
-      <button type="button" class="control-button" data-fullscreen>Project full screen</button>
-      <button type="button" class="control-button" data-observer-open>Observer panel</button>
-    </div>
-  </header>
-
+<body data-phase="room" data-mode="explore">
+  <a class="skip-link" href="#after-magic">Skip the room experience</a>
   <main>
-    <section class="room-shell" id="room-stage" aria-labelledby="world-title">
-      <div class="projection-stage" data-projection-stage>
-        <div class="ceiling-field" aria-hidden="true"></div>
-        <div class="horizon" aria-hidden="true"></div>
-        <div class="world-light world-light-a" aria-hidden="true"></div>
-        <div class="world-light world-light-b" aria-hidden="true"></div>
-        <div class="particle-field" data-particles aria-hidden="true"></div>
-
-        <svg class="lead-character lead-ocean" viewBox="0 0 520 260" aria-label="Milo the young whale">
-          <path class="character-body" d="M83 144c37-72 132-102 249-74 50 12 92 1 124-31-1 40-17 71-48 91 31 14 49 36 57 65-41-18-81-18-120 1-91 45-225 35-275-27-19-23-13-43 13-25z"/>
-          <path class="character-accent" d="M176 174c28 26 66 39 113 39-33 30-79 35-126 16 6-21 10-39 13-55z"/>
-          <circle class="character-eye" cx="331" cy="102" r="7"/><path class="character-smile" d="M351 124c14 9 27 9 40 0"/>
-        </svg>
-        <svg class="lead-character lead-forest" viewBox="0 0 320 360" aria-label="Momo the rabbit">
-          <path class="character-body" d="M105 151C58 83 69 20 101 22c24 2 35 52 40 96 8-63 28-108 55-101 32 8 20 77-4 136 45 17 70 53 65 102-7 71-64 96-116 91-61-6-101-40-98-98 3-49 27-81 62-97z"/>
-          <circle class="character-eye" cx="116" cy="202" r="7"/><circle class="character-eye" cx="184" cy="202" r="7"/>
-          <path class="character-smile" d="M139 224c10 12 21 12 32 0"/>
-        </svg>
-        <svg class="lead-character lead-space" viewBox="0 0 320 360" aria-label="Orbit the robot">
-          <rect class="character-body" x="67" y="86" width="188" height="181" rx="64"/>
-          <rect class="character-accent" x="98" y="122" width="126" height="76" rx="30"/>
-          <circle class="character-eye" cx="135" cy="159" r="10"/><circle class="character-eye" cx="189" cy="159" r="10"/>
-          <path class="character-smile" d="M139 180c16 12 31 12 46 0"/>
-          <path class="character-limb" d="M91 261l-20 66m156-66 20 66M65 180l-46 36m238-36 46 36"/>
-          <path class="character-antenna" d="M161 86V46m0 0 29-21"/><circle class="character-signal" cx="195" cy="21" r="12"/>
-        </svg>
-
-        <div class="support-character" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="hidden-object" data-hidden-object aria-hidden="true">✦</div>
-        <div class="share-trail" aria-hidden="true"></div>
-
-        <div class="world-copy">
-          <p class="world-kicker" data-world-label>Ocean world · Lumisea</p>
-          <h1 id="world-title" data-state-title>The sea is sleeping</h1>
-          <p data-state-copy>Enter when you are ready. Nothing moves until the world is invited.</p>
-          <blockquote data-bedtime-phrase hidden></blockquote>
-        </div>
-
-        <div class="event-card" data-event-card>
-          <span>Day 1</span>
-          <strong data-daily-event>Meet Milo</strong>
-          <small data-return-trigger>Come back tomorrow to discover what Milo found beyond the reef.</small>
-        </div>
-
-        <div class="share-countdown" data-share-countdown hidden aria-live="polite"><strong>10</strong><span>MyNest Moment</span></div>
-        <button class="awaken-button" type="button" data-awaken>Wake my world</button>
+    <section class="ocean-experience" data-ocean-experience aria-label="A real child's bedroom waking into MyNest Ocean">
+      <div class="experience-topbar">
+        <a class="ocean-brand" href="/mynest/" aria-label="MyNest home"><strong>MyNest</strong><span>Ocean</span></a>
+        <button class="sound-control" type="button" data-audio aria-pressed="false"><span aria-hidden="true">♪</span><b>Sound off</b></button>
       </div>
-
-      <div class="state-console" aria-label="Shared world engine states">
-        <div class="state-track" role="tablist" aria-label="World state">
-          <button type="button" data-state-button="entry" aria-selected="true"><span>01</span>Entry</button>
-          <button type="button" data-state-button="awaken"><span>02</span>Awaken</button>
-          <button type="button" data-state-button="discover"><span>03</span>Discover</button>
-          <button type="button" data-state-button="interact"><span>04</span>Interact</button>
-          <button type="button" data-state-button="story"><span>05</span>Story</button>
-          <button type="button" data-state-button="wind_down"><span>06</span>Wind down</button>
-          <button type="button" data-state-button="sleep"><span>07</span>Sleep</button>
-          <button type="button" data-state-button="return"><span>08</span>Return</button>
-        </div>
-        <div class="interaction-controls" data-interaction-controls hidden>
-          <button type="button" data-move="left" aria-label="Guide the character left">←</button>
-          <span>Guide gently</span>
-          <button type="button" data-move="right" aria-label="Guide the character right">→</button>
-        </div>
+      <div class="room-stage" data-room-stage>
+        <picture class="room-photo"><source media="(max-width: 680px)" srcset="assets/ocean-room-base-mobile-v02.jpg"><img src="assets/ocean-room-base-v02.jpg" alt="A warm real child's bedroom with a bed, lamp, bookshelf, window, curtain, ceiling, and whale room friend"></picture>
+        <div class="room-dusk" aria-hidden="true"></div><div class="first-ripple" aria-hidden="true"></div><div class="ocean-wash" aria-hidden="true"></div><div class="wall-caustics" aria-hidden="true"></div>
+        <div class="ceiling-ocean" aria-hidden="true"><i></i><i></i><i></i></div><div class="window-depth" aria-hidden="true"></div>
+        <div class="fish-field" aria-hidden="true"><i class="fish fish-a"></i><i class="fish fish-b"></i><i class="fish fish-c"></i><i class="fish fish-d"></i><i class="fish fish-e"></i></div>
+        <div class="follow-school" aria-hidden="true"><i></i><i></i><i></i></div>
+        <button class="milo" type="button" data-milo aria-label="Touch Milo the whale">
+          <svg viewBox="0 0 560 300" role="img" aria-label="Milo, a gentle moon-blue whale">
+            <defs><linearGradient id="miloBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b7e4e5"/><stop offset=".45" stop-color="#6ba9bd"/><stop offset="1" stop-color="#356f91"/></linearGradient><linearGradient id="miloBelly" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef5e8"/><stop offset="1" stop-color="#adcac7"/></linearGradient></defs>
+            <path class="milo-tail" d="M116 157C65 99 22 105 12 63c48 2 80 16 105 45 1-40 23-76 65-95 4 46-11 86-45 120z"/>
+            <path class="milo-body" d="M104 144c51-88 174-119 316-73 54 18 101 9 128-21-1 43-19 77-56 100 30 18 49 44 55 78-41-22-86-24-134-4-101 43-241 33-302-40-18-22-20-31-7-40z"/>
+            <path class="milo-belly" d="M205 200c57 30 126 35 209 12-51 61-148 77-230 34 6-17 13-32 21-46z"/>
+            <path class="milo-mark" d="M260 91c44-16 92-13 141 8-45-1-85 9-120 31z"/>
+            <circle class="milo-eye" cx="408" cy="119" r="10"/><circle class="milo-eye-glint" cx="411" cy="115" r="3"/><path class="milo-smile" d="M432 144c16 12 34 12 52 0"/>
+          </svg>
+        </button>
+        <div class="milo-shadow" aria-hidden="true"></div><div class="bubble-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="nini-glow" aria-hidden="true"><i></i></div><div class="pip-discovery" aria-hidden="true"><i></i><span>•ᴗ•</span></div><div class="moon-ray" aria-hidden="true"></div><div class="moon-reflection" aria-hidden="true"></div>
+        <div class="story-shells" aria-label="Find Milo's moon shells"><button type="button" data-shell="window" aria-label="Moon shell near the window">✦</button><button type="button" data-shell="shelf" aria-label="Moon shell near the bookshelf">✦</button><button type="button" data-shell="bed" aria-label="Moon shell near the bed">✦</button></div>
+        <button class="room-zone zone-bed" type="button" data-room-zone="bed" aria-label="Touch the bed"><span></span></button><button class="room-zone zone-lamp" type="button" data-room-zone="lamp" aria-label="Touch the lamp"><span></span></button><button class="room-zone zone-shelf" type="button" data-room-zone="shelf" aria-label="Touch the bookshelf"><span></span></button>
+        <div class="first-copy" aria-live="polite"><p>MyNest Ocean</p><h1>My room.<br>My world.</h1><small data-touch-hint>Touch the room.</small></div>
+        <button class="wake-control" type="button" data-wake>Wake my room</button>
+        <div class="mode-controls" role="group" aria-label="Ocean room mode"><button type="button" data-mode="explore" aria-pressed="true"><i aria-hidden="true">✦</i><span>Explore</span></button><button type="button" data-mode="story" aria-pressed="false"><i aria-hidden="true">◐</i><span>Story</span></button><button type="button" data-mode="rest" aria-pressed="false"><i aria-hidden="true">☾</i><span>Rest</span></button></div>
+        <div class="story-prompt" aria-live="polite"><span data-story-count>Find three moon shells</span></div><p class="rest-phrase">The ocean is quiet now.</p>
       </div>
     </section>
 
-    <section class="world-dock" aria-labelledby="choose-world-title">
-      <div>
-        <p class="eyebrow">Three worlds · one engine</p>
-        <h2 id="choose-world-title">Choose where the room lives tonight.</h2>
-        <p>Ocean is the hero prototype. Forest and Space are deliberately lighter architecture proofs.</p>
-      </div>
-      <div class="world-cards">
-        <button type="button" class="world-card ocean-card is-active" data-world-button="ocean" aria-pressed="true"><span>Hero world · 80%</span><strong>Lumisea</strong><small>Milo · Nini · Pip · Moon Ray</small></button>
-        <button type="button" class="world-card forest-card" data-world-button="forest" aria-pressed="false"><span>Engine proof · 40%</span><strong>Mosswood</strong><small>Momo · Kiko · Oru · Grand Tree</small></button>
-        <button type="button" class="world-card space-card" data-world-button="space" aria-pressed="false"><span>Engine proof · 40%</span><strong>NovaNest</strong><small>Orbit · Nova · Comet · Luna</small></button>
-      </div>
-    </section>
-
-    <section class="prototype-tools" aria-labelledby="prototype-title">
-      <div class="tool-copy"><p class="eyebrow">L0 projection world</p><h2 id="prototype-title">Magic first. Platform second.</h2><p>This browser prototype uses one projector output, synthesized ambience, manual calibration, scheduled states, recurring characters, and no camera. It tests whether the world creates pull before adding tracking hardware.</p></div>
-      <div class="calibration-card">
-        <div><h3>Manual room mapping</h3><button type="button" class="text-button" data-calibration-toggle>Show grid</button></div>
-        <label>Horizontal fit <input type="range" min="88" max="100" value="100" data-calibration="x"></label>
-        <label>Vertical fit <input type="range" min="82" max="100" value="100" data-calibration="y"></label>
-        <label>Safe brightness <input type="range" min="35" max="100" value="82" data-calibration="brightness"></label>
-        <p>Use the lowest comfortable brightness. Keep light away from eyes and secure all projector hardware and cables.</p>
-      </div>
-      <div class="moment-card">
-        <p class="eyebrow">8–12 second share moment</p>
-        <h3 data-moment-name>Milo crosses the room</h3>
-        <p data-moment-copy>Milo crosses wall, ceiling, and bed area in one slow, recognizable movement.</p>
-        <button type="button" class="primary-button" data-share-moment>Play the 10-second MyNest Moment</button>
-        <small>Recording is optional and never required for pilot participation or rewards.</small>
-      </div>
-    </section>
-
-    <section class="metric-section" aria-labelledby="metric-title">
-      <p class="eyebrow">Magic Room Pilot v0.1</p>
-      <h2 id="metric-title">Observe attraction before sleep.</h2>
-      <div class="metric-grid">
-        <article><strong>Room Gravity</strong><p>Voluntary entry, requests to return, time in room, character requests, showing the room, and asking for the next event stay as separate observations.</p></article>
-        <article><strong>Return Desire</strong><p>Did the child ask for the world, character, or next event again—without being prompted?</p></article>
-        <article><strong>Novelty Decay</strong><p>Does interest persist after the first-day wow, or does the experience become novelty only?</p></article>
-      </div>
-      <p class="scope-note">This prototype is not sleep therapy or a medical device. It does not claim that projection causes independent sleeping.</p>
-    </section>
+    <div id="after-magic" class="after-magic">
+      <section class="explain-section intro-section" aria-labelledby="what-title"><p class="eyebrow">What just happened?</p><h2 id="what-title">A real room became a world.</h2><p>Ocean light found the wall, climbed the curtain and ceiling, and brought Milo into the room. The bed, lamp, and bookshelf are not scenery—they change what the world does.</p><button class="moment-button" type="button" data-magic-moment><span>Replay the 10-second Magic Moment</span><i aria-hidden="true">→</i></button></section>
+      <section class="respond-section" aria-labelledby="respond-title"><div><p class="eyebrow">A room that responds</p><h2 id="respond-title">Touch what is already there.</h2></div><div class="response-grid"><article><span class="object-icon bed-icon" aria-hidden="true"></span><h3>Bed</h3><p>Milo changes course and brings a quiet school of fish toward the room friend.</p></article><article><span class="object-icon lamp-icon" aria-hidden="true"></span><h3>Lamp</h3><p>The physical glow becomes part of the ocean and calls a soft Nini light into view.</p></article><article><span class="object-icon shelf-icon" aria-hidden="true"></span><h3>Bookshelf</h3><p>Fish hide behind the shelf and Pip appears from a secret room boundary.</p></article></div></section>
+      <section class="modes-section" aria-labelledby="modes-title"><p class="eyebrow">One room · three rhythms</p><h2 id="modes-title">Explore. Story. Rest.</h2><div class="mode-story-grid"><article class="explore-card"><span>01</span><h3>Explore</h3><p>Brighter water, more fish, hidden room discoveries, and gentle touch responses.</p></article><article class="story-card"><span>02</span><h3>Story</h3><p>Milo has lost three moon shells. The room itself holds the clues.</p></article><article class="rest-card"><span>03</span><h3>Rest</h3><p>Fish fade, motion slows, Moon Ray crosses the ceiling, and the same room becomes quiet.</p></article></div></section>
+      <section class="ocean-first" aria-labelledby="ocean-title"><div><p class="eyebrow">Ocean is the first world</p><h2 id="ocean-title">Meet Milo.</h2><p>Large, gentle, curious, and unmistakable. Milo moves slowly, remembers the room’s boundaries, and always knows when it is time to settle.</p></div><div class="milo-portrait" aria-hidden="true"><i></i><span>milo</span></div></section>
+      <section class="next-worlds" aria-labelledby="next-title"><div><p class="eyebrow">The room can become more</p><h2 id="next-title">Two worlds are waking up.</h2></div><div class="next-world-grid"><article class="forest-preview"><span>Forest</span><strong>Coming next</strong><i aria-hidden="true"></i></article><article class="space-preview"><span>Space</span><strong>Coming next</strong><i aria-hidden="true"></i></article></div></section>
+      <section class="real-rooms" aria-labelledby="real-title"><p class="eyebrow">Built for real rooms</p><h2 id="real-title">Magic first. Safe by design.</h2><div class="principle-grid"><p><strong>No camera</strong><span>This L0.5 prototype uses touch and pointer input—not child tracking.</span></p><p><strong>No recording</strong><span>Pilot participation never requires a photo, video, quote, or public post.</span></p><p><strong>Gentle motion</strong><span>No strobe, rapid flashing, sharp luminance change, or startle entrance.</span></p><p><strong>Room-aware</strong><span>Geometry masks let virtual life pass behind the bed, shelf, and curtain.</span></p></div></section>
+      <section class="pilot-section" id="pilot" aria-labelledby="pilot-title"><div><p class="eyebrow">MyNest Ocean pilot</p><h2 id="pilot-title">Try it in a real room.</h2><p>We are preparing a small supervised visual test for children ages 3–6. Pilot observations are anonymous, structured, and separate from publication consent.</p></div><div class="pilot-actions"><a class="primary-link" href="/mynest/recruit/">Join the pilot</a><button class="secondary-link" type="button" data-observer-open>Open pilot notebook</button><a class="text-link" href="/mynest/">Use the Room Check instead</a></div></section>
+    </div>
   </main>
 
   <aside class="observer-panel" data-observer-panel aria-labelledby="observer-title" hidden>
     <div class="observer-head"><div><p class="eyebrow">Structured observations</p><h2 id="observer-title">Room Gravity notebook</h2><p>Anonymous code <strong data-magic-pilot-id></strong></p></div><button type="button" data-observer-close aria-label="Close observer panel">×</button></div>
-    <p class="privacy-note">No name, face, voice, address, school, profile, photo, or free text is collected. UGC publication consent is separate and is not collected here.</p>
-    <nav class="observer-tabs" aria-label="Observation checkpoint">
-      <button type="button" data-observation-tab="baseline" aria-selected="true">Baseline</button>
-      <button type="button" data-observation-tab="first_exposure">First exposure</button>
-      <button type="button" data-observation-tab="day3">Day 3</button>
-      <button type="button" data-observation-tab="day7">Day 7</button>
-      <button type="button" data-observation-tab="day14">Day 14</button>
-    </nav>
-
-    <form data-observation-form="baseline">
-      <label>Age band<select name="age_band" required><option value="">Choose</option><option value="3-4">3–4</option><option value="4-5">4–5</option><option value="5-6">5–6</option></select></label>
-      <label>Voluntary room entry before MyNest<select name="baseline_voluntary_entry" required><option value="">Choose</option><option value="never">Never</option><option value="sometimes">Sometimes</option><option value="often">Often</option></select></label>
-      <label>Typical time in room<select name="baseline_time_in_room" required><option value="">Choose</option><option value="under_10">Under 10 minutes</option><option value="10_30">10–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label>
-      <label>Child requests the room<select name="baseline_child_requests_room" required><option value="">Choose</option><option value="never">Never</option><option value="sometimes">Sometimes</option><option value="often">Often</option></select></label>
-      <label>Child shows room to others<select name="baseline_shows_room" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Bedtime acceptance baseline<select name="baseline_bedtime_acceptance" required><option value="">Choose</option><option value="low">Low</option><option value="mixed">Mixed</option><option value="high">High</option><option value="not_observed">Not observed</option></select></label>
-      <button class="save-button" type="submit">Save baseline</button>
-    </form>
-
-    <form data-observation-form="first_exposure" hidden>
-      <fieldset><legend>Observable first reaction</legend>
-        <label class="check"><input type="checkbox" name="entered_without_prompt"><span>Entered without prompt</span></label>
-        <label class="check"><input type="checkbox" name="approached_projection"><span>Approached projection</span></label>
-        <label class="check"><input type="checkbox" name="pointed_to_character"><span>Pointed to character</span></label>
-        <label class="check"><input type="checkbox" name="spoke_to_character"><span>Spoke to character</span></label>
-        <label class="check"><input type="checkbox" name="requested_repeat"><span>Requested repeat</span></label>
-        <label class="check"><input type="checkbox" name="asked_question"><span>Asked a question</span></label>
-        <label class="check"><input type="checkbox" name="requested_other_world"><span>Requested another world</span></label>
-        <label class="check"><input type="checkbox" name="stayed_after_parent_moved_away"><span>Stayed after parent moved away</span></label>
-      </fieldset>
-      <label>First exposure duration<select name="first_exposure_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label>
-      <button class="save-button" type="submit">Save first exposure</button>
-    </form>
-
-    <form data-observation-form="day3" hidden>
-      <label>Returned voluntarily on Day 3<select name="day_3_return" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Requested the world<select name="requested_world" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Requested a character<select name="requested_character" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Asked what happens next<select name="asked_for_next_event" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Day 3 session duration<select name="day_3_session_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label>
-      <button class="save-button" type="submit">Save Day 3</button>
-    </form>
-
-    <form data-observation-form="day7" hidden>
-      <label>Voluntary entries since introduction<input type="number" name="voluntary_entries" min="0" max="50" required></label>
-      <label>World requests<input type="number" name="world_requests" min="0" max="50" required></label>
-      <label>Character requests<input type="number" name="character_requests" min="0" max="50" required></label>
-      <label>Average session duration<select name="average_session_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label>
-      <label>Asked for next event<select name="asked_for_next_event" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Showed world to another person<select name="showed_to_other_person" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Preferred world<select name="preferred_world" required><option value="ocean">Lumisea</option><option value="forest">Mosswood</option><option value="space">NovaNest</option><option value="none">No preference</option></select></label>
-      <label>Preferred character<select name="preferred_character" required data-character-select></select></label>
-      <button class="save-button" type="submit">Save Day 7</button>
-    </form>
-
-    <form data-observation-form="day14" hidden>
-      <label>Return desire<select name="return_desire" required><option value="">Choose</option><option value="none">No request</option><option value="prompted">Only when prompted</option><option value="spontaneous_once">Spontaneous once</option><option value="spontaneous_repeated">Spontaneous repeatedly</option></select></label>
-      <label>Novelty decay<select name="novelty_decay" required><option value="">Choose</option><option value="high_persistence">High persistence</option><option value="moderate_persistence">Moderate persistence</option><option value="low_persistence">Low persistence</option><option value="novelty_only">Novelty only</option></select></label>
-      <label>Day 14 voluntary return<select name="day_14_return" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Self-initiated room use<select name="self_initiated_room_use" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label>
-      <label>Preferred world<select name="preferred_world" required><option value="ocean">Lumisea</option><option value="forest">Mosswood</option><option value="space">NovaNest</option><option value="none">No preference</option></select></label>
-      <label>Preferred character<select name="preferred_character" required data-character-select></select></label>
-      <label>Bedtime acceptance change<select name="bedtime_acceptance_change" required><option value="worse">Worse</option><option value="same">Same</option><option value="better">Better</option><option value="not_observed">Not observed</option></select></label>
-      <label>Own-room attempt change<select name="own_room_attempt_change" required><option value="worse">Worse</option><option value="same">Same</option><option value="better">Better</option><option value="not_observed">Not observed</option></select></label>
-      <button class="save-button" type="submit">Save Day 14</button>
-    </form>
-
-    <label class="consent-box"><input type="checkbox" data-pilot-consent><span>I am a parent/caregiver and explicitly consent to send these structured anonymous observations to the MyNest Magic Room Pilot. This is pilot consent only—not permission to publish video, photos, quotes, or UGC.</span></label>
-    <p class="observer-status" data-observer-status role="status">Observations stay on this device unless consent is checked.</p>
-    <button type="button" class="export-button" data-export>Copy anonymous observation JSON</button>
+    <p class="privacy-note">No name, face, voice, address, school, profile, photo, video, or free text is collected. UGC publication consent is separate and is not collected here.</p>
+    <nav class="observer-tabs" aria-label="Observation checkpoint"><button type="button" data-observation-tab="baseline" aria-selected="true">Baseline</button><button type="button" data-observation-tab="first_exposure">First exposure</button><button type="button" data-observation-tab="day3">Day 3</button><button type="button" data-observation-tab="day7">Day 7</button><button type="button" data-observation-tab="day14">Day 14</button></nav>
+    <form data-observation-form="baseline"><label>Age band<select name="age_band" required><option value="">Choose</option><option value="3-4">3–4</option><option value="4-5">4–5</option><option value="5-6">5–6</option></select></label><label>Voluntary room entry before MyNest<select name="baseline_voluntary_entry" required><option value="">Choose</option><option value="never">Never</option><option value="sometimes">Sometimes</option><option value="often">Often</option></select></label><label>Typical time in room<select name="baseline_time_in_room" required><option value="">Choose</option><option value="under_10">Under 10 minutes</option><option value="10_30">10–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label><label>Child requests the room<select name="baseline_child_requests_room" required><option value="">Choose</option><option value="never">Never</option><option value="sometimes">Sometimes</option><option value="often">Often</option></select></label><label>Child shows room to others<select name="baseline_shows_room" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Bedtime acceptance baseline<select name="baseline_bedtime_acceptance" required><option value="">Choose</option><option value="low">Low</option><option value="mixed">Mixed</option><option value="high">High</option><option value="not_observed">Not observed</option></select></label><button class="save-button" type="submit">Save baseline</button></form>
+    <form data-observation-form="first_exposure" hidden><fieldset><legend>Observable first reaction</legend><label class="check"><input type="checkbox" name="entered_without_prompt"><span>Entered without prompt</span></label><label class="check"><input type="checkbox" name="approached_projection"><span>Approached projection</span></label><label class="check"><input type="checkbox" name="pointed_to_character"><span>Pointed to character</span></label><label class="check"><input type="checkbox" name="spoke_to_character"><span>Spoke to character</span></label><label class="check"><input type="checkbox" name="requested_repeat"><span>Requested repeat</span></label><label class="check"><input type="checkbox" name="asked_question"><span>Asked a question</span></label><label class="check"><input type="checkbox" name="requested_other_world"><span>Requested another world</span></label><label class="check"><input type="checkbox" name="stayed_after_parent_moved_away"><span>Stayed after parent moved away</span></label></fieldset><label>First exposure duration<select name="first_exposure_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label><button class="save-button" type="submit">Save first exposure</button></form>
+    <form data-observation-form="day3" hidden><label>Returned voluntarily on Day 3<select name="day_3_return" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Requested the world<select name="requested_world" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Requested a character<select name="requested_character" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Asked what happens next<select name="asked_for_next_event" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Day 3 session duration<select name="day_3_session_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label><button class="save-button" type="submit">Save Day 3</button></form>
+    <form data-observation-form="day7" hidden><label>Voluntary entries since introduction<input type="number" name="voluntary_entries" min="0" max="50" required></label><label>World requests<input type="number" name="world_requests" min="0" max="50" required></label><label>Character requests<input type="number" name="character_requests" min="0" max="50" required></label><label>Average session duration<select name="average_session_duration" required><option value="">Choose</option><option value="under_5">Under 5 minutes</option><option value="5_15">5–15 minutes</option><option value="15_30">15–30 minutes</option><option value="over_30">Over 30 minutes</option></select></label><label>Asked for next event<select name="asked_for_next_event" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Showed world to another person<select name="showed_to_other_person" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Preferred world<select name="preferred_world" required><option value="ocean">Lumisea</option><option value="forest">Mosswood</option><option value="space">NovaNest</option><option value="none">No preference</option></select></label><label>Preferred character<select name="preferred_character" required data-character-select></select></label><button class="save-button" type="submit">Save Day 7</button></form>
+    <form data-observation-form="day14" hidden><label>Return desire<select name="return_desire" required><option value="">Choose</option><option value="none">No request</option><option value="prompted">Only when prompted</option><option value="spontaneous_once">Spontaneous once</option><option value="spontaneous_repeated">Spontaneous repeatedly</option></select></label><label>Novelty decay<select name="novelty_decay" required><option value="">Choose</option><option value="high_persistence">High persistence</option><option value="moderate_persistence">Moderate persistence</option><option value="low_persistence">Low persistence</option><option value="novelty_only">Novelty only</option></select></label><label>Day 14 voluntary return<select name="day_14_return" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Self-initiated room use<select name="self_initiated_room_use" required><option value="">Choose</option><option value="true">Yes</option><option value="false">No</option></select></label><label>Preferred world<select name="preferred_world" required><option value="ocean">Lumisea</option><option value="forest">Mosswood</option><option value="space">NovaNest</option><option value="none">No preference</option></select></label><label>Preferred character<select name="preferred_character" required data-character-select></select></label><label>Bedtime acceptance change<select name="bedtime_acceptance_change" required><option value="worse">Worse</option><option value="same">Same</option><option value="better">Better</option><option value="not_observed">Not observed</option></select></label><label>Own-room attempt change<select name="own_room_attempt_change" required><option value="worse">Worse</option><option value="same">Same</option><option value="better">Better</option><option value="not_observed">Not observed</option></select></label><button class="save-button" type="submit">Save Day 14</button></form>
+    <label class="consent-box"><input type="checkbox" data-pilot-consent><span>I am a parent/caregiver and explicitly consent to send these structured anonymous observations to the MyNest Magic Room Pilot. This is pilot consent only—not permission to publish video, photos, quotes, or UGC.</span></label><p class="observer-status" data-observer-status role="status">Observations stay on this device unless consent is checked.</p><button type="button" class="export-button" data-export>Copy anonymous observation JSON</button>
   </aside>
-
-  <div class="calibration-grid" data-calibration-grid hidden aria-hidden="true"></div>
-
-  <footer><span>MyNest · My Room. My World.</span><a href="/mynest/">Return to the Room Check</a><span>Prototype—not medical treatment.</span></footer>
-  <script src="worlds.js?v=20261005-v01"></script>
-  <script src="magic-room-sync.js?v=20261005-v01"></script>
-  <script src="magic-room.js?v=20261005-v01"></script>
+  <footer><span>MyNest · My room. My world.</span><a href="/mynest/">Room Check</a><span>No camera · no recording · no rapid flashing</span></footer>
+  <script src="worlds.js?v=20261005-v02"></script><script src="magic-room-sync.js?v=20261005-v01"></script><script src="magic-room.js?v=20261005-v02"></script>
 </body>
 </html>
