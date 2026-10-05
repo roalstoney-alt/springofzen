@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test workers/mynest-api/test/*.test.js",
-    "qa:mynest:magic": "node scripts/qa-mynest-ocean-v02.mjs",
+    "qa:mynest:magic": "node scripts/qa-mynest-ocean-room001.mjs",
     "mynest:dev": "wrangler dev --config workers/mynest-api/wrangler.jsonc",
     "mynest:deploy": "wrangler deploy --config workers/mynest-api/wrangler.jsonc"
   },
