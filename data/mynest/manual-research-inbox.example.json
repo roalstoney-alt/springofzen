@@ -1,0 +1,19 @@
+{
+  "batch_id": "MANUAL-REDDIT-20261005-A",
+  "collected_by_human": true,
+  "records": [
+    {
+      "source": "reddit",
+      "subreddit": "r/Parenting",
+      "published_period": "2026-10",
+      "age_band": "4-5",
+      "current_sleep_setup": "own-room-returns",
+      "raw_problem_wording": "Example only: our child starts in their room but comes back after waking.",
+      "failed_solution": "Repeatedly walking the child back without a consistent plan",
+      "parent_action_already_tried": "Changed the bedtime routine several times",
+      "purchase_or_action_intent": "action",
+      "pilot_fit": "high",
+      "internal_source_url": "https://www.reddit.com/r/Parenting/comments/example/"
+    }
+  ]
+}

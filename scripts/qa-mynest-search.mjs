@@ -17,7 +17,8 @@ assert.ok(corpus.every((record) => record.source_url.startsWith("https://")), "e
 assert.ok(corpus.every((record) => record.raw_question && record.normalized_question && record.primary_problem_code), "required problem fields must exist");
 assert.ok(corpus.every((record) => !Object.keys(record).some((key) => prohibited.has(key))), "corpus must not carry identity fields");
 assert.equal(queue.external_posting, "DISABLED");
-assert.ok(queue.drafts.every((draft) => draft.status === "HUMAN_REVIEW_REQUIRED"));
+assert.equal(queue.broad_autonomous_web_crawl, "DISABLED");
+assert.ok(queue.review_queue.every((draft) => draft.status === "HUMAN_REVIEW_REQUIRED"));
 
 const canonicalUrls = new Set();
 for (const question of published) {

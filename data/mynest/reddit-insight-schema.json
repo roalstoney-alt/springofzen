@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.springofzen.com/schemas/mynest-reddit-insight-v0.1.1.json",
+  "title": "MyNest anonymous Reddit insight",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "insight_id",
+    "source",
+    "subreddit",
+    "published_period",
+    "age_band",
+    "current_sleep_setup",
+    "raw_problem_wording",
+    "normalized_problem",
+    "failed_solution",
+    "parent_action_already_tried",
+    "primary_barrier",
+    "secondary_barrier",
+    "transition_intent",
+    "urgency",
+    "purchase_or_action_intent",
+    "question_cluster",
+    "answer_gap",
+    "pilot_fit"
+  ],
+  "properties": {
+    "insight_id": {"type": "string", "pattern": "^RDI-[0-9]{8}-[A-F0-9]{8}$"},
+    "source": {"const": "reddit"},
+    "subreddit": {"enum": ["r/Parenting", "r/toddlers", "r/sleeptrain", "r/ScienceBasedParenting"]},
+    "published_period": {"type": "string", "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"},
+    "age_band": {"enum": ["unknown", "2.5-3", "3-4", "4-5", "5-6", "outside-cohort"]},
+    "current_sleep_setup": {"enum": ["unknown", "co-sleeping", "parent-room", "own-room-parent-present", "own-room-returns", "own-room-independent", "other"]},
+    "raw_problem_wording": {"type": "string", "minLength": 3, "maxLength": 500},
+    "normalized_problem": {"type": "string", "minLength": 3, "maxLength": 240},
+    "failed_solution": {"type": ["string", "null"], "maxLength": 240},
+    "parent_action_already_tried": {"type": ["string", "null"], "maxLength": 240},
+    "primary_barrier": {"enum": ["F01", "F02", "F03", "F04", "F05", "F06"]},
+    "secondary_barrier": {"type": ["string", "null"], "enum": ["F01", "F02", "F03", "F04", "F05", "F06", null]},
+    "transition_intent": {"enum": ["none", "exploring", "planning", "active"]},
+    "urgency": {"enum": ["low", "medium", "high"]},
+    "purchase_or_action_intent": {"enum": ["none", "information", "action", "purchase"]},
+    "question_cluster": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 80},
+    "answer_gap": {"type": "string", "minLength": 3, "maxLength": 240},
+    "pilot_fit": {"enum": ["low", "medium", "high"]},
+    "internal_source_url": {"type": ["string", "null"], "format": "uri", "maxLength": 500}
+  },
+  "privacy": {
+    "prohibited_fields": ["username", "user_name", "name", "email", "phone", "profile_url", "child_name", "address", "exact_birthday", "exact_birthdate"],
+    "source_url_use": "INTERNAL_VERIFICATION_ONLY_NOT_A_CONTACT_LEAD"
+  }
+}

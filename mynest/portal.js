@@ -97,9 +97,13 @@
   const recruitmentParams = new URLSearchParams(window.location.search);
   const recruitmentGroup = recruitmentParams.get("group");
   const recruitmentPilotId = recruitmentParams.get("pilot");
-  if (["A", "B", "C"].includes(recruitmentGroup) && /^P-[A-Z0-9]{4}$/.test(recruitmentPilotId || "")) {
+  const recruitmentHouseholdId = recruitmentParams.get("household");
+  const recruitmentChildId = recruitmentParams.get("child");
+  if (["A", "B", "C"].includes(recruitmentGroup) && /^P-[A-Z0-9]{4}$/.test(recruitmentPilotId || "") && /^H-[A-Z0-9]{4}$/.test(recruitmentHouseholdId || "") && /^C-[A-Z0-9]{4}$/.test(recruitmentChildId || "")) {
     state.recruitmentGroup = recruitmentGroup;
     state.recruitmentPilotId = recruitmentPilotId;
+    state.recruitmentHouseholdId = recruitmentHouseholdId;
+    state.recruitmentChildId = recruitmentChildId;
     saveState();
   }
 
@@ -137,6 +141,9 @@
     state.pendingEvents.push({
       client_event_id: createEventId(),
       household_id: state.householdId,
+      pilot_id: state.recruitmentPilotId || null,
+      recruitment_household_id: state.recruitmentHouseholdId || null,
+      recruitment_child_id: state.recruitmentChildId || null,
       event_type: eventType,
       step: state.step,
       client_created_at: new Date().toISOString(),
@@ -303,6 +310,7 @@
   function renderFollowup() {
     const total = completedNights();
     const verified = hasVerifiedTransition();
+    const allRequiredCheckins = CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result));
     const choice = choiceNames[state.choice.childChoice] || "No child choice";
     document.querySelector("[data-success-count]").textContent = total;
     document.querySelector("[data-summary-strip]").innerHTML = `
@@ -316,6 +324,10 @@
     const title = document.querySelector("[data-outcome-title]");
     const copy = document.querySelector("[data-outcome-copy]");
     const card = document.querySelector("[data-outcome-card]");
+    const voucherCard = document.querySelector("[data-voucher-card]");
+    voucherCard.hidden = !(allRequiredCheckins && state.recruitmentPilotId);
+    const voucherPilotId = voucherCard.querySelector("[data-voucher-pilot-id]");
+    if (voucherPilotId) voucherPilotId.textContent = state.recruitmentPilotId || "";
     card.classList.toggle("is-verified", verified);
     if (verified) {
       title.textContent = "A verified transition signal.";
@@ -340,7 +352,9 @@
       `First night: ${resultLabels[state.firstNight?.result] || "not logged"} / ${willingnessLabels[state.firstNight?.willingness] || "entry not logged"}`,
       ...CHECKPOINTS.map((day) => `Day ${day}: ${checkpointStateText(state.checkpoints?.[day])}`),
       `Own-room nights logged: ${completedNights()}`,
-      `Verified transition signal: ${hasVerifiedTransition() ? "yes" : "not yet"}`
+      `Verified transition signal: ${hasVerifiedTransition() ? "yes" : "not yet"}`,
+      `Required check-ins complete: ${CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result)) ? "yes" : "not yet"}`,
+      `Completion voucher: ${state.recruitmentPilotId && CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result)) ? "eligible" : "not yet eligible"}`
     ];
     return lines.join("\n");
   }

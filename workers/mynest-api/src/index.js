@@ -40,6 +40,9 @@ export const PROHIBITED_FIELDS = new Set([
 const TOP_LEVEL_FIELDS = new Set([
   "client_event_id",
   "household_id",
+  "pilot_id",
+  "recruitment_household_id",
+  "recruitment_child_id",
   "event_type",
   "step",
   "client_created_at",
@@ -92,7 +95,11 @@ const SCREEN_FIELDS = new Set([
   "safe_space",
   "transition_next_14_days",
   "follow_up_available",
-  "medical_scope_request"
+  "medical_scope_request",
+  "acquisition_source",
+  "acquisition_medium",
+  "campaign_key",
+  "content_key"
 ]);
 const CONSENT_FIELDS = new Set(["pilot_consent", "consent_version"]);
 const DAY0_FIELDS = new Set([
@@ -115,6 +122,9 @@ const ROOM_RESISTANCE = new Set(["yes", "with_resistance", "no"]);
 const NIGHT_LIGHT = new Set(["none", "dim", "bright"]);
 const CURRENT_SOUND = new Set(["quiet", "steady", "variable"]);
 const PREVIOUS_ATTEMPT = new Set(["none", "once", "multiple"]);
+const ACQUISITION_SOURCES = new Set(["meta", "google", "chatgpt", "reddit", "mynest", "direct", "other"]);
+const ACQUISITION_MEDIA = new Set(["paid_social", "cpc", "paid_assistant", "organic", "referral", "direct", "other"]);
+const CAMPAIGN_KEY_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
 const GROUP_SEQUENCE = ["A", "B", "C", "C", "A", "B", "C", "A", "B", "C"];
 
 let rateWindowStart = 0;
@@ -181,6 +191,12 @@ export function validateEvent(input) {
 
   if (!UUID_PATTERN.test(input.client_event_id || "")) return { ok: false, code: "INVALID_CLIENT_EVENT_ID", message: "client_event_id must be a UUID v4." };
   if (!HOUSEHOLD_PATTERN.test(input.household_id || "")) return { ok: false, code: "INVALID_HOUSEHOLD_ID", message: "household_id is invalid." };
+  const hasRecruitmentLink = input.pilot_id != null || input.recruitment_household_id != null || input.recruitment_child_id != null;
+  if (hasRecruitmentLink) {
+    if (!RECRUITMENT_ID_PATTERNS.pilot_id.test(input.pilot_id || "")) return { ok: false, code: "INVALID_PILOT_ID", message: "pilot_id is invalid." };
+    if (!RECRUITMENT_ID_PATTERNS.household_id.test(input.recruitment_household_id || "")) return { ok: false, code: "INVALID_RECRUITMENT_HOUSEHOLD_ID", message: "recruitment_household_id is invalid." };
+    if (!RECRUITMENT_ID_PATTERNS.child_id.test(input.recruitment_child_id || "")) return { ok: false, code: "INVALID_RECRUITMENT_CHILD_ID", message: "recruitment_child_id is invalid." };
+  }
   if (!ALLOWED_EVENT_TYPES.has(input.event_type)) return { ok: false, code: "INVALID_EVENT_TYPE", message: "event_type is invalid." };
   if (!Number.isInteger(input.step) || input.step < 1 || input.step > 5) return { ok: false, code: "INVALID_STEP", message: "step must be an integer from 1 to 5." };
   if (typeof input.client_created_at !== "string" || input.client_created_at.length > 40 || Number.isNaN(Date.parse(input.client_created_at))) {
@@ -274,6 +290,15 @@ export function validateRecruitment(input) {
     for (const field of ["safe_space", "transition_next_14_days", "follow_up_available", "medical_scope_request"]) {
       if (!requiredBoolean(payload[field])) return { ok: false, code: "INVALID_SCREEN", message: `${field} must be boolean.` };
     }
+    payload.acquisition_source ??= "direct";
+    payload.acquisition_medium ??= "direct";
+    payload.campaign_key ??= null;
+    payload.content_key ??= null;
+    if (!ACQUISITION_SOURCES.has(payload.acquisition_source)) return { ok: false, code: "INVALID_ACQUISITION", message: "acquisition_source is invalid." };
+    if (!ACQUISITION_MEDIA.has(payload.acquisition_medium)) return { ok: false, code: "INVALID_ACQUISITION", message: "acquisition_medium is invalid." };
+    for (const field of ["campaign_key", "content_key"]) {
+      if (payload[field] !== null && !CAMPAIGN_KEY_PATTERN.test(payload[field])) return { ok: false, code: "INVALID_ACQUISITION", message: `${field} is invalid.` };
+    }
   } else if (input.action === "consent") {
     if (payload.pilot_consent !== true) return { ok: false, code: "CONSENT_REQUIRED", message: "Explicit pilot consent is required." };
     if (payload.consent_version !== "MYNEST_CONSENT_v0.1") return { ok: false, code: "INVALID_CONSENT_VERSION", message: "consent_version is invalid." };
@@ -298,17 +323,21 @@ async function insertEvent(env, event) {
   const payload = event.payload;
   const statement = env.MYNEST_DB.prepare(`
     INSERT INTO mynest_pilot_events (
-      id, client_event_id, household_id, event_type, step, client_created_at,
+      id, client_event_id, household_id, pilot_id, recruitment_household_id, recruitment_child_id,
+      event_type, step, client_created_at,
       age_band, problem_code, theme, child_choice, room_entry_willingness, own_room_result,
       own_room_nights, verified_transition, readiness_confirmed, checkpoint_day,
       checkpoint_willingness, checkpoint_result, created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(client_event_id) DO UPDATE SET client_event_id = excluded.client_event_id
     RETURNING id
   `).bind(
     id,
     event.client_event_id,
     event.household_id,
+    event.pilot_id ?? null,
+    event.recruitment_household_id ?? null,
+    event.recruitment_child_id ?? null,
     event.event_type,
     event.step,
     event.client_created_at,
@@ -330,6 +359,34 @@ async function insertEvent(env, event) {
   return row?.id || id;
 }
 
+export async function markPilotCompleteIfReady(env, event) {
+  if (event.event_type !== "checkpoint_saved" || !event.pilot_id || !event.recruitment_household_id || !event.recruitment_child_id) return false;
+  const checkpoints = await env.MYNEST_DB.prepare(`
+    SELECT COUNT(DISTINCT checkpoint_day) AS count
+    FROM mynest_pilot_events
+    WHERE pilot_id = ?
+      AND recruitment_household_id = ?
+      AND recruitment_child_id = ?
+      AND event_type = 'checkpoint_saved'
+      AND checkpoint_day IN (1, 3, 7, 14)
+  `).bind(event.pilot_id, event.recruitment_household_id, event.recruitment_child_id).first();
+  if (Number(checkpoints?.count || 0) < 4) return false;
+
+  const completedAt = new Date().toISOString();
+  const row = await env.MYNEST_DB.prepare(`
+    UPDATE mynest_pilot_enrollments
+    SET status = 'PILOT_COMPLETE', voucher_eligible = 1,
+        completed_at = COALESCE(completed_at, ?), updated_at = ?
+    WHERE pilot_id = ?
+      AND household_id = ?
+      AND child_id = ?
+      AND day0_timestamp IS NOT NULL
+      AND status IN ('PILOT_ACTIVE', 'PILOT_COMPLETE')
+    RETURNING pilot_id
+  `).bind(completedAt, completedAt, event.pilot_id, event.recruitment_household_id, event.recruitment_child_id).first();
+  return Boolean(row?.pilot_id);
+}
+
 async function getEnrollment(env, pilotId) {
   return env.MYNEST_DB.prepare(`
     SELECT household_id, child_id, status, group_assignment,
@@ -348,8 +405,9 @@ async function saveScreen(env, event) {
       pilot_id, household_id, child_id, status, screen_event_id,
       age_band, sleep_location, transition_goal, safe_space,
       transition_next_14_days, follow_up_available, medical_scope_request,
+      acquisition_source, acquisition_medium, campaign_key, content_key,
       created_at, updated_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
     event.pilot_id,
     event.household_id,
@@ -363,6 +421,10 @@ async function saveScreen(env, event) {
     payload.transition_next_14_days ? 1 : 0,
     payload.follow_up_available ? 1 : 0,
     payload.medical_scope_request ? 1 : 0,
+    payload.acquisition_source,
+    payload.acquisition_medium,
+    payload.campaign_key,
+    payload.content_key,
     now,
     now
   ).run();
@@ -515,7 +577,10 @@ async function handleRequest(request, env) {
       return json({ ok: true, status: result.status, group: result.group }, 200, origin);
     }
     const eventId = await insertEvent(env, validated.value);
-    return json({ ok: true, event_id: eventId }, 200, origin);
+    const pilotComplete = await markPilotCompleteIfReady(env, validated.value);
+    const responseBody = { ok: true, event_id: eventId };
+    if (validated.value.pilot_id) responseBody.pilot_complete = pilotComplete;
+    return json(responseBody, 200, origin);
   } catch (error) {
     console.error("MyNest D1 insert failed", error?.message || "unknown");
     return reject("DATABASE_ERROR", "Unable to store event.", 503, origin);

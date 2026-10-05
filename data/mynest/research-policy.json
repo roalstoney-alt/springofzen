@@ -1,0 +1,46 @@
+{
+  "project": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1.1",
+  "effective_date": "2026-10-05",
+  "supersedes": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1",
+  "primary_manual_demand_source": "REDDIT",
+  "secondary_source": "MYNEST_FIRST_PARTY_DATA",
+  "broad_autonomous_web_crawl": "DISABLED",
+  "reddit_role": "REALITY_SENSOR",
+  "reddit_communities": [
+    "r/Parenting",
+    "r/toddlers",
+    "r/sleeptrain",
+    "r/ScienceBasedParenting"
+  ],
+  "daily_manual_target": {
+    "minimum": 20,
+    "maximum": 30,
+    "unit": "public_posts_or_comments"
+  },
+  "primary_recruitment": "PAID_ACQUISITION",
+  "paid_channels": ["META", "GOOGLE", "CHATGPT_ADS"],
+  "conversion_entries": [
+    "https://www.springofzen.com/mynest/",
+    "https://www.springofzen.com/mynest/questions/"
+  ],
+  "required_utm_parameters": ["utm_source", "utm_medium", "utm_campaign", "utm_content"],
+  "direct_reddit_contact": "EXCEPTION_ONLY",
+  "mass_dm": "PROHIBITED",
+  "identity_scraping": "PROHIBITED",
+  "profile_enrichment": "PROHIBITED",
+  "automatic_posting": "PROHIBITED",
+  "human_review_required": ["public_page", "paid_ad", "reddit_reply"],
+  "internal_review_not_required": ["deduplication", "clustering", "frequency_report"],
+  "child_choice": ["LIGHT", "STORY_OR_SOUND", "ROOM_FRIEND"],
+  "completion_incentive": {
+    "value": "US$39 equivalent voucher",
+    "requires": ["Day 0", "Day 1", "Day 3", "Day 7", "Day 14"],
+    "does_not_require": ["successful outcome", "review", "testimonial"]
+  },
+  "legacy_problem_corpus": {
+    "path": "data/mynest/problem-corpus.jsonl",
+    "records": 111,
+    "status": "PRESERVED_HISTORICAL_EVIDENCE"
+  },
+  "status": "READY_TO_EXECUTE"
+}

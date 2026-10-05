@@ -8,6 +8,9 @@ function eventFixture() {
   return {
     event_id: "177b8738-a546-4c31-9ca8-5a4fe7c2dd18",
     household_id: "NEST-A1B2",
+    pilot_id: "P-E5F6",
+    recruitment_household_id: "H-A1B2",
+    recruitment_child_id: "C-C3D4",
     event_type: "theme_chosen",
     step: 2,
     client_created_at: "2026-10-04T12:00:00.000Z",
@@ -33,6 +36,9 @@ test("normalization upgrades legacy event_id and strips free text", () => {
   assert.equal("notes" in normalized.payload, false);
   assert.equal("child_selected_text" in normalized.payload, false);
   assert.equal(normalized.payload.child_choice, "room_friend");
+  assert.equal(normalized.pilot_id, "P-E5F6");
+  assert.equal(normalized.recruitment_household_id, "H-A1B2");
+  assert.equal(normalized.recruitment_child_id, "C-C3D4");
 });
 
 test("queue delivery semantics distinguish success, permanent rejection, and retry", () => {

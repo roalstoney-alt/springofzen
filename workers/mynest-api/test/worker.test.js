@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import worker, {
   PROHIBITED_FIELDS,
   eligibilityForScreen,
+  markPilotCompleteIfReady,
   resetRateLimitForTests,
   validateRecruitment
 } from "../src/index.js";
@@ -69,7 +70,11 @@ function validRecruitment(action = "screen", payload = {}) {
     safe_space: true,
     transition_next_14_days: true,
     follow_up_available: true,
-    medical_scope_request: false
+    medical_scope_request: false,
+    acquisition_source: "google",
+    acquisition_medium: "cpc",
+    campaign_key: "mynest_cohort_001",
+    content_key: "barrier_first"
   } : action === "consent" ? {
     pilot_consent: true,
     consent_version: "MYNEST_CONSENT_v0.1"
@@ -179,6 +184,34 @@ test("recruitment validation accepts structured screen, consent, and Day 0 paylo
   assert.equal(validateRecruitment(validRecruitment("day0")).ok, true);
 });
 
+test("pilot progress accepts a bounded recruitment pilot ID", async () => {
+  const linked = validEvent({ pilot_id: "P-E5F6", recruitment_household_id: "H-A1B2", recruitment_child_id: "C-C3D4" });
+  assert.equal((await worker.fetch(request(linked), { MYNEST_DB: new FakeD1() })).status, 200);
+  const invalid = validEvent({ pilot_id: "not-a-pilot", recruitment_household_id: "H-A1B2", recruitment_child_id: "C-C3D4" });
+  const response = await worker.fetch(request(invalid), { MYNEST_DB: new FakeD1() });
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).error, "INVALID_PILOT_ID");
+  const incomplete = await worker.fetch(request(validEvent({ pilot_id: "P-E5F6" })), { MYNEST_DB: new FakeD1() });
+  assert.equal(incomplete.status, 400);
+  assert.equal((await incomplete.json()).error, "INVALID_RECRUITMENT_HOUSEHOLD_ID");
+});
+
+test("voucher eligibility requires all four post-Day-0 checkpoints", async () => {
+  const event = { event_type: "checkpoint_saved", pilot_id: "P-E5F6", recruitment_household_id: "H-A1B2", recruitment_child_id: "C-C3D4" };
+  const database = (count) => ({
+    prepare(sql) {
+      return {
+        bind: () => ({
+          first: async () => sql.includes("COUNT(DISTINCT checkpoint_day)") ? { count } : { pilot_id: "P-E5F6" }
+        })
+      };
+    }
+  });
+  assert.equal(await markPilotCompleteIfReady({ MYNEST_DB: database(3) }, event), false);
+  assert.equal(await markPilotCompleteIfReady({ MYNEST_DB: database(4) }, event), true);
+  assert.equal(await markPilotCompleteIfReady({ MYNEST_DB: database(4) }, { ...event, pilot_id: null }), false);
+});
+
 test("recruitment eligibility follows the frozen decision order", () => {
   const base = validRecruitment("screen").payload;
   assert.equal(eligibilityForScreen(base), "ELIGIBLE");
@@ -201,4 +234,6 @@ test("recruitment rejects free text, unknown fields, bad consent, and invalid co
 
   assert.equal(validateRecruitment(validRecruitment("consent", { pilot_consent: false })).code, "CONSENT_REQUIRED");
   assert.equal(validateRecruitment(validRecruitment("day0", { own_room_nights_last_7: 8 })).code, "INVALID_BASELINE_COUNT");
+  assert.equal(validateRecruitment(validRecruitment("screen", { campaign_key: "bad campaign!" })).code, "INVALID_ACQUISITION");
+  assert.equal(validateRecruitment(validRecruitment("screen", { acquisition_source: "profile-scrape" })).code, "INVALID_ACQUISITION");
 });

@@ -17,13 +17,35 @@
     return Array.from(bytes, (value) => ALPHABET[value % ALPHABET.length]).join("");
   }
 
+  function campaignKey(value) {
+    if (!value) return null;
+    const normalized = value.toLowerCase().trim().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 64);
+    return normalized || null;
+  }
+
+  function captureAttribution() {
+    if (window.MyNestAcquisition?.get) return window.MyNestAcquisition.get();
+    const params = new URLSearchParams(window.location.search);
+    const sourceMap = { meta: "meta", facebook: "meta", instagram: "meta", google: "google", chatgpt: "chatgpt", reddit: "reddit", mynest: "mynest" };
+    const mediumMap = { paid_social: "paid_social", cpc: "cpc", paid_search: "cpc", paid_assistant: "paid_assistant", organic: "organic", referral: "referral" };
+    const rawSource = (params.get("utm_source") || "").toLowerCase();
+    const rawMedium = (params.get("utm_medium") || "").toLowerCase();
+    return {
+      acquisition_source: rawSource ? (sourceMap[rawSource] || "other") : "direct",
+      acquisition_medium: rawMedium ? (mediumMap[rawMedium] || "other") : "direct",
+      campaign_key: campaignKey(params.get("utm_campaign")),
+      content_key: campaignKey(params.get("utm_content"))
+    };
+  }
+
   function initialState() {
     return {
       household_id: `H-${randomCode()}`,
       child_id: `C-${randomCode()}`,
       pilot_id: `P-${randomCode()}`,
       status: "DISCOVERED",
-      group: null
+      group: null,
+      acquisition: captureAttribution()
     };
   }
 
@@ -126,7 +148,7 @@
     document.querySelector("[data-pilot-id]").textContent = state.pilot_id;
     document.querySelector("[data-group]").textContent = state.group ? `GROUP ${state.group}` : "WAITLIST";
     const link = document.querySelector("[data-continue-link]");
-    link.href = `../?pilot=${encodeURIComponent(state.pilot_id)}&group=${encodeURIComponent(state.group || "")}`;
+    link.href = `../?pilot=${encodeURIComponent(state.pilot_id)}&household=${encodeURIComponent(state.household_id)}&child=${encodeURIComponent(state.child_id)}&group=${encodeURIComponent(state.group || "")}`;
     link.textContent = state.group === "A" ? "Continue to diagnosis →" : "Continue to MyNest →";
     screenSection.hidden = true;
     consentSection.hidden = true;
@@ -148,7 +170,8 @@
       safe_space: values.safe_space === "true",
       transition_next_14_days: values.transition_next_14_days === "true",
       follow_up_available: values.follow_up_available === "true",
-      medical_scope_request: values.medical_scope_request === "true"
+      medical_scope_request: values.medical_scope_request === "true",
+      ...state.acquisition
     };
     setBusy(form, true);
     setStatus("screen", "Checking eligibility…");

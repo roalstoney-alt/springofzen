@@ -208,9 +208,16 @@ const corpus = questions.map(([url, raw, language, age, published], index) => {
 const counts = Object.fromEntries(topics.map(([slug]) => [slug, corpus.filter((r) => r.answer_page_candidate === slug).length]));
 
 const questionMap = {
-  project: "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1",
+  project: "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1.1",
   generated_at: today,
   raw_problem_records: corpus.length,
+  research_policy: {
+    legacy_corpus_status: "PRESERVED_HISTORICAL_EVIDENCE",
+    primary_manual_source: "REDDIT",
+    secondary_source: "MYNEST_FIRST_PARTY_DATA",
+    broad_autonomous_web_crawl: "DISABLED",
+    new_records_path: "data/mynest/reddit-insights.jsonl"
+  },
   canonical_questions: topics.map(([slug, question, primary_problem_code, first_experiment, published, priority_score], index) => ({
     id: `MYNEST-Q-${String(index + 1).padStart(2, "0")}`,
     slug,
@@ -298,7 +305,7 @@ function pageShell({ title, description, canonical, body, articleJson }) {
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="${canonical}">
-<meta name="robots" content="index,follow"><link rel="stylesheet" href="/mynest/questions/questions.css?v=20261005">
+<meta name="robots" content="index,follow"><link rel="stylesheet" href="/mynest/questions/questions.css?v=20261005"><script src="/mynest/acquisition.js?v=20261005-v011"></script>
 <script type="application/ld+json">${JSON.stringify(structured)}</script></head>
 <body><a class="skip" href="#answer">Skip to the answer</a><header><a class="brand" href="/mynest/">MyNest <span>by Spring of Zen</span></a><nav><a href="/mynest/questions/">Questions</a><a href="/mynest/method/">Method</a><a href="/mynest/results/">Results</a></nav></header>${body}<footer><a href="/mynest/">MyNest Room Check</a><span>Environmental and behavioural transition planning—not medical treatment.</span></footer></body></html>`;
 }
@@ -385,12 +392,14 @@ function write(relativePath, content) {
 
 write("data/mynest/problem-corpus.jsonl", corpus.map((record) => JSON.stringify(record)).join("\n") + "\n");
 write("data/mynest/question-map.json", JSON.stringify(questionMap, null, 2) + "\n");
-write("data/mynest/platform-content-queue.json", JSON.stringify(queue, null, 2) + "\n");
+// v0.1.1 policy and review queues are maintained independently so this legacy
+// historical-corpus builder cannot restore broad-platform outreach drafts.
 write("docs/mynest/MYNEST_TOPIC_MAP_v0.1.md", topicDoc);
 write("docs/mynest/MYNEST_ANSWER_PAGE_STANDARD_v0.1.md", standardDoc);
 write("mynest/questions/questions.css", css);
 write("mynest/questions/index.html", hub);
-write("mynest/method/index.html", method);
+// The public method page is maintained independently under the v0.1.1 manual
+// Reddit research and privacy policy.
 write("mynest/results/index.html", results);
 for (const [slug, data] of published) write(`mynest/questions/${slug}/index.html`, answerPage(slug, data));
 

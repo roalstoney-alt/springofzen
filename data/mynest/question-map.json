@@ -1,7 +1,14 @@
 {
-  "project": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1",
+  "project": "MYNEST_SEARCH_AND_ANSWER_ENGINE_v0.1.1",
   "generated_at": "2026-10-05",
   "raw_problem_records": 111,
+  "research_policy": {
+    "legacy_corpus_status": "PRESERVED_HISTORICAL_EVIDENCE",
+    "primary_manual_source": "REDDIT",
+    "secondary_source": "MYNEST_FIRST_PARTY_DATA",
+    "broad_autonomous_web_crawl": "DISABLED",
+    "new_records_path": "data/mynest/reddit-insights.jsonl"
+  },
   "canonical_questions": [
     {
       "id": "MYNEST-Q-01",

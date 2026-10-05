@@ -24,6 +24,9 @@
     return {
       client_event_id: event.client_event_id || event.event_id,
       household_id: event.household_id,
+      pilot_id: event.pilot_id || null,
+      recruitment_household_id: event.recruitment_household_id || null,
+      recruitment_child_id: event.recruitment_child_id || null,
       event_type: event.event_type,
       step: event.step,
       client_created_at: event.client_created_at,
