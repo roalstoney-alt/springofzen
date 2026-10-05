@@ -1,5 +1,6 @@
 const API_PATH = "/api/mynest/pilot-events";
 const RECRUITMENT_PATH = "/api/mynest/pilot-recruitment";
+const MAGIC_ROOM_PATH = "/api/mynest/magic-room-events";
 const MAX_BODY_BYTES = 4096;
 const RATE_WINDOW_MS = 60_000;
 const RATE_LIMIT_PER_ISOLATE = 120;
@@ -34,7 +35,16 @@ export const PROHIBITED_FIELDS = new Set([
   "birthdate",
   "dob",
   "child_selected_text",
-  "tinyChoice"
+  "tinyChoice",
+  "face",
+  "face_recording",
+  "voice",
+  "voice_archive",
+  "video",
+  "photo",
+  "school",
+  "profile",
+  "profile_url"
 ]);
 
 const TOP_LEVEL_FIELDS = new Set([
@@ -126,6 +136,29 @@ const ACQUISITION_SOURCES = new Set(["meta", "google", "chatgpt", "reddit", "myn
 const ACQUISITION_MEDIA = new Set(["paid_social", "cpc", "paid_assistant", "organic", "referral", "direct", "other"]);
 const CAMPAIGN_KEY_PATTERN = /^[a-z0-9][a-z0-9_-]{0,63}$/;
 const GROUP_SEQUENCE = ["A", "B", "C", "C", "A", "B", "C", "A", "B", "C"];
+
+const MAGIC_ROOM_ACTIONS = new Set(["baseline", "first_exposure", "day3", "day7", "day14"]);
+const MAGIC_ROOM_TOP_LEVEL_FIELDS = new Set(["client_event_id", "action", "magic_pilot_id", "pilot_consent", "consent_version", "payload"]);
+const MAGIC_ROOM_COMMON_FIELDS = new Set(["world", "character"]);
+const MAGIC_ROOM_FIELDS = {
+  baseline: new Set(["age_band", "baseline_voluntary_entry", "baseline_time_in_room", "baseline_child_requests_room", "baseline_shows_room", "baseline_bedtime_acceptance"]),
+  first_exposure: new Set(["entered_without_prompt", "approached_projection", "pointed_to_character", "spoke_to_character", "requested_repeat", "asked_question", "requested_other_world", "stayed_after_parent_moved_away", "first_exposure_duration"]),
+  day3: new Set(["day_3_return", "requested_world", "requested_character", "asked_for_next_event", "day_3_session_duration"]),
+  day7: new Set(["voluntary_entries", "world_requests", "character_requests", "average_session_duration", "asked_for_next_event", "showed_to_other_person", "preferred_world", "preferred_character"]),
+  day14: new Set(["return_desire", "novelty_decay", "day_14_return", "self_initiated_room_use", "preferred_world", "preferred_character", "bedtime_acceptance_change", "own_room_attempt_change"])
+};
+const MAGIC_PILOT_PATTERN = /^MR-[A-Z0-9]{6}$/;
+const MAGIC_AGE_BANDS = new Set(["3-4", "4-5", "5-6"]);
+const MAGIC_WORLDS = new Set(["ocean", "forest", "space"]);
+const MAGIC_PREFERRED_WORLDS = new Set(["ocean", "forest", "space", "none"]);
+const MAGIC_CHARACTERS = new Set(["milo", "nini", "pip", "moon_ray", "momo", "kiko", "oru", "grand_tree", "nova", "orbit", "comet", "luna", "none"]);
+const FREQUENCY_LEVELS = new Set(["never", "sometimes", "often"]);
+const SESSION_DURATIONS = new Set(["under_5", "5_15", "15_30", "over_30"]);
+const BASELINE_DURATIONS = new Set(["under_10", "10_30", "over_30"]);
+const BASELINE_ACCEPTANCE = new Set(["low", "mixed", "high", "not_observed"]);
+const RETURN_DESIRE = new Set(["none", "prompted", "spontaneous_once", "spontaneous_repeated"]);
+const NOVELTY_DECAY = new Set(["high_persistence", "moderate_persistence", "low_persistence", "novelty_only"]);
+const OUTCOME_CHANGE = new Set(["worse", "same", "better", "not_observed"]);
 
 let rateWindowStart = 0;
 let rateWindowCount = 0;
@@ -315,6 +348,136 @@ export function validateRecruitment(input) {
   }
 
   return { ok: true, value: input };
+}
+
+export function validateMagicRoomEvent(input) {
+  if (!isPlainObject(input)) return { ok: false, code: "INVALID_BODY", message: "Body must be a JSON object." };
+  const prohibitedTopLevel = firstProhibitedField(input);
+  if (prohibitedTopLevel) return { ok: false, code: "PROHIBITED_FIELD", message: `Field is not permitted: ${prohibitedTopLevel}` };
+  const unexpectedTopLevel = firstUnexpectedField(input, MAGIC_ROOM_TOP_LEVEL_FIELDS);
+  if (unexpectedTopLevel) return { ok: false, code: "UNKNOWN_FIELD", message: `Unknown field: ${unexpectedTopLevel}` };
+  if (!UUID_PATTERN.test(input.client_event_id || "")) return { ok: false, code: "INVALID_CLIENT_EVENT_ID", message: "client_event_id must be a UUID v4." };
+  if (!MAGIC_ROOM_ACTIONS.has(input.action)) return { ok: false, code: "INVALID_ACTION", message: "action is invalid." };
+  if (!MAGIC_PILOT_PATTERN.test(input.magic_pilot_id || "")) return { ok: false, code: "INVALID_MAGIC_PILOT_ID", message: "magic_pilot_id is invalid." };
+  if (input.pilot_consent !== true) return { ok: false, code: "CONSENT_REQUIRED", message: "Explicit Magic Room pilot consent is required." };
+  if (input.consent_version !== "MYNEST_MAGIC_ROOM_CONSENT_v0.1") return { ok: false, code: "INVALID_CONSENT_VERSION", message: "consent_version is invalid." };
+  if (!isPlainObject(input.payload)) return { ok: false, code: "INVALID_PAYLOAD", message: "payload must be an object." };
+
+  const prohibitedPayload = firstProhibitedField(input.payload);
+  if (prohibitedPayload) return { ok: false, code: "PROHIBITED_FIELD", message: `Field is not permitted: ${prohibitedPayload}` };
+  const allowedFields = new Set([...MAGIC_ROOM_COMMON_FIELDS, ...MAGIC_ROOM_FIELDS[input.action]]);
+  const unexpectedPayload = firstUnexpectedField(input.payload, allowedFields);
+  if (unexpectedPayload) return { ok: false, code: "UNKNOWN_FIELD", message: `Unknown payload field: ${unexpectedPayload}` };
+
+  const payload = input.payload;
+  if (!MAGIC_WORLDS.has(payload.world)) return { ok: false, code: "INVALID_WORLD", message: "world is invalid." };
+  if (!MAGIC_CHARACTERS.has(payload.character)) return { ok: false, code: "INVALID_CHARACTER", message: "character is invalid." };
+
+  if (input.action === "baseline") {
+    if (!MAGIC_AGE_BANDS.has(payload.age_band)) return { ok: false, code: "INVALID_AGE_BAND", message: "age_band is invalid." };
+    if (!FREQUENCY_LEVELS.has(payload.baseline_voluntary_entry)) return { ok: false, code: "INVALID_BASELINE", message: "baseline_voluntary_entry is invalid." };
+    if (!BASELINE_DURATIONS.has(payload.baseline_time_in_room)) return { ok: false, code: "INVALID_BASELINE", message: "baseline_time_in_room is invalid." };
+    if (!FREQUENCY_LEVELS.has(payload.baseline_child_requests_room)) return { ok: false, code: "INVALID_BASELINE", message: "baseline_child_requests_room is invalid." };
+    if (!requiredBoolean(payload.baseline_shows_room)) return { ok: false, code: "INVALID_BASELINE", message: "baseline_shows_room must be boolean." };
+    if (!BASELINE_ACCEPTANCE.has(payload.baseline_bedtime_acceptance)) return { ok: false, code: "INVALID_BASELINE", message: "baseline_bedtime_acceptance is invalid." };
+  } else if (input.action === "first_exposure") {
+    for (const field of ["entered_without_prompt", "approached_projection", "pointed_to_character", "spoke_to_character", "requested_repeat", "asked_question", "requested_other_world", "stayed_after_parent_moved_away"]) {
+      if (!requiredBoolean(payload[field])) return { ok: false, code: "INVALID_FIRST_EXPOSURE", message: `${field} must be boolean.` };
+    }
+    if (!SESSION_DURATIONS.has(payload.first_exposure_duration)) return { ok: false, code: "INVALID_FIRST_EXPOSURE", message: "first_exposure_duration is invalid." };
+  } else if (input.action === "day3") {
+    for (const field of ["day_3_return", "requested_world", "requested_character", "asked_for_next_event"]) {
+      if (!requiredBoolean(payload[field])) return { ok: false, code: "INVALID_DAY3", message: `${field} must be boolean.` };
+    }
+    if (!SESSION_DURATIONS.has(payload.day_3_session_duration)) return { ok: false, code: "INVALID_DAY3", message: "day_3_session_duration is invalid." };
+  } else if (input.action === "day7") {
+    for (const field of ["voluntary_entries", "world_requests", "character_requests"]) {
+      if (!Number.isInteger(payload[field]) || payload[field] < 0 || payload[field] > 50) return { ok: false, code: "INVALID_DAY7_COUNT", message: `${field} must be an integer from 0 to 50.` };
+    }
+    if (!SESSION_DURATIONS.has(payload.average_session_duration)) return { ok: false, code: "INVALID_DAY7", message: "average_session_duration is invalid." };
+    for (const field of ["asked_for_next_event", "showed_to_other_person"]) {
+      if (!requiredBoolean(payload[field])) return { ok: false, code: "INVALID_DAY7", message: `${field} must be boolean.` };
+    }
+    if (!MAGIC_PREFERRED_WORLDS.has(payload.preferred_world)) return { ok: false, code: "INVALID_PREFERRED_WORLD", message: "preferred_world is invalid." };
+    if (!MAGIC_CHARACTERS.has(payload.preferred_character)) return { ok: false, code: "INVALID_PREFERRED_CHARACTER", message: "preferred_character is invalid." };
+  } else {
+    if (!RETURN_DESIRE.has(payload.return_desire)) return { ok: false, code: "INVALID_DAY14", message: "return_desire is invalid." };
+    if (!NOVELTY_DECAY.has(payload.novelty_decay)) return { ok: false, code: "INVALID_DAY14", message: "novelty_decay is invalid." };
+    for (const field of ["day_14_return", "self_initiated_room_use"]) {
+      if (!requiredBoolean(payload[field])) return { ok: false, code: "INVALID_DAY14", message: `${field} must be boolean.` };
+    }
+    if (!MAGIC_PREFERRED_WORLDS.has(payload.preferred_world)) return { ok: false, code: "INVALID_PREFERRED_WORLD", message: "preferred_world is invalid." };
+    if (!MAGIC_CHARACTERS.has(payload.preferred_character)) return { ok: false, code: "INVALID_PREFERRED_CHARACTER", message: "preferred_character is invalid." };
+    if (!OUTCOME_CHANGE.has(payload.bedtime_acceptance_change)) return { ok: false, code: "INVALID_DAY14", message: "bedtime_acceptance_change is invalid." };
+    if (!OUTCOME_CHANGE.has(payload.own_room_attempt_change)) return { ok: false, code: "INVALID_DAY14", message: "own_room_attempt_change is invalid." };
+  }
+
+  return { ok: true, value: input };
+}
+
+async function insertMagicRoomEvent(env, event) {
+  const payload = event.payload;
+  const booleanFields = new Set([
+    "baseline_shows_room", "entered_without_prompt", "approached_projection", "pointed_to_character",
+    "spoke_to_character", "requested_repeat", "asked_question", "requested_other_world",
+    "stayed_after_parent_moved_away", "day_3_return", "requested_world", "requested_character",
+    "asked_for_next_event", "showed_to_other_person", "day_14_return", "self_initiated_room_use"
+  ]);
+  const record = {
+    id: crypto.randomUUID(),
+    client_event_id: event.client_event_id,
+    magic_pilot_id: event.magic_pilot_id,
+    action: event.action,
+    consent_version: event.consent_version,
+    age_band: payload.age_band ?? null,
+    world: payload.world,
+    character: payload.character,
+    baseline_voluntary_entry: payload.baseline_voluntary_entry ?? null,
+    baseline_time_in_room: payload.baseline_time_in_room ?? null,
+    baseline_child_requests_room: payload.baseline_child_requests_room ?? null,
+    baseline_shows_room: payload.baseline_shows_room ?? null,
+    baseline_bedtime_acceptance: payload.baseline_bedtime_acceptance ?? null,
+    entered_without_prompt: payload.entered_without_prompt ?? null,
+    approached_projection: payload.approached_projection ?? null,
+    pointed_to_character: payload.pointed_to_character ?? null,
+    spoke_to_character: payload.spoke_to_character ?? null,
+    requested_repeat: payload.requested_repeat ?? null,
+    asked_question: payload.asked_question ?? null,
+    requested_other_world: payload.requested_other_world ?? null,
+    stayed_after_parent_moved_away: payload.stayed_after_parent_moved_away ?? null,
+    first_exposure_duration: payload.first_exposure_duration ?? null,
+    day_3_return: payload.day_3_return ?? null,
+    requested_world: payload.requested_world ?? null,
+    requested_character: payload.requested_character ?? null,
+    day_3_session_duration: payload.day_3_session_duration ?? null,
+    voluntary_entries: payload.voluntary_entries ?? null,
+    world_requests: payload.world_requests ?? null,
+    character_requests: payload.character_requests ?? null,
+    average_session_duration: payload.average_session_duration ?? null,
+    asked_for_next_event: payload.asked_for_next_event ?? null,
+    showed_to_other_person: payload.showed_to_other_person ?? null,
+    preferred_world: payload.preferred_world ?? null,
+    preferred_character: payload.preferred_character ?? null,
+    return_desire: payload.return_desire ?? null,
+    novelty_decay: payload.novelty_decay ?? null,
+    day_14_return: payload.day_14_return ?? null,
+    self_initiated_room_use: payload.self_initiated_room_use ?? null,
+    bedtime_acceptance_change: payload.bedtime_acceptance_change ?? null,
+    own_room_attempt_change: payload.own_room_attempt_change ?? null,
+    created_at: new Date().toISOString()
+  };
+  for (const field of booleanFields) {
+    if (record[field] !== null) record[field] = record[field] ? 1 : 0;
+  }
+  const fields = Object.keys(record);
+  const statement = env.MYNEST_DB.prepare(`
+    INSERT INTO mynest_magic_room_events (${fields.join(", ")})
+    VALUES (${fields.map(() => "?").join(", ")})
+    ON CONFLICT(client_event_id) DO UPDATE SET client_event_id = excluded.client_event_id
+    RETURNING id
+  `).bind(...Object.values(record));
+  const row = await statement.first();
+  return row?.id || record.id;
 }
 
 async function insertEvent(env, event) {
@@ -531,7 +694,7 @@ async function handleRequest(request, env) {
   const url = new URL(request.url);
   const origin = request.headers.get("Origin") || "";
 
-  if (url.pathname !== API_PATH && url.pathname !== RECRUITMENT_PATH) return reject("NOT_FOUND", "Not found.", 404, origin);
+  if (![API_PATH, RECRUITMENT_PATH, MAGIC_ROOM_PATH].includes(url.pathname)) return reject("NOT_FOUND", "Not found.", 404, origin);
   if (!ALLOWED_ORIGINS.has(origin)) return reject("ORIGIN_NOT_ALLOWED", "Origin is not allowed.", 403, origin);
 
   if (request.method === "OPTIONS") {
@@ -566,7 +729,8 @@ async function handleRequest(request, env) {
   }
 
   const isRecruitment = url.pathname === RECRUITMENT_PATH;
-  const validated = isRecruitment ? validateRecruitment(input) : validateEvent(input);
+  const isMagicRoom = url.pathname === MAGIC_ROOM_PATH;
+  const validated = isRecruitment ? validateRecruitment(input) : isMagicRoom ? validateMagicRoomEvent(input) : validateEvent(input);
   if (!validated.ok) return reject(validated.code, validated.message, 400, origin);
   if (!env.MYNEST_DB) return reject("DATABASE_UNAVAILABLE", "Database is unavailable.", 503, origin);
 
@@ -575,6 +739,10 @@ async function handleRequest(request, env) {
       const result = await handleRecruitment(env, validated.value);
       if (result.error) return reject(result.error, result.message, result.statusCode, origin);
       return json({ ok: true, status: result.status, group: result.group }, 200, origin);
+    }
+    if (isMagicRoom) {
+      const eventId = await insertMagicRoomEvent(env, validated.value);
+      return json({ ok: true, event_id: eventId, checkpoint: validated.value.action }, 200, origin);
     }
     const eventId = await insertEvent(env, validated.value);
     const pilotComplete = await markPilotCompleteIfReady(env, validated.value);

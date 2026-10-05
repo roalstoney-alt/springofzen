@@ -170,6 +170,9 @@ a { color: inherit; }
 }
 .hero-actions > span { color: var(--muted); font-size: 13px; }
 .pilot-link { color: var(--ink); font-size: 14px; font-weight: 800; text-underline-offset: 4px; }
+.magic-launch { text-decoration: none; }
+.world-line { max-width: 620px; margin: 22px 0 0; color: var(--muted); font-size: 13px; }
+.world-line strong { color: #087f9c; }.world-line span:first-of-type { color: #3f8064; }.world-line span:last-of-type { color: #6756a1; }
 .primary-button, .secondary-button, .back-button, .quiet-button, .small-button {
   border: 0;
   cursor: pointer;
@@ -420,7 +423,7 @@ footer a { color: var(--ink); }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; padding-top: 50px; }
-  .hero-copy { text-align: center; }.hero-lede, .trust-note { margin-left: auto; margin-right: auto; }.hero-actions { justify-content: center; }
+  .hero-copy { text-align: center; }.hero-lede, .trust-note, .world-line { margin-left: auto; margin-right: auto; }.hero-actions { justify-content: center; }
   .room-illustration { width: min(530px, 100%); margin: 0 auto; }
   .choice-list { grid-template-columns: 1fr; }
   .sharing-options { grid-template-columns: 1fr; }
@@ -430,7 +433,7 @@ footer a { color: var(--ink); }
 @media (max-width: 680px) {
   .site-header { width: min(100% - 28px, 1220px); }.pilot-chip { display: none; }
   .hero, .journey, footer { width: min(100% - 28px, 1220px); }
-  .hero { min-height: auto; padding: 34px 0 60px; gap: 52px; }.hero h1 { font-size: clamp(48px, 15vw, 72px); }.hero-actions { display: grid; }.hero-actions .primary-button { width: 100%; }
+  .hero { min-height: auto; padding: 34px 0 60px; gap: 52px; }.hero h1 { font-size: clamp(48px, 15vw, 72px); }.hero-actions { display: grid; }.hero-actions .primary-button, .hero-actions .secondary-button { width: 100%; }
   .room-illustration { min-height: 410px; border-width: 7px; border-bottom-width: 18px; border-radius: 110px 110px 20px 20px; }.window-scene { transform: scale(.72); transform-origin: left top; }.bed { left: 17%; right: 5%; bottom: 18%; transform: scale(.88); transform-origin: right bottom; }.night-light { left: 5%; transform: scale(.75); transform-origin: bottom left; }.soft-toy { right: 12%; bottom: 30%; transform: scale(.8); }
   .journey { padding-top: 30px; }.journey-head { align-items: flex-start; }.household-id { display: none; }.progress { margin: 36px 0 18px; }.progress button { min-width: 42px; }.progress button b { display: none; }.progress > i { margin: 0 3px; }
   .step-panel { padding: 28px 19px; }.step-intro { margin-bottom: 30px; }.step-intro h2 { font-size: 38px; }

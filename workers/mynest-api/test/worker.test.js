@@ -5,11 +5,13 @@ import worker, {
   eligibilityForScreen,
   markPilotCompleteIfReady,
   resetRateLimitForTests,
-  validateRecruitment
+  validateRecruitment,
+  validateMagicRoomEvent
 } from "../src/index.js";
 
 const ORIGIN = "https://www.springofzen.com";
 const ENDPOINT = `${ORIGIN}/api/mynest/pilot-events`;
+const MAGIC_ENDPOINT = `${ORIGIN}/api/mynest/magic-room-events`;
 
 function validEvent(overrides = {}) {
   return {
@@ -96,6 +98,48 @@ function validRecruitment(action = "screen", payload = {}) {
     pilot_id: "P-E5F6",
     payload: { ...defaults, ...payload }
   };
+}
+
+function validMagicRoom(action = "baseline", payload = {}) {
+  const defaults = action === "baseline" ? {
+    world: "ocean", character: "milo", age_band: "4-5",
+    baseline_voluntary_entry: "sometimes", baseline_time_in_room: "10_30",
+    baseline_child_requests_room: "never", baseline_shows_room: false,
+    baseline_bedtime_acceptance: "mixed"
+  } : action === "first_exposure" ? {
+    world: "ocean", character: "milo", entered_without_prompt: true,
+    approached_projection: true, pointed_to_character: true, spoke_to_character: false,
+    requested_repeat: true, asked_question: true, requested_other_world: false,
+    stayed_after_parent_moved_away: true, first_exposure_duration: "15_30"
+  } : action === "day3" ? {
+    world: "ocean", character: "milo", day_3_return: true, requested_world: true,
+    requested_character: true, asked_for_next_event: true, day_3_session_duration: "15_30"
+  } : action === "day7" ? {
+    world: "ocean", character: "milo", voluntary_entries: 5, world_requests: 4,
+    character_requests: 3, average_session_duration: "15_30", asked_for_next_event: true,
+    showed_to_other_person: false, preferred_world: "ocean", preferred_character: "milo"
+  } : {
+    world: "ocean", character: "milo", return_desire: "spontaneous_repeated",
+    novelty_decay: "high_persistence", day_14_return: true, self_initiated_room_use: true,
+    preferred_world: "ocean", preferred_character: "milo",
+    bedtime_acceptance_change: "not_observed", own_room_attempt_change: "not_observed"
+  };
+  return {
+    client_event_id: "9cf2ea61-57d3-4cd6-a023-b9b16cb4bdc8",
+    action,
+    magic_pilot_id: "MR-A1B2C3",
+    pilot_consent: true,
+    consent_version: "MYNEST_MAGIC_ROOM_CONSENT_v0.1",
+    payload: { ...defaults, ...payload }
+  };
+}
+
+function magicRequest(body) {
+  return new Request(MAGIC_ENDPOINT, {
+    method: "POST",
+    headers: { Origin: ORIGIN, "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
 }
 
 test.beforeEach(() => resetRateLimitForTests());
@@ -236,4 +280,28 @@ test("recruitment rejects free text, unknown fields, bad consent, and invalid co
   assert.equal(validateRecruitment(validRecruitment("day0", { own_room_nights_last_7: 8 })).code, "INVALID_BASELINE_COUNT");
   assert.equal(validateRecruitment(validRecruitment("screen", { campaign_key: "bad campaign!" })).code, "INVALID_ACQUISITION");
   assert.equal(validateRecruitment(validRecruitment("screen", { acquisition_source: "profile-scrape" })).code, "INVALID_ACQUISITION");
+});
+
+test("Magic Room validation accepts all five structured checkpoints", () => {
+  for (const action of ["baseline", "first_exposure", "day3", "day7", "day14"]) {
+    assert.equal(validateMagicRoomEvent(validMagicRoom(action)).ok, true, action);
+  }
+});
+
+test("Magic Room validation rejects missing consent, identity fields, free text, and bad enums", () => {
+  assert.equal(validateMagicRoomEvent({ ...validMagicRoom(), pilot_consent: false }).code, "CONSENT_REQUIRED");
+  assert.equal(validateMagicRoomEvent(validMagicRoom("baseline", { child_name: "Synthetic" })).code, "PROHIBITED_FIELD");
+  assert.equal(validateMagicRoomEvent(validMagicRoom("day7", { note: "Synthetic" })).code, "PROHIBITED_FIELD");
+  assert.equal(validateMagicRoomEvent(validMagicRoom("day14", { novelty_decay: "viral" })).code, "INVALID_DAY14");
+  assert.equal(validateMagicRoomEvent(validMagicRoom("baseline", { world: "dinosaur" })).code, "INVALID_WORLD");
+});
+
+test("Magic Room endpoint stores a consented structured observation", async () => {
+  const db = new FakeD1();
+  const response = await worker.fetch(magicRequest(validMagicRoom("first_exposure")), { MYNEST_DB: db });
+  const body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.ok, true);
+  assert.equal(body.checkpoint, "first_exposure");
+  assert.match(body.event_id, /^[0-9a-f-]{36}$/);
 });

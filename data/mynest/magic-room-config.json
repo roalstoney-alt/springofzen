@@ -1,0 +1,35 @@
+{
+  "project": "MYNEST_THREE_WORLDS_IP_AND_MAGIC_ROOM_PILOT_v0.1",
+  "status": "READY_TO_EXECUTE",
+  "core_product": "CHILD_OWNED_RESPONSIVE_ROOM",
+  "public_positioning": "MY_ROOM_MY_WORLD",
+  "interaction_level": "L0_PROJECTION_WORLD",
+  "world_engine": ["ENTRY", "AWAKEN", "DISCOVER", "INTERACT", "STORY", "WIND_DOWN", "SLEEP", "RETURN"],
+  "worlds": [
+    {"id": "OCEAN_LUMISEA", "key": "ocean", "role": "HERO", "completeness_target": 80, "lead_character": "MILO", "naming_status": "WORKING_NAME_IP_REVIEW_REQUIRED"},
+    {"id": "FOREST_MOSSWOOD", "key": "forest", "role": "ENGINE_PROOF", "completeness_target": 40, "lead_character": "MOMO", "naming_status": "WORKING_NAME_IP_REVIEW_REQUIRED"},
+    {"id": "SPACE_NOVANEST", "key": "space", "role": "ENGINE_PROOF", "completeness_target": 40, "lead_character": "ORBIT", "naming_status": "WORKING_NAME_IP_REVIEW_REQUIRED"}
+  ],
+  "pilot": {
+    "cohort_id": "MYNEST_MAGIC_ROOM_COHORT_001",
+    "households": {"minimum": 3, "maximum": 5},
+    "age_bands": ["3-4", "4-5", "5-6"],
+    "primary_metric": "ROOM_GRAVITY",
+    "secondary_metric": "RETURN_DESIRE",
+    "novelty_metric": "NOVELTY_DECAY",
+    "later_metric": "OWN_ROOM_SUCCESS",
+    "checkpoints": ["BASELINE", "FIRST_EXPOSURE", "DAY_3", "DAY_7", "DAY_14"],
+    "sleep_causality_claims": "PROHIBITED"
+  },
+  "privacy": {
+    "structured_observations_only": true,
+    "camera_required": false,
+    "recording_default": false,
+    "pilot_consent_separate_from_ugc_publication_consent": true,
+    "free_text": "PROHIBITED"
+  },
+  "gates": {
+    "physical_hardware_productization": ["ROOM_GRAVITY_SIGNAL_PRESENT", "RETURN_DESIRE_SIGNAL_PRESENT", "NOVELTY_DECAY_ACCEPTABLE", "CHARACTER_ATTACHMENT_OBSERVED"],
+    "world_pages": "DO_NOT_PUBLISH_EMPTY_SEO_SHELLS"
+  }
+}
