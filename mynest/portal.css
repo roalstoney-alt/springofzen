@@ -448,3 +448,23 @@ footer a { color: var(--ink); }
   .outcome-card { grid-template-columns: 1fr; }.outcome-icon { width: 48px; height: 48px; }
   footer { display: grid; text-align: center; }
 }
+
+/* Lived-in Reframe v0.3 — desire and room image before explanation. */
+.site-header{position:relative;z-index:40;transition:opacity .4s ease}
+body:has(.lived-home:not([hidden])) .site-header{position:absolute;left:50%;top:0;transform:translateX(-50%);opacity:0;pointer-events:none}
+.lived-home{position:relative;width:100%;height:100svh;min-height:620px;margin:0;padding:0;display:block;overflow:hidden;background:#bf9a70}
+.home-room-visual,.home-room-visual picture,.home-room-visual img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.home-room-visual img{object-fit:cover;object-position:center center;transition:transform 1.4s ease}.home-room-visual:hover img{transform:scale(1.008)}
+.lived-home::after{content:"";position:absolute;z-index:2;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(19,24,23,.03),transparent 52%,rgba(15,26,25,.3))}
+.home-entry-copy{position:absolute;z-index:4;left:clamp(1.3rem,5vw,5rem);bottom:clamp(5.5rem,11vh,8rem);color:#fdfaf1;text-shadow:0 2px 20px rgba(22,31,29,.35)}
+.home-entry-copy>p{margin:0 0 .55rem;font-size:.66rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase}
+.lived-home .home-entry-copy h1{margin:0 0 1.3rem;font-size:clamp(2.45rem,5.2vw,4.9rem);font-weight:500;line-height:.93;letter-spacing:-.035em}.lived-home .home-entry-copy h1 em{color:inherit;font-weight:400}
+.lived-home .primary-button{min-height:46px;padding:0 1.15rem;background:rgba(250,248,240,.88);color:#20332f;box-shadow:none;text-shadow:none;font-size:.82rem}.lived-home .primary-button:hover{background:#fff;box-shadow:none}
+.problem-path{position:absolute;z-index:5;right:clamp(1.2rem,4vw,4rem);bottom:clamp(1.2rem,4vh,2.4rem);padding:.55rem 0;border:0;border-bottom:1px solid rgba(255,255,255,.48);background:transparent;color:#fff;font-size:.72rem;font-weight:800;letter-spacing:.04em;cursor:pointer;text-shadow:0 2px 14px rgba(10,24,22,.45)}
+.problem-path span{margin-left:.45rem}.problem-path:focus-visible{outline:3px solid rgba(255,255,255,.7);outline-offset:5px}
+
+@media(max-width:680px){
+  .lived-home{min-height:640px}.home-room-visual img{object-position:50% 50%}.lived-home::after{background:linear-gradient(180deg,rgba(19,24,23,.02),transparent 48%,rgba(15,26,25,.36))}
+  .home-entry-copy{left:1.15rem;bottom:6.2rem}.lived-home .home-entry-copy h1{font-size:clamp(2.5rem,13vw,4.1rem)}.problem-path{right:1.15rem;bottom:1.25rem}
+}
+@media(prefers-reduced-motion:reduce){.home-room-visual img{transition:none}.home-room-visual:hover img{transform:none}}

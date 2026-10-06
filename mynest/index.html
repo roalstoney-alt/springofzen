@@ -10,7 +10,9 @@
   <meta property="og:description" content="Enter a room-sized world, then build a gentle first-night plan and observe the transition for 14 days.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://www.springofzen.com/mynest/">
-  <link rel="stylesheet" href="portal.css?v=20261005-magic">
+  <link rel="preload" href="magic-room/assets/ocean-room-base-v03-desktop.jpg" as="image" media="(min-width: 681px)">
+  <link rel="preload" href="magic-room/assets/ocean-room-base-v03-mobile.jpg" as="image" media="(max-width: 680px)">
+  <link rel="stylesheet" href="portal.css?v=20261006-lived-v03">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the room plan</a>
@@ -20,40 +22,20 @@
       <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
       <span><strong>MyNest</strong><small>from Spring of Zen</small></span>
     </a>
-    <div class="header-actions">
-      <span class="pilot-chip">Ocean Room 001</span>
-      <button class="quiet-button" type="button" data-reset hidden>Start over</button>
-    </div>
+    <div class="header-actions"><button class="quiet-button" type="button" data-reset hidden>Start over</button></div>
   </header>
 
   <main id="main">
-    <section class="hero" id="room-check" data-intro>
-      <div class="hero-copy">
-        <p class="eyebrow">MyNest · A child-owned responsive room</p>
-        <h1>My Room.<br><em>My World.</em></h1>
-        <p class="hero-lede">See Milo and three small fish quietly live inside a real child’s room—then watch digital Milo return into the physical plush at bedtime.</p>
-        <div class="hero-actions">
-          <a class="primary-button magic-launch" href="magic-room/">See the Magic Room <span aria-hidden="true">→</span></a>
-          <button class="secondary-button" type="button" data-start>My child won’t sleep alone</button>
-        </div>
-        <p class="world-line"><strong>One excellent room first.</strong> Ocean Room 001 focuses on Milo, three physical objects, and a believable bedtime return—not a catalogue of worlds or toys.</p>
-        <div class="trust-note">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3m-11 0h12v10H6z"/></svg>
-          <p><strong>Private by design.</strong> We do not ask for your child’s name, photo, email, or exact birth date. If you choose pilot sharing, only structured answers are sent—never your optional notes.</p>
-        </div>
+    <section class="hero lived-home" id="room-check" data-intro>
+      <a class="home-room-visual" href="magic-room/" aria-label="See the living room experience">
+        <picture><source media="(max-width: 680px)" srcset="magic-room/assets/ocean-room-base-v03-mobile.jpg"><img src="magic-room/assets/ocean-room-base-v03-desktop.jpg" alt="A quiet lived-in child's room with a low bed, whale room friend, pearl light, abstract stone object, and open floor"></picture>
+      </a>
+      <div class="home-entry-copy">
+        <p>MyNest</p>
+        <h1>My room.<br><em>My world.</em></h1>
+        <a class="primary-button magic-launch" href="magic-room/">See the room <span aria-hidden="true">→</span></a>
       </div>
-
-      <div class="room-illustration" aria-label="An illustrated child’s room with a low light, a bedtime story, and a room friend">
-        <div class="room-sky">
-          <span class="star star-a"></span><span class="star star-b"></span><span class="star star-c"></span>
-          <span class="moon"></span>
-        </div>
-        <div class="window-scene"><span></span><i></i><i></i><i></i></div>
-        <div class="bed"><span class="pillow"></span><span class="blanket"></span></div>
-        <div class="night-light"><span></span></div>
-        <div class="soft-toy"><span></span><i></i><i></i></div>
-        <p>“I helped make this room mine.”</p>
-      </div>
+      <button class="problem-path" type="button" data-start>My child won’t sleep alone <span aria-hidden="true">↓</span></button>
     </section>
 
     <section class="journey" data-journey hidden>

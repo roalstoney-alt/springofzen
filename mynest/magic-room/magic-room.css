@@ -149,3 +149,61 @@ body.magic-moment .experience-topbar,body.magic-moment .first-copy,body.magic-mo
 @keyframes milo-transfer-mobile-living{0%{left:46%;top:35%;opacity:.68;transform:scale(.65)}100%{left:61%;top:31%;opacity:0;transform:scale(.3)}}
 @media(prefers-reduced-motion:reduce){.fish,.milo,.shell-event,.reef-event,.plush-glow,.sleep-breath{animation-duration:.01ms!important}.wall-caustics{display:none}body.milo-entered .milo{left:39%;top:49%;opacity:.9}}
 @media(max-width:680px) and (prefers-reduced-motion:reduce){body.milo-entered .milo{left:18%;top:58%}}
+
+/* Lived-in Reframe v0.3 — the room arrives before any explanation. */
+:root{--room-image:url("assets/ocean-room-base-v03-desktop.jpg")}
+.room-stage{min-height:560px;background:#cba77d}
+.room-photo img{object-position:center center}
+.experience-topbar{justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity 1.1s ease}
+.sound-control{pointer-events:none}
+.scene-controls{opacity:0!important;pointer-events:none!important;transition:opacity 1.1s ease}
+body.controls-ready .experience-topbar{opacity:.62;pointer-events:auto}
+body.controls-ready .sound-control,body.controls-ready .scene-controls{pointer-events:auto!important}
+body.controls-ready .scene-controls{opacity:.62!important}
+.first-copy,.wake-control,.ocean-brand{display:none!important}
+.room-dusk{background:linear-gradient(180deg,rgba(28,23,19,.01),rgba(13,31,31,.03) 58%,rgba(12,43,44,.065))}
+.ocean-wash{inset:62% 0 0;background:linear-gradient(180deg,transparent,rgba(20,101,108,.025) 54%,rgba(10,75,82,.075))}
+.wall-caustics{inset:66% -8% -10%;background:repeating-radial-gradient(ellipse at 46% 50%,transparent 0 58px,rgba(193,255,241,.075) 64px 67px,transparent 73px 138px)}
+body.wake-water .ocean-wash{opacity:.35}body.wake-water .wall-caustics{opacity:.16}
+.first-ripple{left:9%;top:64%;width:8%;height:5%;opacity:.5}
+
+/* One fish is discovered first, a second follows, then the small family is present. */
+body.fish-peek .fish-field{opacity:1}body[data-mode="rest"] .fish-field{opacity:0!important}
+body.discovery-one:not(.discovery-two) .fish-b,body.discovery-one:not(.discovery-two) .fish-c{opacity:0!important}
+body.discovery-two:not(.discovery-three) .fish-c{opacity:0!important}
+body.fish-peek:not(.wake-life) .fish-a{left:11%;top:55%;opacity:.76;transform:scale(.58)}
+.fish-a{left:18%;top:70%}.fish-b{left:45%;top:78%}.fish-c{left:69%;top:70%}
+
+/* Desktop art anchors are authored for the independent 16:9 master. */
+.zone-reef{left:2%;top:21%;width:14%;height:27%}.zone-shell{left:21%;right:auto;top:27%;width:15%;height:28%}.zone-plush{left:54%;top:17%;width:39%;height:38%}
+.reef-event{left:6%;top:30%;width:76px;height:66px}.shell-event{left:24%;right:auto;top:31%;width:104px;height:104px}.plush-glow{left:57%;top:20%;width:37%;height:34%}.sleep-breath{left:70%;top:33%;width:13%;height:8%}
+.milo{width:min(22vw,340px);top:55%}.milo-contact{left:34%;top:58%;width:24%;height:18%}
+body.milo-entered .milo{left:35%;top:53%;animation:milo-lived-arrive 4.2s cubic-bezier(.2,.72,.2,1) 1 both!important}
+body.milo-away .milo{animation:milo-lived-leave 3.2s ease-in 1 both!important}body.milo-returning .milo{animation:milo-lived-reenter 3.5s ease-out 1 both!important}
+body[data-mode="rest"] .milo{left:35%;top:53%;width:min(22vw,340px)}body.return-travel .milo{animation:milo-home-lived 4.2s cubic-bezier(.35,.1,.25,1) 1 both!important}body.return-transfer .milo{animation:milo-transfer-lived 3.2s ease-in 1 both!important}
+
+/* Editorial explanation begins only after the room viewport. */
+.night-setup{padding-top:clamp(6rem,12vw,11rem)}.night-setup>p:not(.eyebrow),.section-lede{max-width:760px;color:#63707a;font-size:clamp(1.08rem,1.7vw,1.3rem)}
+.object-section .response-grid{gap:0;background:transparent}.object-section .response-grid article{min-height:0;padding:2.1rem 1.5rem 2.4rem;border:0;border-top:1px solid rgba(24,51,59,.2);border-radius:0;background:transparent}.object-section .response-grid article+article{border-left:1px solid rgba(24,51,59,.12)}
+.response-story .mode-story-grid article{background:transparent;border-top:1px solid rgba(24,51,59,.18)}
+.method-fold{width:min(100% - 40px,1180px);margin:0 auto 8rem;border-top:1px solid rgba(24,51,59,.2);border-bottom:1px solid rgba(24,51,59,.2);color:#18333b}.method-fold>summary{padding:1.45rem 0;cursor:pointer;font:600 clamp(1.05rem,2vw,1.35rem) Georgia,serif;list-style:none}.method-fold>summary::-webkit-details-marker{display:none}.method-fold>summary::after{content:"+";float:right;font:400 1.5rem/1 Inter,sans-serif}.method-fold[open]>summary::after{content:"−"}.method-fold .pilot-section{width:100%;padding:4rem 0 5rem;border-top:1px solid rgba(24,51,59,.12)}
+
+@keyframes milo-lived-arrive{0%{left:14%;top:59%;opacity:0;transform:scale(.7)}30%{opacity:.58}68%{left:28%;top:55%;transform:rotate(2deg) scale(.88)}100%{left:35%;top:53%;opacity:.92;transform:rotate(-2deg)}}
+@keyframes milo-lived-leave{0%{left:35%;top:53%;opacity:.92}70%{left:68%;top:58%;opacity:.46}100%{left:104%;top:60%;opacity:0;transform:scale(.72)}}
+@keyframes milo-lived-reenter{0%{left:15%;top:60%;opacity:0;transform:scale(.7)}48%{opacity:.66}100%{left:35%;top:53%;opacity:.92;transform:rotate(-2deg)}}
+@keyframes milo-home-lived{0%{left:35%;top:53%;opacity:.92;transform:rotate(3deg) scale(1)}48%{left:52%;top:45%;transform:rotate(-5deg) scale(.88)}100%{left:66%;top:31%;opacity:.66;transform:rotate(-2deg) scale(.72)}}
+@keyframes milo-transfer-lived{0%{left:66%;top:31%;opacity:.66;transform:scale(.72)}65%{opacity:.4;filter:drop-shadow(0 0 18px rgba(226,240,195,.4))}100%{left:72%;top:28%;opacity:0;transform:scale(.35)}}
+
+@media(max-width:680px){
+  :root{--room-image:url("assets/ocean-room-base-v03-mobile.jpg")}.room-photo img{object-position:50% 50%}.ocean-wash{inset:63% 0 0}.wall-caustics{inset:68% -18% -7%}.first-ripple{left:28%;top:62%;width:14%}
+  body.fish-peek:not(.wake-life) .fish-a{left:29%;top:53%;opacity:.76}.fish-a{left:20%;top:70%}.fish-b{left:45%;top:79%}.fish-c{left:70%;top:69%}
+  .zone-shell{left:0;top:30%;width:23%;height:21%}.zone-reef{left:22%;top:31%;width:20%;height:20%}.zone-plush{left:58%;top:21%;width:42%;height:27%}
+  .shell-event{left:2%;top:33%;width:88px;height:88px}.reef-event{left:26%;top:36%;width:68px;height:58px}.plush-glow{left:60%;top:23%;width:39%;height:24%}.sleep-breath{left:76%;top:33%;width:17%;height:8%}
+  .milo{width:50vw;top:61%}body.milo-entered .milo{left:18%;top:59%}.milo-contact{left:19%;top:64%;width:46%;height:16%}
+  body[data-mode="rest"] .milo{left:18%;top:59%;width:50vw}body.return-travel .milo{animation-name:milo-home-mobile-lived!important}body.return-transfer .milo{animation-name:milo-transfer-mobile-lived!important}
+  .object-section .response-grid article+article{border-left:0}.method-fold{width:min(100% - 28px,1180px);margin-bottom:5rem}.method-fold .pilot-section{padding:3rem 0 4rem}
+}
+@keyframes milo-home-mobile-lived{0%{left:18%;top:59%;opacity:.92;transform:rotate(3deg) scale(1)}50%{left:36%;top:49%;transform:rotate(-4deg) scale(.82)}100%{left:59%;top:33%;opacity:.64;transform:scale(.64)}}
+@keyframes milo-transfer-mobile-lived{0%{left:59%;top:33%;opacity:.64;transform:scale(.64)}100%{left:72%;top:29%;opacity:0;transform:scale(.3)}}
+@media(prefers-reduced-motion:reduce){body.fish-peek .fish-field{transition:opacity 1.2s ease}.wall-caustics{display:none}body.milo-entered .milo{left:35%;top:53%;opacity:.9}}
+@media(max-width:680px) and (prefers-reduced-motion:reduce){body.milo-entered .milo{left:18%;top:59%}}

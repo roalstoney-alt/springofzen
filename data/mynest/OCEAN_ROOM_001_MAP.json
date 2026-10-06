@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.2",
+  "schema_version": "0.3",
   "room_id": "OCEAN_ROOM_001",
   "measurement_status": "pending_physical_room",
   "coordinate_system": {
@@ -11,6 +11,7 @@
   },
   "room": {
     "camera_height_mm": 1000,
+    "camera_height_mm_art_intent": 1000,
     "physical_width_mm": null,
     "physical_depth_mm": null,
     "physical_height_mm": null,
@@ -18,15 +19,19 @@
     "projection_wall_height_mm": null
   },
   "objects": {
-    "shell_light": { "desktop_anchor_pct": [69, 36], "mobile_anchor_pct": [26, 39], "measured_mm": null, "sku": "SKU_OCEAN_002_SHELL_LIGHT" },
-    "reef_accent": { "desktop_anchor_pct": [42, 39], "mobile_anchor_pct": [43, 39], "measured_mm": null, "sku": "SKU_OCEAN_003_REEF_ACCENT" },
-    "milo_plush": { "desktop_anchor_pct": [88, 30], "mobile_anchor_pct": [75, 36], "measured_mm": null, "sku": "SKU_OCEAN_001_MILO_PLUSH" }
+    "shell_light": { "desktop_anchor_pct": [28, 40], "mobile_anchor_pct": [10, 39], "measured_mm": null, "sku": "SKU_OCEAN_002_SHELL_LIGHT" },
+    "reef_accent": { "desktop_anchor_pct": [8, 31], "mobile_anchor_pct": [30, 39], "measured_mm": null, "sku": "SKU_OCEAN_003_REEF_ACCENT" },
+    "milo_plush": { "desktop_anchor_pct": [72, 33], "mobile_anchor_pct": [78, 34], "measured_mm": null, "sku": "SKU_OCEAN_001_MILO_PLUSH" }
   },
   "zones": {
-    "floor": { "desktop_bounds_pct": [0, 53, 100, 47], "mobile_bounds_pct": [0, 52, 100, 48] },
-    "lower_wall": { "desktop_bounds_pct": [12, 42, 77, 23], "mobile_bounds_pct": [14, 36, 78, 22] },
-    "milo_transit": { "desktop_bounds_pct": [20, 28, 67, 35], "mobile_bounds_pct": [7, 31, 76, 38] },
-    "sleep": { "desktop_bounds_pct": [75, 18, 24, 32], "mobile_bounds_pct": [53, 27, 46, 24] }
+    "floor": { "desktop_bounds_pct": [0, 66, 100, 34], "mobile_bounds_pct": [0, 58, 100, 42] },
+    "lower_wall": { "desktop_bounds_pct": [0, 42, 72, 25], "mobile_bounds_pct": [0, 36, 58, 23] },
+    "milo_transit": { "desktop_bounds_pct": [12, 30, 64, 36], "mobile_bounds_pct": [7, 31, 76, 38] },
+    "sleep": { "desktop_bounds_pct": [53, 18, 42, 37], "mobile_bounds_pct": [58, 22, 42, 27] }
+  },
+  "independent_maps": {
+    "desktop": "data/mynest/ocean-room-001-desktop-map.json",
+    "mobile": "data/mynest/ocean-room-001-mobile-map.json"
   },
   "calibration_required": [
     "Replace every null physical measurement with an on-site measurement.",

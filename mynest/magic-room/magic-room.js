@@ -16,6 +16,7 @@
   let fishTimer = null;
   let followTimer = null;
   let fishTouchReset = null;
+  let controlsTimer = null;
   let activeInteraction = null;
   let fishTouches = 0;
   let miloTouches = 0;
@@ -113,11 +114,11 @@
     if (wakeStarted && !immediate) return;
     clearTimers(wakeTimers);
     wakeStarted = true;
-    const times = reducedMotion ? [0, 350, 850, 1350, 2050, 2700] : immediate ? [0, 350, 900, 1600, 2700, 3900] : [0, 650, 1500, 3500, 5500, 8200];
-    queueTimer(wakeTimers, times[0], () => { body.classList.add("wake-ripple", "fish-peek"); logLocal("OCEAN_WOKE"); });
-    queueTimer(wakeTimers, times[1], () => body.classList.add("wake-water"));
-    queueTimer(wakeTimers, times[2], () => { body.classList.add("wake-life"); setFishState("move"); });
-    queueTimer(wakeTimers, times[3], () => setFishState("observe"));
+    const times = reducedMotion ? [800, 1300, 1800, 2400, 3200, 4200] : immediate ? [0, 500, 1100, 1900, 3000, 4300] : [3000, 4500, 6000, 8000, 10500, 13500];
+    queueTimer(wakeTimers, times[0], () => { body.classList.add("wake-ripple", "fish-peek", "discovery-one"); logLocal("OCEAN_WOKE"); });
+    queueTimer(wakeTimers, times[1], () => setFishState("observe"));
+    queueTimer(wakeTimers, times[2], () => { body.classList.add("wake-water", "wake-life", "discovery-two"); setFishState("observe"); });
+    queueTimer(wakeTimers, times[3], () => { body.classList.add("discovery-three"); setFishState("move"); });
     queueTimer(wakeTimers, times[4], () => {
       body.classList.add("milo-entered", "milo-arriving");
       setFishState("hide"); setMiloState("idle"); logLocal("MILO_SEEN");
@@ -125,7 +126,6 @@
     queueTimer(wakeTimers, times[5], () => {
       body.classList.remove("milo-arriving");
       body.classList.add("ocean-ready");
-      document.querySelector("[data-touch-hint]").textContent = "";
       setFishState("return");
       scheduleFishCycle();
       scheduleResidentLoop();
@@ -286,13 +286,13 @@
     stopResidentLoop();
     clearResponseClasses();
     document.querySelector("[data-ocean-experience]").scrollIntoView({ behavior: "auto" });
-    body.classList.remove("wake-ripple", "wake-water", "wake-life", "milo-entered", "ocean-ready");
+    body.classList.remove("wake-ripple", "wake-water", "wake-life", "discovery-one", "discovery-two", "discovery-three", "milo-entered", "ocean-ready");
     setFishState("hide");
     void body.offsetWidth;
     body.classList.add("magic-moment");
     window.setTimeout(() => {
       body.classList.remove("magic-moment");
-      body.classList.add("wake-water", "wake-life", "milo-entered", "ocean-ready");
+      body.classList.add("wake-water", "wake-life", "discovery-one", "discovery-two", "discovery-three", "milo-entered", "ocean-ready");
       setFishState("observe");
       setMiloState("idle");
       scheduleFishCycle();
@@ -303,12 +303,13 @@
   function restartScene() {
     clearTimers(wakeTimers); clearTimers(returnTimers); stopResidentLoop(); stopFishCycle();
     window.clearTimeout(feedbackTimer); window.clearTimeout(followTimer); window.clearTimeout(fishTouchReset);
+    window.clearTimeout(controlsTimer);
     activeInteraction = null; fishTouches = 0; miloTouches = 0; wakeStarted = false;
     body.dataset.mode = "explore"; body.dataset.miloState = "idle"; setFishState("hide");
     body.className = "";
     document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", "false");
     document.querySelector("[data-rest-phrase]").textContent = "";
-    document.querySelector("[data-touch-hint]").textContent = "Watch closely.";
+    controlsTimer = window.setTimeout(() => body.classList.add("controls-ready"), reducedMotion ? 250 : 1500);
     queueTimer(wakeTimers, reducedMotion ? 200 : 700, () => wakeRoom());
     logLocal("SCENE_RESTARTED");
   }
@@ -418,12 +419,12 @@
     fishTouchReset = window.setTimeout(() => { fishTouches = 0; }, reducedMotion ? 2600 : 8500);
   });
 
-  document.querySelector("[data-wake]").addEventListener("click", () => wakeRoom(true));
+  document.querySelector("[data-wake]")?.addEventListener("click", () => wakeRoom(true));
   document.querySelector("[data-audio]").addEventListener("click", toggleAudio);
   document.querySelector("[data-milo]").addEventListener("click", () => triggerResponse("milo"));
   document.querySelectorAll("[data-room-zone]").forEach((button) => button.addEventListener("click", () => triggerResponse(button.dataset.roomZone)));
   document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
-  document.querySelector("[data-restart]").addEventListener("click", restartScene);
+  document.querySelector("[data-restart]")?.addEventListener("click", restartScene);
   document.querySelector("[data-rest-toggle]").addEventListener("click", () => setMode(body.dataset.mode === "rest" ? "explore" : "rest"));
   document.querySelector("[data-magic-moment]").addEventListener("click", playMagicMoment);
   document.querySelector("[data-observer-open]").addEventListener("click", () => { document.querySelector("[data-observer-panel]").hidden = false; });
@@ -435,7 +436,7 @@
     await saveObservation(form.dataset.observationForm, form); button.disabled = false;
   }));
   document.querySelector("[data-export]").addEventListener("click", async () => {
-    const exportData = { project: "MYNEST_OCEAN_REAL_ROOM_001_LIVING_SCENE_v0.2", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
+    const exportData = { project: "MYNEST_OCEAN_REAL_ROOM_001_LIVED_IN_REFRAME_v0.3", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
     try { await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)); setObserverStatus("Anonymous observation JSON copied."); }
     catch { setObserverStatus("Clipboard access was blocked. Observations remain on this device.", true); }
   });
@@ -444,5 +445,6 @@
   populateCharacters(); hydrateObservationForms();
   document.querySelector("[data-magic-pilot-id]").textContent = state.magic_pilot_id;
   saveState(); setFishState("hide"); logLocal("ROOM_LOADED");
-  queueTimer(wakeTimers, reducedMotion ? 300 : 1500, () => wakeRoom());
+  wakeRoom();
+  controlsTimer = window.setTimeout(() => body.classList.add("controls-ready"), reducedMotion ? 250 : 1500);
 })();

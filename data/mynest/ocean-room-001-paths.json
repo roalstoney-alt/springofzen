@@ -1,32 +1,32 @@
 {
-  "schema_version": "0.2",
+  "schema_version": "0.3",
   "room_id": "OCEAN_ROOM_001",
   "coordinate_system": "normalized_percent_top_left",
   "interpolation": "cubic_bezier",
   "paths": {
     "FISH_PATH_REEF_TO_BED": {
-      "desktop": [[39, 58], [44, 73], [58, 79], [70, 68]],
-      "mobile": [[42, 53], [43, 73], [57, 82], [72, 68]]
+      "desktop": [[9, 54], [18, 68], [45, 80], [70, 70]],
+      "mobile": [[29, 52], [28, 68], [49, 81], [74, 70]]
     },
     "FISH_PATH_BED_TO_WALL": {
-      "desktop": [[70, 68], [66, 62], [57, 59], [50, 63]],
-      "mobile": [[72, 68], [67, 60], [57, 57], [48, 64]]
+      "desktop": [[70, 70], [66, 65], [57, 62], [49, 67]],
+      "mobile": [[74, 70], [69, 64], [58, 60], [47, 67]]
     },
     "FISH_PATH_WALL_TO_CURTAIN": {
-      "desktop": [[50, 63], [39, 61], [28, 66], [19, 72]],
-      "mobile": [[48, 64], [37, 61], [27, 66], [18, 73]]
+      "desktop": [[49, 67], [38, 63], [27, 68], [16, 73]],
+      "mobile": [[47, 67], [36, 63], [26, 68], [17, 74]]
     },
     "MILO_PATH_ENTRY": {
-      "desktop": [[23, 56], [28, 54], [34, 50], [39, 49]],
-      "mobile": [[8, 66], [12, 63], [16, 59], [18, 58]]
+      "desktop": [[14, 59], [22, 57], [30, 54], [35, 53]],
+      "mobile": [[7, 65], [11, 63], [15, 60], [18, 59]]
     },
     "MILO_PATH_APPROACH": {
-      "desktop": [[39, 49], [34, 54], [44, 51], [49, 48]],
-      "mobile": [[18, 58], [16, 64], [27, 60], [32, 56]]
+      "desktop": [[35, 53], [31, 58], [41, 55], [48, 51]],
+      "mobile": [[18, 59], [16, 65], [27, 61], [33, 57]]
     },
     "MILO_PATH_HOME": {
-      "desktop": [[39, 49], [51, 47], [66, 39], [84, 29]],
-      "mobile": [[18, 58], [28, 53], [43, 41], [69, 34]]
+      "desktop": [[35, 53], [48, 48], [59, 39], [72, 31]],
+      "mobile": [[18, 59], [34, 51], [51, 41], [72, 31]]
     }
   },
   "depth_scale": {
@@ -34,7 +34,7 @@
     "milo": [0.75, 1.05]
   },
   "notes": [
-    "Paths are authored for the two dedicated web art masters.",
+    "Desktop and mobile paths are independently authored for their v0.3 art masters.",
     "Recalibrate endpoints after physical projector geometry is measured.",
     "All ordinary fish paths remain in the lower-room band."
   ]

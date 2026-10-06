@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.3",
+  "room_id": "OCEAN_ROOM_001",
+  "art_master": "mynest/magic-room/assets/ocean-room-base-v03-mobile.jpg",
+  "aspect_ratio": "9:16",
+  "coordinate_system": "normalized_percent_top_left",
+  "measurement_status": "pending_physical_room",
+  "camera_height_mm_art_intent": 1000,
+  "anchors": {
+    "reef_accent": [30, 39],
+    "shell_light": [10, 39],
+    "milo_plush": [78, 34]
+  },
+  "masks": {
+    "MASK_MOBILE_FLOOR": [[0, 58], [100, 58], [100, 100], [0, 100]],
+    "MASK_MOBILE_BED": [[39, 43], [100, 39], [100, 65], [40, 59]],
+    "MASK_MOBILE_HEADBOARD": [[39, 26], [72, 25], [74, 51], [39, 51]],
+    "MASK_MOBILE_SHELF": [[0, 39], [43, 39], [43, 59], [0, 59]],
+    "MASK_MOBILE_REEF": [[23, 33], [39, 33], [40, 46], [22, 46]],
+    "MASK_MOBILE_SHELL": [[0, 31], [23, 31], [24, 50], [0, 50]],
+    "MASK_MOBILE_MILO_PLUSH": [[59, 23], [100, 23], [100, 46], [59, 47]],
+    "MASK_MOBILE_CURTAIN": [[9, 0], [37, 0], [37, 36], [10, 36]],
+    "MASK_MOBILE_LOWER_WALL": [[0, 36], [58, 36], [58, 59], [0, 59]]
+  },
+  "paths": {
+    "fish_first": [[29, 52], [34, 58], [29, 66], [21, 72]],
+    "fish_floor": [[20, 71], [41, 80], [59, 78], [76, 69]],
+    "milo_entry": [[7, 65], [11, 63], [15, 60], [18, 59]],
+    "milo_home": [[18, 59], [34, 51], [51, 41], [72, 31]]
+  }
+}
