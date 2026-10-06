@@ -1,44 +1,37 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "room_id": "OCEAN_ROOM_001",
   "measurement_status": "pending_physical_room",
   "coordinate_system": {
-    "origin": "top_left_of_projection_surface",
+    "origin": "top_left_of_art_master",
     "units": "normalized_percent",
-    "x_range": [0, 100],
-    "y_range": [0, 100],
+    "desktop_aspect": "16:9",
+    "mobile_aspect": "9:16",
     "z_note": "Physical depth in millimetres must be added during on-site calibration."
   },
   "room": {
-    "width_mm": null,
-    "depth_mm": null,
-    "height_mm": null,
+    "camera_height_mm": 1000,
+    "physical_width_mm": null,
+    "physical_depth_mm": null,
+    "physical_height_mm": null,
     "projection_wall_width_mm": null,
     "projection_wall_height_mm": null
   },
   "objects": {
-    "bed": { "bounds_pct": { "x": 50, "y": 45, "width": 49, "height": 55 }, "measured_mm": null },
-    "shelf": { "bounds_pct": { "x": 20, "y": 45, "width": 27, "height": 41 }, "measured_mm": null },
-    "shell_light": { "anchor_pct": { "x": 92, "y": 61 }, "measured_mm": null, "sku": "SKU_OCEAN_002_SHELL_LIGHT" },
-    "reef_accent": { "anchor_pct": { "x": 31, "y": 70 }, "measured_mm": null, "sku": "SKU_OCEAN_003_REEF_ACCENT" },
-    "milo_plush": { "anchor_pct": { "x": 70, "y": 65 }, "measured_mm": null, "sku": "SKU_OCEAN_001_MILO_PLUSH" },
-    "projector": { "position_mm": null, "throw_ratio": null, "coverage_pct": null }
+    "shell_light": { "desktop_anchor_pct": [69, 36], "mobile_anchor_pct": [26, 39], "measured_mm": null, "sku": "SKU_OCEAN_002_SHELL_LIGHT" },
+    "reef_accent": { "desktop_anchor_pct": [42, 39], "mobile_anchor_pct": [43, 39], "measured_mm": null, "sku": "SKU_OCEAN_003_REEF_ACCENT" },
+    "milo_plush": { "desktop_anchor_pct": [88, 30], "mobile_anchor_pct": [75, 36], "measured_mm": null, "sku": "SKU_OCEAN_001_MILO_PLUSH" }
   },
   "zones": {
-    "floor_edge": { "bounds_pct": { "x": 3, "y": 68, "width": 94, "height": 25 }, "digital_elements": ["small_fish", "water_light"] },
-    "child_wall": { "bounds_pct": { "x": 8, "y": 54, "width": 84, "height": 31 }, "digital_elements": ["small_fish", "shell_event", "reef_event"] },
-    "milo_transit": { "bounds_pct": { "x": 6, "y": 35, "width": 82, "height": 31 }, "digital_elements": ["milo"] },
-    "sleep_zone": { "bounds_pct": { "x": 54, "y": 48, "width": 42, "height": 42 }, "digital_elements": ["milo_return", "plush_glow"] }
-  },
-  "occlusion_masks": {
-    "bed_headboard": { "polygon_pct": [[64, 50], [94, 50], [100, 58], [100, 100], [44, 100], [52, 70], [63, 64]] },
-    "shelf": { "polygon_pct": [[20, 55], [46, 55], [46, 86], [20, 86]] },
-    "curtain": { "polygon_pct": [[7, 2], [19, 3], [19, 83], [7, 78]] }
+    "floor": { "desktop_bounds_pct": [0, 53, 100, 47], "mobile_bounds_pct": [0, 52, 100, 48] },
+    "lower_wall": { "desktop_bounds_pct": [12, 42, 77, 23], "mobile_bounds_pct": [14, 36, 78, 22] },
+    "milo_transit": { "desktop_bounds_pct": [20, 28, 67, 35], "mobile_bounds_pct": [7, 31, 76, 38] },
+    "sleep": { "desktop_bounds_pct": [75, 18, 24, 32], "mobile_bounds_pct": [53, 27, 46, 24] }
   },
   "calibration_required": [
     "Replace every null physical measurement with an on-site measurement.",
     "Photograph projector coverage without a child present.",
-    "Re-fit all object anchors and occlusion polygons to the physical room.",
-    "Verify that the plush anchor is visible from the projector and child viewing position."
+    "Fit bed, headboard, shelf, reef, curtain, shell, and plush masks to the physical room.",
+    "Verify the Milo home-path endpoint from child viewing height."
   ]
 }

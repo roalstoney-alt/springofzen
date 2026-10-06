@@ -15,6 +15,10 @@
   let feedbackTimer = null;
   let fishTimer = null;
   let followTimer = null;
+  let fishTouchReset = null;
+  let activeInteraction = null;
+  let fishTouches = 0;
+  let miloTouches = 0;
 
   window.MYNEST_LOCAL_QA_EVENTS = qaEvents;
 
@@ -87,11 +91,13 @@
   function scheduleResidentLoop() {
     stopResidentLoop();
     if (body.dataset.mode === "rest" || body.classList.contains("magic-moment")) return;
-    queueTimer(residentTimers, reducedMotion ? 6500 : 12000, () => {
+    const visiblePause = reducedMotion ? 7000 : 14000 + Math.round(Math.random() * 4000);
+    queueTimer(residentTimers, visiblePause, () => {
       if (body.dataset.mode === "rest") return;
       body.classList.add("milo-away");
       setMiloState("idle");
-      queueTimer(residentTimers, reducedMotion ? 3500 : 7600, () => {
+      const absentPause = reducedMotion ? 4500 : 11000 + Math.round(Math.random() * 4000);
+      queueTimer(residentTimers, absentPause, () => {
         if (body.dataset.mode === "rest") return;
         body.classList.remove("milo-away");
         body.classList.add("milo-returning");
@@ -107,14 +113,20 @@
     if (wakeStarted && !immediate) return;
     clearTimers(wakeTimers);
     wakeStarted = true;
-    const times = reducedMotion ? [0, 450, 1000, 1650, 2300] : immediate ? [0, 500, 1200, 2200, 3600] : [0, 1400, 2800, 4400, 6800];
-    queueTimer(wakeTimers, times[0], () => { body.classList.add("wake-ripple"); logLocal("OCEAN_WOKE"); });
+    const times = reducedMotion ? [0, 350, 850, 1350, 2050, 2700] : immediate ? [0, 350, 900, 1600, 2700, 3900] : [0, 650, 1500, 3500, 5500, 8200];
+    queueTimer(wakeTimers, times[0], () => { body.classList.add("wake-ripple", "fish-peek"); logLocal("OCEAN_WOKE"); });
     queueTimer(wakeTimers, times[1], () => body.classList.add("wake-water"));
     queueTimer(wakeTimers, times[2], () => { body.classList.add("wake-life"); setFishState("move"); });
-    queueTimer(wakeTimers, times[3], () => { body.classList.add("milo-entered"); setMiloState("idle"); logLocal("MILO_SEEN"); });
+    queueTimer(wakeTimers, times[3], () => setFishState("observe"));
     queueTimer(wakeTimers, times[4], () => {
+      body.classList.add("milo-entered", "milo-arriving");
+      setFishState("hide"); setMiloState("idle"); logLocal("MILO_SEEN");
+    });
+    queueTimer(wakeTimers, times[5], () => {
+      body.classList.remove("milo-arriving");
       body.classList.add("ocean-ready");
-      document.querySelector("[data-touch-hint]").textContent = "Touch what you notice.";
+      document.querySelector("[data-touch-hint]").textContent = "";
+      setFishState("return");
       scheduleFishCycle();
       scheduleResidentLoop();
     });
@@ -141,7 +153,7 @@
     if (!AudioContext) return null;
     const context = new AudioContext();
     const master = context.createGain();
-    master.gain.value = .12;
+    master.gain.value = .045;
     master.connect(context.destination);
     const low = context.createOscillator();
     const high = context.createOscillator();
@@ -150,7 +162,7 @@
     const filter = context.createBiquadFilter();
     low.type = "sine"; high.type = "sine";
     low.frequency.value = 68; high.frequency.value = 132;
-    lowGain.gain.value = .1; highGain.gain.value = .018;
+    lowGain.gain.value = .045; highGain.gain.value = .006;
     filter.type = "lowpass"; filter.frequency.value = 320;
     low.connect(lowGain).connect(filter); high.connect(highGain).connect(filter); filter.connect(master);
     low.start(); high.start();
@@ -158,7 +170,7 @@
       const now = context.currentTime;
       low.frequency.setTargetAtTime(resting ? 52 : 68, now, 1.4);
       high.frequency.setTargetAtTime(resting ? 96 : 132, now, 1.4);
-      master.gain.setTargetAtTime(resting ? .045 : .12, now, 1.8);
+      master.gain.setTargetAtTime(resting ? .018 : .045, now, 1.8);
     }, stop() {
       master.gain.setTargetAtTime(.001, context.currentTime, .25);
       window.setTimeout(() => context.close(), 700);
@@ -188,45 +200,58 @@
 
   function triggerResponse(type) {
     if (!body.classList.contains("ocean-ready")) wakeRoom(true);
-    if (body.dataset.mode === "rest") return;
+    if (body.dataset.mode === "rest" || activeInteraction) return;
+    activeInteraction = type;
+    stopFishCycle();
+    stopResidentLoop();
     clearResponseClasses();
     window.clearTimeout(feedbackTimer);
-    body.classList.remove("milo-away");
-    body.classList.add(`${type}-response`);
-    const eventNames = { shell: "SHELL_CLICKED", reef: "REEF_CLICKED", plush: "PLUSH_CLICKED", milo: "MILO_CLICKED" };
-    logLocal(eventNames[type]);
-    if (type === "milo") { setMiloState("play"); pulseTone(122, 1.1); }
-    if (type === "plush") { setMiloState("approach"); pulseTone(104, 1.2); }
-    if (type === "shell") { setMiloState("notice_child"); setFishState("observe"); pulseTone(208, .75); }
-    if (type === "reef") { setFishState("hide"); pulseTone(164, .55); }
+    const delay = reducedMotion ? 60 : type === "reef" ? 550 + Math.random() * 400 : 150 + Math.random() * 450;
     feedbackTimer = window.setTimeout(() => {
-      clearResponseClasses();
-      setMiloState("idle");
-      setFishState("return");
-      scheduleFishCycle();
-      scheduleResidentLoop();
-    }, reducedMotion ? 2300 : type === "milo" ? 7600 : 5200);
+      body.classList.remove("milo-away");
+      body.classList.add(`${type}-response`);
+      const eventNames = { shell: "SHELL_CLICKED", reef: "REEF_CLICKED", plush: "PLUSH_CLICKED", milo: "MILO_CLICKED" };
+      logLocal(eventNames[type]);
+      if (type === "milo") {
+        miloTouches = Math.min(3, miloTouches + 1);
+        setMiloState(miloTouches === 1 ? "notice_child" : miloTouches === 2 ? "approach" : "play");
+        pulseTone(112, 1.05);
+      }
+      if (type === "plush") { setMiloState("approach"); pulseTone(96, 1.15); }
+      if (type === "shell") { setMiloState("notice_child"); setFishState("observe"); pulseTone(196, .7); }
+      if (type === "reef") { setFishState("hide"); pulseTone(152, .5); }
+      feedbackTimer = window.setTimeout(() => {
+        clearResponseClasses();
+        activeInteraction = null;
+        setMiloState("idle");
+        setFishState("return");
+        scheduleFishCycle();
+        scheduleResidentLoop();
+      }, reducedMotion ? 1900 : type === "milo" ? 6200 : 5000);
+    }, delay);
   }
 
   function resetReturnHome() {
     clearTimers(returnTimers);
     body.classList.remove("return-quiet", "return-turn", "return-travel", "return-transfer", "return-sleep", "rest-complete");
-    document.querySelector("[data-rest-phrase]").textContent = "Milo is going home.";
+    document.querySelector("[data-rest-phrase]").textContent = "";
   }
 
   function startReturnHome() {
     resetReturnHome();
     stopFishCycle();
     stopResidentLoop();
-    clearResponseClasses();
+    window.clearTimeout(feedbackTimer);
+    feedbackTimer = null;
+    clearResponseClasses(); activeInteraction = null;
     body.classList.remove("milo-away", "milo-returning");
     setMiloState("return_home");
     logLocal("MILO_RETURN_HOME_STARTED");
     const times = reducedMotion ? [0, 450, 1000, 1750, 2500] : [0, 2800, 5200, 9200, 12400];
     queueTimer(returnTimers, times[0], () => { body.classList.add("return-quiet"); setFishState("hide"); });
-    queueTimer(returnTimers, times[1], () => { body.classList.add("return-turn"); document.querySelector("[data-rest-phrase]").textContent = "Milo sees his bed."; });
-    queueTimer(returnTimers, times[2], () => { body.classList.add("return-travel"); document.querySelector("[data-rest-phrase]").textContent = "Milo is going home."; });
-    queueTimer(returnTimers, times[3], () => { body.classList.add("return-transfer"); document.querySelector("[data-rest-phrase]").textContent = "Almost home."; });
+    queueTimer(returnTimers, times[1], () => body.classList.add("return-turn"));
+    queueTimer(returnTimers, times[2], () => body.classList.add("return-travel"));
+    queueTimer(returnTimers, times[3], () => body.classList.add("return-transfer"));
     queueTimer(returnTimers, times[4], () => {
       body.classList.add("return-sleep", "rest-complete");
       setMiloState("sleep");
@@ -238,7 +263,7 @@
   function setMode(mode) {
     if (!["explore", "story", "rest"].includes(mode)) return;
     body.dataset.mode = mode;
-    document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mode === mode)));
+    document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", String(mode === "rest"));
     if (mode === "rest") {
       logLocal("REST_STARTED");
       startReturnHome();
@@ -249,7 +274,6 @@
       setFishState("return");
       scheduleFishCycle();
       scheduleResidentLoop();
-      document.querySelector("[data-story-count]").textContent = mode === "story" ? "Touch the shell light." : "";
     }
     if (audioEngine) audioEngine.setRest(mode === "rest");
   }
@@ -274,6 +298,19 @@
       scheduleFishCycle();
       scheduleResidentLoop();
     }, reducedMotion ? 3200 : 10400);
+  }
+
+  function restartScene() {
+    clearTimers(wakeTimers); clearTimers(returnTimers); stopResidentLoop(); stopFishCycle();
+    window.clearTimeout(feedbackTimer); window.clearTimeout(followTimer); window.clearTimeout(fishTouchReset);
+    activeInteraction = null; fishTouches = 0; miloTouches = 0; wakeStarted = false;
+    body.dataset.mode = "explore"; body.dataset.miloState = "idle"; setFishState("hide");
+    body.className = "";
+    document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", "false");
+    document.querySelector("[data-rest-phrase]").textContent = "";
+    document.querySelector("[data-touch-hint]").textContent = "Watch closely.";
+    queueTimer(wakeTimers, reducedMotion ? 200 : 700, () => wakeRoom());
+    logLocal("SCENE_RESTARTED");
   }
 
   function formPayload(form) {
@@ -337,14 +374,48 @@
     const y = Math.max(58, Math.min(84, ((event.clientY - bounds.top) / bounds.height) * 100));
     stage.style.setProperty("--pointer-x", `${x}%`);
     stage.style.setProperty("--pointer-y", `${y}%`);
-    body.classList.add("fish-follow");
-    setFishState("observe");
+  });
+
+  stage.addEventListener("pointerdown", (event) => {
+    if (!body.classList.contains("ocean-ready") || body.dataset.mode === "rest" || activeInteraction) return;
+    if (event.target.closest("button, a, input, select, label")) return;
+    const bounds = stage.getBoundingClientRect();
+    const x = Math.max(8, Math.min(92, ((event.clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.max(58, Math.min(84, ((event.clientY - bounds.top) / bounds.height) * 100));
+    if (y < 58) return;
+    stage.style.setProperty("--pointer-x", `${x}%`);
+    stage.style.setProperty("--pointer-y", `${y}%`);
+    fishTouches += 1;
+    activeInteraction = "fish";
+    stopFishCycle();
     window.clearTimeout(followTimer);
+    window.clearTimeout(fishTouchReset);
+
+    if (fishTouches === 1) {
+      setFishState("observe");
+      logLocal("FISH_NOTICED_CHILD");
+    } else if (fishTouches === 2) {
+      body.classList.add("fish-follow");
+      setFishState("observe");
+      logLocal("FISH_FOLLOWED_BRIEFLY");
+      window.setTimeout(() => {
+        body.classList.remove("milo-away");
+        setMiloState("notice_child");
+      }, reducedMotion ? 80 : 700);
+    } else {
+      setFishState("hide");
+      logLocal("FISH_CHOSE_TO_HIDE");
+    }
+
     followTimer = window.setTimeout(() => {
       body.classList.remove("fish-follow");
-      setFishState("return");
+      setFishState(fishTouches > 1 ? "hide" : "return");
+      setMiloState("idle");
+      activeInteraction = null;
       scheduleFishCycle();
-    }, reducedMotion ? 800 : 2200);
+      scheduleResidentLoop();
+    }, reducedMotion ? 900 : fishTouches === 2 ? 2600 : 1900);
+    fishTouchReset = window.setTimeout(() => { fishTouches = 0; }, reducedMotion ? 2600 : 8500);
   });
 
   document.querySelector("[data-wake]").addEventListener("click", () => wakeRoom(true));
@@ -352,6 +423,8 @@
   document.querySelector("[data-milo]").addEventListener("click", () => triggerResponse("milo"));
   document.querySelectorAll("[data-room-zone]").forEach((button) => button.addEventListener("click", () => triggerResponse(button.dataset.roomZone)));
   document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
+  document.querySelector("[data-restart]").addEventListener("click", restartScene);
+  document.querySelector("[data-rest-toggle]").addEventListener("click", () => setMode(body.dataset.mode === "rest" ? "explore" : "rest"));
   document.querySelector("[data-magic-moment]").addEventListener("click", playMagicMoment);
   document.querySelector("[data-observer-open]").addEventListener("click", () => { document.querySelector("[data-observer-panel]").hidden = false; });
   document.querySelector("[data-observer-close]").addEventListener("click", () => { document.querySelector("[data-observer-panel]").hidden = true; });
@@ -362,7 +435,7 @@
     await saveObservation(form.dataset.observationForm, form); button.disabled = false;
   }));
   document.querySelector("[data-export]").addEventListener("click", async () => {
-    const exportData = { project: "MYNEST_OCEAN_REAL_ROOM_001_SCENE_AND_SKU_SPEC_v0.1", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
+    const exportData = { project: "MYNEST_OCEAN_REAL_ROOM_001_LIVING_SCENE_v0.2", magic_pilot_id: state.magic_pilot_id, observations: state.observations };
     try { await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)); setObserverStatus("Anonymous observation JSON copied."); }
     catch { setObserverStatus("Clipboard access was blocked. Observations remain on this device.", true); }
   });
@@ -371,5 +444,5 @@
   populateCharacters(); hydrateObservationForms();
   document.querySelector("[data-magic-pilot-id]").textContent = state.magic_pilot_id;
   saveState(); setFishState("hide"); logLocal("ROOM_LOADED");
-  queueTimer(wakeTimers, reducedMotion ? 300 : 1200, () => wakeRoom());
+  queueTimer(wakeTimers, reducedMotion ? 300 : 1500, () => wakeRoom());
 })();

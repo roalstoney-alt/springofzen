@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2",
+  "room_id": "OCEAN_ROOM_001",
+  "coordinate_system": "normalized_percent_top_left",
+  "interpolation": "cubic_bezier",
+  "paths": {
+    "FISH_PATH_REEF_TO_BED": {
+      "desktop": [[39, 58], [44, 73], [58, 79], [70, 68]],
+      "mobile": [[42, 53], [43, 73], [57, 82], [72, 68]]
+    },
+    "FISH_PATH_BED_TO_WALL": {
+      "desktop": [[70, 68], [66, 62], [57, 59], [50, 63]],
+      "mobile": [[72, 68], [67, 60], [57, 57], [48, 64]]
+    },
+    "FISH_PATH_WALL_TO_CURTAIN": {
+      "desktop": [[50, 63], [39, 61], [28, 66], [19, 72]],
+      "mobile": [[48, 64], [37, 61], [27, 66], [18, 73]]
+    },
+    "MILO_PATH_ENTRY": {
+      "desktop": [[23, 56], [28, 54], [34, 50], [39, 49]],
+      "mobile": [[8, 66], [12, 63], [16, 59], [18, 58]]
+    },
+    "MILO_PATH_APPROACH": {
+      "desktop": [[39, 49], [34, 54], [44, 51], [49, 48]],
+      "mobile": [[18, 58], [16, 64], [27, 60], [32, 56]]
+    },
+    "MILO_PATH_HOME": {
+      "desktop": [[39, 49], [51, 47], [66, 39], [84, 29]],
+      "mobile": [[18, 58], [28, 53], [43, 41], [69, 34]]
+    }
+  },
+  "depth_scale": {
+    "fish": [0.65, 1.0],
+    "milo": [0.75, 1.05]
+  },
+  "notes": [
+    "Paths are authored for the two dedicated web art masters.",
+    "Recalibrate endpoints after physical projector geometry is measured.",
+    "All ordinary fish paths remain in the lower-room band."
+  ]
+}

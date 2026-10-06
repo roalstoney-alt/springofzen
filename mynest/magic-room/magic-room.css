@@ -69,3 +69,83 @@ body.magic-moment .experience-topbar,body.magic-moment .first-copy,body.magic-mo
 @media(max-width:760px){.first-copy h1{font-size:clamp(2.7rem,13vw,4.2rem)}.milo{width:54vw}body.milo-entered .milo{left:22%;top:48%}.fish-a{left:8%;top:78%}.fish-b{left:25%;top:72%}.fish-c{left:43%;top:81%}.fish-d{left:61%;top:70%}.fish-e{left:79%;top:78%}.zone-plush{left:50%;top:54%;width:43%;height:34%}.zone-shell{right:0;top:51%;width:19%;height:25%}.zone-reef{left:18%;top:53%;width:35%;height:30%}.shell-event{right:0;top:56%;width:76px;height:76px}.reef-event{left:27%;top:63%}.plush-glow{left:58%;top:59%;width:25%;height:21%}body[data-mode="story"] .milo{left:20%;top:49%}body[data-mode="rest"] .milo{left:22%;top:48%;width:54vw}.return-section ol{grid-template-columns:1fr 1fr}.return-section li{min-height:140px}body.return-travel .milo{animation-name:milo-return-path-mobile!important}body.return-transfer .milo{animation-name:milo-transfer-mobile!important}}
 @keyframes milo-return-path-mobile{0%{left:22%;top:48%;opacity:.95;transform:rotate(3deg) scale(1)}55%{left:42%;top:52%;transform:rotate(-5deg) scale(.75)}100%{left:53%;top:58%;opacity:.75;transform:scale(.5)}}@keyframes milo-transfer-mobile{0%{left:53%;top:58%;opacity:.75;transform:scale(.5)}100%{left:62%;top:64%;opacity:0;transform:scale(.12)}}
 @media(prefers-reduced-motion:reduce){.fish,.milo,.shell-event,.reef-event,.plush-glow,.sleep-breath{animation-duration:.01ms!important;animation-iteration-count:1!important}body.milo-entered .milo,body.return-travel .milo,body.return-transfer .milo{animation-duration:.01ms!important;animation-iteration-count:1!important}body.milo-entered .milo{left:43%;top:42%;opacity:.9}body.return-sleep .milo{opacity:0!important}}
+
+/* Living Scene v0.2 — child-eye room, photographic residents, and restrained occupancy. */
+:root{--room-image:url("assets/ocean-room-child-eye-desktop-v03.jpg")}
+.room-stage{min-height:560px;background:#d3ad80;cursor:default}
+.room-photo img{object-position:50% 50%}
+.room-dusk{background:linear-gradient(180deg,rgba(25,20,16,.01),rgba(12,28,30,.025) 52%,rgba(10,35,40,.06))}
+.ocean-wash{inset:58% 0 0;background:linear-gradient(180deg,transparent,rgba(22,101,111,.035) 55%,rgba(10,75,88,.09));mix-blend-mode:multiply}
+.wall-caustics{inset:61% -6% -12%;opacity:0;background:repeating-radial-gradient(ellipse at 48% 54%,transparent 0 54px,rgba(193,255,241,.09) 60px 63px,transparent 69px 130px);mask-image:linear-gradient(transparent,#000 27%)}
+body.wake-water .ocean-wash{opacity:.45}body.wake-water .wall-caustics{opacity:.22}
+.first-ripple{left:36%;top:68%;width:9%;height:6%;border-color:rgba(107,204,198,.22)}
+.first-copy{left:50%;top:37%;transform:translate(-50%,-50%);width:min(92%,780px);text-align:center;color:#20322e;text-shadow:0 1px 20px rgba(255,250,236,.86)}
+.first-copy p{color:#28695f}.first-copy h1{font-size:clamp(2.5rem,5vw,4.8rem);line-height:.98}.first-copy small{color:#465d56}
+body.ocean-ready .first-copy{opacity:0!important;transform:translate(-50%,-44%);pointer-events:none}
+.wake-control{display:none}
+.experience-topbar{padding:max(.85rem,env(safe-area-inset-top)) clamp(.85rem,2.4vw,2rem)}
+.ocean-brand,.sound-control{color:#253b35;text-shadow:0 1px 14px rgba(255,255,255,.8)}
+.sound-control{min-height:36px;padding:0 .65rem;border-color:rgba(28,62,55,.2);background:rgba(255,252,243,.5);color:#243d37}.sound-control span{color:#26796e}.sound-control b{font-size:.66rem}
+.scene-controls{position:absolute;z-index:45;right:max(.7rem,env(safe-area-inset-right));bottom:max(.7rem,env(safe-area-inset-bottom));display:flex;gap:.35rem;opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+body.ocean-ready .scene-controls{opacity:.68;pointer-events:auto}body[data-mode="rest"] .scene-controls{opacity:.82}
+.scene-controls button{display:flex;align-items:center;gap:.32rem;min-height:34px;padding:.2rem .55rem;border:1px solid rgba(30,59,52,.16);border-radius:999px;background:rgba(255,253,246,.58);color:#304b44;backdrop-filter:blur(10px);cursor:pointer}.scene-controls i{font-style:normal;font-size:.86rem}.scene-controls span{font-size:.6rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+
+/* Three fish are the default population; two reserved nodes keep the hard maximum at five. */
+.fish-d,.fish-e{display:none!important}.fish{width:clamp(52px,5.5vw,88px);height:clamp(52px,5.5vw,88px);border:0!important;border-radius:0!important;background-image:url("assets/baby-fish-family-v01.webp")!important;background-repeat:no-repeat!important;background-size:300% 100%!important;filter:contrast(1.08) saturate(.82) drop-shadow(0 6px 7px rgba(21,49,49,.34));opacity:0;transition:left 1.5s cubic-bezier(.2,.72,.2,1),top 1.5s cubic-bezier(.2,.72,.2,1),opacity 1s ease,transform 1.5s ease}
+.fish::before,.fish::after{display:none!important}.fish-a{left:35%;top:72%;background-position:0 0!important}.fish-b{left:51%;top:80%;background-position:50% 0!important;transform:scale(.78)}.fish-c{left:67%;top:70%;background-position:100% 0!important;transform:scale(.62)}
+body.fish-peek:not(.wake-life) .fish-a{left:39%;top:57%;opacity:.5;transform:scale(.48)}
+body[data-fish-state="move"] .fish{animation:fish-living-move 7.2s ease-in-out 1 both}
+body[data-fish-state="observe"] .fish{animation:none;opacity:.88;transform:translateY(-3px) scale(.76)}body[data-fish-state="observe"] .fish-c{transform:translateY(-2px) scale(.66)}
+body[data-fish-state="hide"] .fish{animation:none;left:39%;top:59%;opacity:0;transform:scale(.25)}
+body[data-fish-state="return"] .fish{animation:fish-living-return 2.8s ease-out 1 both}
+body.fish-follow .fish{animation:none!important;left:var(--pointer-x)!important;top:var(--pointer-y)!important;opacity:.73}body.fish-follow .fish-a{transform:translate(-54px,-10px) scale(.72)}body.fish-follow .fish-b{transform:translate(-5px,18px) scale(.58)}body.fish-follow .fish-c{transform:translate(48px,-12px) scale(.48)}
+
+/* Milo is a transparent photographic sprite, never a room-scale vector. */
+.milo{z-index:11;left:-25%;top:51%;width:min(24vw,370px);aspect-ratio:3/2;height:auto!important;padding:0;border:0;background:none!important;overflow:visible;opacity:0;filter:drop-shadow(0 15px 13px rgba(26,47,43,.2));clip-path:none!important;transition:transform 1.2s ease,filter 1.2s ease;cursor:pointer}
+.milo-sprite{position:absolute;inset:0;display:block;background-image:url("assets/milo-living-cutout-v02.webp");background-repeat:no-repeat;background-size:contain;background-position:center}
+.milo-contact{z-index:10;left:41%;top:53%;width:22%;height:20%;border-radius:50%;opacity:0;background:radial-gradient(ellipse,rgba(142,213,201,.12),transparent 68%);filter:blur(5px);transition:opacity 1s ease}
+body.milo-entered .milo{left:39%;top:49%;opacity:.94;animation:milo-living-arrive 4.2s cubic-bezier(.2,.72,.2,1) 1 both!important;clip-path:none!important}
+body.milo-entered .milo-contact{opacity:.55}body.milo-away .milo{animation:milo-living-leave 3.2s ease-in 1 both!important}body.milo-returning .milo{animation:milo-living-reenter 3.5s ease-out 1 both!important}
+body[data-milo-state] .milo-sprite{background-position:center}
+body[data-milo-state="notice_child"] .milo{transform:rotate(2deg) translateY(3px)}body[data-milo-state="approach"] .milo{transform:translate(6%,5%) scale(.96)}body[data-milo-state="play"] .milo{transform:translate(-2%,-2%) scale(1.02)}
+body.milo-response .milo{animation:milo-living-play 6.2s ease-in-out 1 both!important}body.plush-response .milo{animation:milo-living-plush 5s ease-in-out 1 both!important}body.shell-response .milo{transform:rotate(2deg) translate(-2%,2%)}
+
+/* Object alignment in the 16:9 child-eye master. */
+.zone-shell{left:64%;right:auto;top:24%;width:11%;height:24%}.zone-reef{left:37%;top:27%;width:12%;height:26%}.zone-plush{left:80%;top:20%;width:19%;height:27%}
+.shell-event{left:65%;right:auto;top:25%;width:104px;height:104px}.reef-event{left:39%;top:37%;width:78px;height:64px}.plush-glow{left:81%;top:21%;width:17%;height:25%}.sleep-breath{left:87%;top:31%;width:8%;height:7%}
+.room-zone span{opacity:0!important}.shell-event i{background:radial-gradient(circle at 50% 60%,#fff8d1 0 8%,rgba(255,232,163,.36) 15% 29%,rgba(111,198,188,.13) 40%,transparent 70%)}
+body.shell-response .shell-event{animation:shell-living-event 5.5s ease-in-out 1 both}body.shell-response .shell-event span{animation:creature-peek 4.2s 1s ease-in-out 1 both}body.reef-response .reef-event{animation:reef-peek 5s ease-in-out 1 both}body.plush-response .plush-glow{animation:plush-invite 5s ease-in-out 1 both}
+
+/* The room quiets before Milo crosses to the physical plush. */
+.rest-phrase{left:50%;right:auto;bottom:7%;transform:translateX(-50%);color:#344b45;text-shadow:0 1px 14px rgba(255,255,255,.9)}
+body[data-mode="rest"] .room-dusk{background:linear-gradient(180deg,rgba(20,24,24,.08),rgba(12,32,35,.19))}body[data-mode="rest"] .ocean-wash{opacity:.09}body[data-mode="rest"] .wall-caustics{opacity:.04}body[data-mode="rest"] .milo{left:39%;top:49%;width:min(24vw,380px);transform:none}
+body.return-turn .milo{transform:rotate(5deg) translateY(3%)}body.return-travel .milo{animation:milo-home-living 4.2s cubic-bezier(.35,.1,.25,1) 1 both!important;clip-path:none!important}body.return-transfer .milo{animation:milo-transfer-living 3.2s ease-in 1 both!important}body.return-sleep .milo{opacity:0!important}body.return-sleep .sleep-breath{animation:plush-breathe-v02 5.8s ease-in-out 2 both}.rest-complete .ocean-wash{opacity:.015!important}.rest-complete .wall-caustics{opacity:0!important}.rest-complete .milo-contact{opacity:0!important}
+
+body.magic-moment .experience-topbar,body.magic-moment .first-copy,body.magic-moment .wake-control,body.magic-moment .scene-controls,body.magic-moment .room-zone,body.magic-moment .rest-phrase{opacity:0!important;pointer-events:none!important}body.magic-moment .ocean-wash{animation:moment-water-living 10s ease 1 both}body.magic-moment .wall-caustics{animation:moment-caustics-living 10s ease 1 both}body.magic-moment .fish-field{animation:moment-fish-living 10s ease 1 both}body.magic-moment .milo{animation:moment-milo-living 10s cubic-bezier(.2,.7,.2,1) 1 both!important;clip-path:none!important}
+
+@keyframes fish-living-move{0%{margin-left:-3%;opacity:0}18%,69%{opacity:.72}45%{transform:translateY(-4px) scale(.76)}84%,100%{margin-left:8%;opacity:0}}
+@keyframes fish-living-return{0%{opacity:0;transform:scale(.25)}65%{opacity:.7}100%{opacity:.66;transform:scale(.7)}}
+@keyframes milo-living-arrive{0%{left:23%;top:56%;opacity:0;transform:scale(.7)}24%{opacity:.56}62%{left:33%;top:51%;transform:rotate(2deg) scale(.88)}100%{left:39%;top:49%;opacity:.94;transform:rotate(-2deg)}}
+@keyframes milo-living-leave{0%{left:39%;top:49%;opacity:.94}70%{left:65%;top:56%;opacity:.5}100%{left:104%;top:58%;opacity:0;transform:scale(.72)}}
+@keyframes milo-living-reenter{0%{left:19%;top:57%;opacity:0;transform:scale(.7)}48%{opacity:.68}100%{left:39%;top:49%;opacity:.94;transform:rotate(-2deg)}}
+@keyframes milo-living-play{0%,100%{left:39%;top:49%;transform:rotate(-2deg)}34%{left:34%;top:54%;transform:rotate(-6deg) scale(.92)}67%{left:49%;top:48%;transform:rotate(3deg) scale(1)}}
+@keyframes milo-living-plush{0%,100%{left:39%;top:49%}60%{left:67%;top:39%;transform:rotate(-5deg) scale(.77)}78%{left:72%;top:34%;transform:rotate(-2deg) scale(.7)}}
+@keyframes shell-living-event{0%,100%{opacity:0;transform:scale(.82)}24%,72%{opacity:.72;transform:scale(1)}}
+@keyframes milo-home-living{0%{left:39%;top:49%;opacity:.94;transform:rotate(3deg) scale(1)}48%{left:59%;top:42%;transform:rotate(-5deg) scale(.88)}100%{left:75%;top:29%;opacity:.68;transform:rotate(-2deg) scale(.72)}}
+@keyframes milo-transfer-living{0%{left:75%;top:29%;opacity:.68;transform:scale(.72)}65%{opacity:.43;filter:drop-shadow(0 0 18px rgba(226,240,195,.45))}100%{left:84%;top:24%;opacity:0;transform:scale(.35)}}
+@keyframes plush-breathe-v02{0%,100%{opacity:.03;transform:scale(.84)}48%{opacity:.35;transform:scale(1.04)}}
+@keyframes moment-water-living{0%,18%{opacity:0}42%,78%{opacity:.42}100%{opacity:.04}}@keyframes moment-caustics-living{0%,28%{opacity:0}48%,74%{opacity:.2}100%{opacity:0}}@keyframes moment-fish-living{0%,25%{opacity:0}42%,70%{opacity:.76}100%{opacity:.05}}@keyframes moment-milo-living{0%,45%{left:23%;top:56%;opacity:0;transform:scale(.7)}58%{left:31%;top:52%;opacity:.72}82%{left:42%;top:49%;opacity:.94;transform:rotate(-2deg)}100%{left:57%;top:54%;opacity:.42;transform:scale(.76)}}
+
+@media(max-width:680px){
+  :root{--room-image:url("assets/ocean-room-child-eye-mobile-v03.jpg")}.room-stage{min-height:620px}.room-photo img{object-position:50% 50%}.first-copy{top:25%;width:88%}.first-copy h1{font-size:clamp(2.45rem,12.2vw,4rem)}.first-copy p{font-size:.62rem}.experience-topbar{padding-top:max(.75rem,env(safe-area-inset-top))}.ocean-brand span{display:none}.sound-control{min-height:34px}.scene-controls span{display:none}.scene-controls button{width:34px;justify-content:center;padding:0}
+  .ocean-wash{inset:57% 0 0}.wall-caustics{inset:61% -20% -8%}.first-ripple{left:34%;top:74%;width:16%}
+  .fish{width:68px;height:68px}.fish-a{left:22%;top:72%}.fish-b{left:45%;top:81%}.fish-c{left:69%;top:68%}body.fish-peek:not(.wake-life) .fish-a{left:39%;top:55%}
+  .milo{width:54vw;top:60%}body.milo-entered .milo{left:18%;top:58%}.milo-contact{left:18%;top:62%;width:49%;height:18%}
+  .zone-shell{left:15%;top:31%;width:22%;height:18%}.zone-reef{left:35%;top:33%;width:20%;height:17%}.zone-plush{left:54%;top:28%;width:45%;height:20%}.shell-event{left:15%;top:33%;width:88px;height:88px}.reef-event{left:36%;top:37%;width:70px;height:60px}.plush-glow{left:57%;top:28%;width:40%;height:22%}.sleep-breath{left:70%;top:36%;width:18%;height:8%}
+  body[data-mode="rest"] .milo{left:18%;top:58%;width:54vw}body.return-travel .milo{animation-name:milo-home-mobile-living!important}body.return-transfer .milo{animation-name:milo-transfer-mobile-living!important}.rest-phrase{bottom:6.2%;width:90%;text-align:center}
+  .return-section ol{grid-template-columns:1fr 1fr}
+}
+@keyframes milo-home-mobile-living{0%{left:18%;top:58%;opacity:.94;transform:rotate(3deg) scale(1)}50%{left:30%;top:48%;transform:rotate(-4deg) scale(.84)}100%{left:46%;top:35%;opacity:.68;transform:scale(.65)}}
+@keyframes milo-transfer-mobile-living{0%{left:46%;top:35%;opacity:.68;transform:scale(.65)}100%{left:61%;top:31%;opacity:0;transform:scale(.3)}}
+@media(prefers-reduced-motion:reduce){.fish,.milo,.shell-event,.reef-event,.plush-glow,.sleep-breath{animation-duration:.01ms!important}.wall-caustics{display:none}body.milo-entered .milo{left:39%;top:49%;opacity:.9}}
+@media(max-width:680px) and (prefers-reduced-motion:reduce){body.milo-entered .milo{left:18%;top:58%}}
