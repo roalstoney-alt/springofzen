@@ -207,3 +207,33 @@ body[data-mode="rest"] .milo{left:35%;top:53%;width:min(22vw,340px)}body.return-
 @keyframes milo-transfer-mobile-lived{0%{left:59%;top:33%;opacity:.64;transform:scale(.64)}100%{left:72%;top:29%;opacity:0;transform:scale(.3)}}
 @media(prefers-reduced-motion:reduce){body.fish-peek .fish-field{transition:opacity 1.2s ease}.wall-caustics{display:none}body.milo-entered .milo{left:35%;top:53%;opacity:.9}}
 @media(max-width:680px) and (prefers-reduced-motion:reduce){body.milo-entered .milo{left:18%;top:59%}}
+
+/* Rest Night Lighting Patch v0.3.1 — Rest is a room time-of-day transition. */
+.room-photo-day{z-index:0}.room-photo-night{z-index:1;opacity:0;pointer-events:none;transition:opacity 1.8s cubic-bezier(.32,.02,.24,1)}
+body[data-room-light="day"] .room-photo-night{opacity:0;transition-duration:1.7s}
+body[data-room-light="dusk"] .room-photo-night{opacity:.48;transition-duration:1.8s}
+body[data-room-light="night"] .room-photo-night{opacity:1;transition-duration:2.3s}
+body.rest-exiting[data-room-light="dusk"] .room-photo-night{opacity:.48;transition-duration:1.7s}
+
+/* Ambient, window, water, and creature systems respond independently from the paired base art. */
+body[data-room-light="day"] .room-dusk{opacity:1;background:linear-gradient(180deg,rgba(28,23,19,.01),rgba(13,31,31,.03) 58%,rgba(12,43,44,.065))}
+body[data-room-light="dusk"] .room-dusk{opacity:.34;background:linear-gradient(180deg,rgba(17,26,39,.12),rgba(12,24,37,.21) 58%,rgba(8,25,34,.29));transition:background 1.8s ease,opacity 1.8s ease}
+body[data-room-light="night"] .room-dusk{opacity:.12;background:linear-gradient(180deg,rgba(3,10,22,.08),rgba(4,12,23,.16));transition:background 2.3s ease,opacity 2.3s ease}
+body[data-mode="rest"][data-room-light="day"] .ocean-wash{opacity:.35}
+body[data-room-light="dusk"] .ocean-wash{opacity:.045!important;transition:opacity 1.8s ease}
+body[data-room-light="dusk"] .wall-caustics{opacity:.025!important;transition:opacity 1.8s ease}
+body[data-room-light="night"] .ocean-wash{opacity:.01!important;transition:opacity 2.3s ease}
+body[data-room-light="night"] .wall-caustics,body[data-room-light="night"] .window-depth{opacity:0!important;transition:opacity 2.3s ease}
+body.rest-complete[data-room-light="night"] .ocean-wash,body.rest-complete[data-room-light="night"] .wall-caustics{opacity:0!important}
+
+/* Fish remain briefly in DAY/DUSK, then leave before Milo begins his return. */
+body[data-mode="rest"][data-room-light="day"]:not(.fish-exit) .fish-field,body[data-mode="rest"][data-room-light="dusk"]:not(.fish-exit) .fish-field{opacity:1!important}
+body.fish-exit .fish-field,body[data-room-light="night"] .fish-field{opacity:0!important}
+
+/* The paired night asset supplies the practical Shell glow; no separate fantasy pulse is added. */
+body[data-room-light="dusk"] .shell-event,body[data-room-light="night"] .shell-event,body.rest-complete .shell-event{opacity:0!important;animation:none!important}
+
+@media(prefers-reduced-motion:reduce){
+  .room-photo-night{transition:opacity 2s ease!important}
+  body[data-room-light="dusk"] .room-dusk,body[data-room-light="night"] .room-dusk{transition:background 2s ease,opacity 2s ease!important}
+}

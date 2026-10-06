@@ -231,28 +231,41 @@
     }, delay);
   }
 
-  function resetReturnHome() {
+  function setRoomLight(state) {
+    if (!["day", "dusk", "night"].includes(state)) return;
+    body.dataset.roomLight = state;
+  }
+
+  function resetReturnHome({ preserveLight = false } = {}) {
     clearTimers(returnTimers);
-    body.classList.remove("return-quiet", "return-turn", "return-travel", "return-transfer", "return-sleep", "rest-complete");
+    body.classList.remove("rest-requested", "rest-exiting", "shell-warming", "fish-exit", "return-quiet", "return-turn", "return-travel", "return-transfer", "return-sleep", "rest-complete");
+    if (!preserveLight) setRoomLight("day");
     document.querySelector("[data-rest-phrase]").textContent = "";
   }
 
   function startReturnHome() {
-    resetReturnHome();
+    resetReturnHome({ preserveLight: true });
     stopFishCycle();
     stopResidentLoop();
     window.clearTimeout(feedbackTimer);
     feedbackTimer = null;
     clearResponseClasses(); activeInteraction = null;
     body.classList.remove("milo-away", "milo-returning");
-    setMiloState("return_home");
-    logLocal("MILO_RETURN_HOME_STARTED");
-    const times = reducedMotion ? [0, 450, 1000, 1750, 2500] : [0, 2800, 5200, 9200, 12400];
-    queueTimer(returnTimers, times[0], () => { body.classList.add("return-quiet"); setFishState("hide"); });
-    queueTimer(returnTimers, times[1], () => body.classList.add("return-turn"));
-    queueTimer(returnTimers, times[2], () => body.classList.add("return-travel"));
-    queueTimer(returnTimers, times[3], () => body.classList.add("return-transfer"));
-    queueTimer(returnTimers, times[4], () => {
+    body.classList.add("rest-requested");
+    const times = [300, 800, 1500, 2000, 3000, 4500, 5200, 9400, 12600];
+    queueTimer(returnTimers, times[0], () => setFishState("observe"));
+    queueTimer(returnTimers, times[1], () => { body.classList.add("return-quiet"); setRoomLight("dusk"); });
+    queueTimer(returnTimers, times[2], () => body.classList.add("shell-warming"));
+    queueTimer(returnTimers, times[3], () => { body.classList.add("fish-exit"); setFishState("hide"); });
+    queueTimer(returnTimers, times[4], () => setRoomLight("night"));
+    queueTimer(returnTimers, times[5], () => {
+      setMiloState("return_home");
+      body.classList.add("return-turn");
+      logLocal("MILO_RETURN_HOME_STARTED");
+    });
+    queueTimer(returnTimers, times[6], () => body.classList.add("return-travel"));
+    queueTimer(returnTimers, times[7], () => body.classList.add("return-transfer"));
+    queueTimer(returnTimers, times[8], () => {
       body.classList.add("return-sleep", "rest-complete");
       setMiloState("sleep");
       document.querySelector("[data-rest-phrase]").textContent = "Milo is sleeping.";
@@ -260,20 +273,41 @@
     });
   }
 
+  function exitRest() {
+    resetReturnHome({ preserveLight: true });
+    stopFishCycle();
+    stopResidentLoop();
+    body.classList.add("rest-exiting");
+    setFishState("hide");
+    setMiloState("idle");
+    setRoomLight("dusk");
+    queueTimer(returnTimers, 1800, () => setRoomLight("day"));
+    queueTimer(returnTimers, 3700, () => {
+      body.classList.remove("rest-exiting");
+      setFishState("return");
+      scheduleFishCycle();
+      scheduleResidentLoop();
+    });
+  }
+
   function setMode(mode) {
     if (!["explore", "story", "rest"].includes(mode)) return;
+    const wasRest = body.dataset.mode === "rest";
     body.dataset.mode = mode;
     document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", String(mode === "rest"));
     if (mode === "rest") {
       logLocal("REST_STARTED");
       startReturnHome();
     } else {
-      resetReturnHome();
       body.classList.remove("milo-away");
-      setMiloState("idle");
-      setFishState("return");
-      scheduleFishCycle();
-      scheduleResidentLoop();
+      if (wasRest || body.dataset.roomLight !== "day") exitRest();
+      else {
+        resetReturnHome();
+        setMiloState("idle");
+        setFishState("return");
+        scheduleFishCycle();
+        scheduleResidentLoop();
+      }
     }
     if (audioEngine) audioEngine.setRest(mode === "rest");
   }
@@ -282,6 +316,9 @@
     if (body.classList.contains("magic-moment")) return;
     logLocal("MAGIC_MOMENT_PLAYED");
     setMode("explore");
+    clearTimers(returnTimers);
+    setRoomLight("day");
+    body.classList.remove("rest-exiting");
     stopFishCycle();
     stopResidentLoop();
     clearResponseClasses();
@@ -306,6 +343,7 @@
     window.clearTimeout(controlsTimer);
     activeInteraction = null; fishTouches = 0; miloTouches = 0; wakeStarted = false;
     body.dataset.mode = "explore"; body.dataset.miloState = "idle"; setFishState("hide");
+    setRoomLight("day");
     body.className = "";
     document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", "false");
     document.querySelector("[data-rest-phrase]").textContent = "";

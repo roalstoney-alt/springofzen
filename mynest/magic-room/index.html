@@ -10,9 +10,11 @@
   <link rel="canonical" href="https://www.springofzen.com/mynest/magic-room/">
   <link rel="preload" href="assets/ocean-room-base-v03-desktop.jpg" as="image" media="(min-width: 681px)">
   <link rel="preload" href="assets/ocean-room-base-v03-mobile.jpg" as="image" media="(max-width: 680px)">
-  <link rel="stylesheet" href="magic-room.css?v=20261006-lived-v03">
+  <link rel="preload" href="assets/ocean-room-base-v03-desktop-night.jpg" as="image" media="(min-width: 681px)">
+  <link rel="preload" href="assets/ocean-room-base-v03-mobile-night.jpg" as="image" media="(max-width: 680px)">
+  <link rel="stylesheet" href="magic-room.css?v=20261006-night-v031">
 </head>
-<body data-phase="room" data-mode="explore" data-milo-state="idle">
+<body data-phase="room" data-mode="explore" data-milo-state="idle" data-room-light="day">
   <a class="skip-link" href="#after-magic">Skip the room experience</a>
   <main>
     <section class="ocean-experience" data-ocean-experience aria-label="A real child's bedroom waking into MyNest Ocean">
@@ -20,7 +22,8 @@
         <button class="sound-control" type="button" data-audio aria-pressed="false"><span aria-hidden="true">♪</span><b>Sound off</b></button>
       </div>
       <div class="room-stage" data-room-stage>
-        <picture class="room-photo"><source media="(max-width: 680px)" srcset="assets/ocean-room-base-v03-mobile.jpg"><img src="assets/ocean-room-base-v03-desktop.jpg" alt="A lived-in child's bedroom at child height with a low bed, a familiar whale plush, a pearl bedside light, an abstract stone object, and reachable open floor"></picture>
+        <picture class="room-photo room-photo-day"><source media="(max-width: 680px)" srcset="assets/ocean-room-base-v03-mobile.jpg"><img src="assets/ocean-room-base-v03-desktop.jpg" alt="A lived-in child's bedroom at child height with a low bed, a familiar whale plush, a pearl bedside light, an abstract stone object, and reachable open floor"></picture>
+        <picture class="room-photo room-photo-night" aria-hidden="true"><source media="(max-width: 680px)" srcset="assets/ocean-room-base-v03-mobile-night.jpg"><img src="assets/ocean-room-base-v03-desktop-night.jpg" alt=""></picture>
         <div class="room-dusk" aria-hidden="true"></div><div class="first-ripple" aria-hidden="true"></div><div class="ocean-wash" aria-hidden="true"></div><div class="wall-caustics" aria-hidden="true"></div><div class="window-depth" aria-hidden="true"></div>
         <div class="fish-field" aria-hidden="true"><i class="fish fish-a" data-fish></i><i class="fish fish-b" data-fish></i><i class="fish fish-c" data-fish></i><i class="fish fish-d" data-fish></i><i class="fish fish-e" data-fish></i></div>
         <button class="milo" type="button" data-milo aria-label="Touch Milo the young whale"><span class="milo-sprite" aria-hidden="true"></span></button><div class="milo-contact" aria-hidden="true"></div>
@@ -53,6 +56,6 @@
     <label class="consent-box"><input type="checkbox" data-pilot-consent><span>I am a parent/caregiver and explicitly consent to send these structured anonymous observations to the MyNest Magic Room Pilot. This is pilot consent only—not permission to publish video, photos, quotes, or UGC.</span></label><p class="observer-status" data-observer-status role="status">Observations stay on this device unless consent is checked.</p><button type="button" class="export-button" data-export>Copy anonymous observation JSON</button>
   </aside>
   <footer><span>MyNest · My room. My world.</span><a href="/mynest/">Room Check</a><span>No camera · no recording · no rapid flashing</span></footer>
-  <script src="worlds.js?v=20261005-v02"></script><script src="magic-room-sync.js?v=20261005-v01"></script><script src="magic-room.js?v=20261006-lived-v03"></script>
+  <script src="worlds.js?v=20261005-v02"></script><script src="magic-room-sync.js?v=20261005-v01"></script><script src="magic-room.js?v=20261006-night-v031"></script>
 </body>
 </html>
