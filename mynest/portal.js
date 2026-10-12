@@ -257,8 +257,19 @@
   }
 
   function completedNights() {
-    const results = [state.firstNight?.result, ...CHECKPOINTS.map((day) => state.checkpoints?.[day]?.result)];
-    return results.filter((value) => value === "full").length;
+    return observedResults().filter((value) => value === "full").length;
+  }
+
+  function observedResults() {
+    return [state.firstNight?.result, ...CHECKPOINTS.map((day) => state.checkpoints?.[day]?.result)].filter(Boolean);
+  }
+
+  function attemptCount() {
+    return observedResults().filter((value) => ["full", "part", "attempt"].includes(value)).length;
+  }
+
+  function partialNightCount() {
+    return observedResults().filter((value) => value === "part").length;
   }
 
   function hasVerifiedTransition() {
@@ -280,6 +291,13 @@
       const button = fragment.querySelector(".checkpoint-head");
       const form = fragment.querySelector("form");
       const entry = state.checkpoints?.[day] || {};
+      if (day === 14) {
+        const submit = form.querySelector("button[type='submit']");
+        const demand = document.createElement("label");
+        demand.className = "next-help-field";
+        demand.innerHTML = `<span>What would help next? <small>optional · saved only on this device</small></span><select name="whatNext"><option value="">Choose…</option><option value="softer_light">Softer light</option><option value="story_or_sound">Story or sound</option><option value="room_friend">Room friend</option><option value="more_interactive_room">More interactive room</option><option value="nothing">Nothing — we're fine</option><option value="not_sure">Not sure</option></select>`;
+        submit.before(demand);
+      }
       fragment.querySelector(".checkpoint-day").textContent = `Day ${day}`;
       fragment.querySelector(".checkpoint-state").textContent = checkpointStateText(entry);
       article.classList.toggle("is-complete", Boolean(entry.result));
@@ -309,10 +327,14 @@
 
   function renderFollowup() {
     const total = completedNights();
-    const verified = hasVerifiedTransition();
+    const attempts = attemptCount();
+    const partials = partialNightCount();
+    const pilotThreshold = hasVerifiedTransition();
     const allRequiredCheckins = CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result));
     const choice = choiceNames[state.choice.childChoice] || "No child choice";
-    document.querySelector("[data-success-count]").textContent = total;
+    document.querySelector("[data-full-count]").textContent = total;
+    document.querySelector("[data-attempt-count]").textContent = attempts;
+    document.querySelector("[data-partial-count]").textContent = partials;
     document.querySelector("[data-summary-strip]").innerHTML = `
       <span>${choice}</span>
       <span>Age ${state.diagnosis.age || "—"}</span>
@@ -324,23 +346,35 @@
     const title = document.querySelector("[data-outcome-title]");
     const copy = document.querySelector("[data-outcome-copy]");
     const card = document.querySelector("[data-outcome-card]");
+    const safetyBoundary = document.querySelector("[data-safety-boundary]");
     const voucherCard = document.querySelector("[data-voucher-card]");
     voucherCard.hidden = !(allRequiredCheckins && state.recruitmentPilotId);
     const voucherPilotId = voucherCard.querySelector("[data-voucher-pilot-id]");
     if (voucherPilotId) voucherPilotId.textContent = state.recruitmentPilotId || "";
-    card.classList.toggle("is-verified", verified);
-    if (verified) {
-      title.textContent = "A verified transition signal.";
-      copy.textContent = "At least two own-room nights, including Day 7 or Day 14, are logged. Keep the ritual steady before changing it.";
+    card.classList.toggle("is-verified", pilotThreshold);
+    const day7 = state.checkpoints?.[7];
+    const day14 = state.checkpoints?.[14];
+    const laterNoProgress = [day7, day14].some((entry) => entry?.result === "none" || entry?.willingness === "no");
+    safetyBoundary.hidden = !laterNoProgress;
+
+    if (day14?.result) {
+      title.textContent = "The 14-day observation is ready to review.";
+      copy.textContent = "This observation period is complete enough to review. Compare full nights, attempts, partial nights, and room entry separately before deciding what to change.";
+    } else if (day7?.result === "none" && day7?.willingness === "no" && total === 0) {
+      title.textContent = "No clear change yet.";
+      copy.textContent = "We have not seen a clear change yet. Keep the interpretation cautious and review whether this experiment is the right fit.";
+    } else if (Object.keys(state.checkpoints || {}).length === 0 && state.firstNight?.result) {
+      title.textContent = "The first attempt is recorded.";
+      copy.textContent = "Day 1 acknowledges the attempt only. Keep the next step small and observe without predicting the outcome.";
+    } else if (total === 0 && [state.firstNight, ...CHECKPOINTS.map((day) => state.checkpoints?.[day])].some((entry) => entry?.willingness === "easy" || entry?.willingness === "support")) {
+      title.textContent = "Room entry is becoming easier.";
+      copy.textContent = "Room entry is becoming easier, but full-night sleep has not clearly changed.";
     } else if (total > 0) {
-      title.textContent = "An own-room success is on the board.";
-      copy.textContent = "Celebrate quietly, then repeat what worked. Day 7 and Day 14 will show whether the shift is holding.";
-    } else if (state.firstNight?.result === "part" || state.firstNight?.result === "attempt") {
-      title.textContent = "The first attempt counts.";
-      copy.textContent = "Room entry and part-night sleep are meaningful leading signals. Keep the next step small and predictable.";
+      title.textContent = "Full own-room nights are logged.";
+      copy.textContent = "Keep observing through Day 14. A logged night describes this household's experience; it does not predict future success.";
     } else {
       title.textContent = "The experiment is underway.";
-      copy.textContent = "Keep the room predictable and celebrate each willing entry. Pausing one night does not reset the process.";
+      copy.textContent = "Keep the room predictable and record what happens without treating the observation as a test the child can fail.";
     }
   }
 
@@ -351,30 +385,82 @@
       `Child choice: ${choiceNames[state.choice.childChoice] || "not set"}`,
       `First night: ${resultLabels[state.firstNight?.result] || "not logged"} / ${willingnessLabels[state.firstNight?.willingness] || "entry not logged"}`,
       ...CHECKPOINTS.map((day) => `Day ${day}: ${checkpointStateText(state.checkpoints?.[day])}`),
-      `Own-room nights logged: ${completedNights()}`,
-      `Verified transition signal: ${hasVerifiedTransition() ? "yes" : "not yet"}`,
+      `Full own-room nights: ${completedNights()}`,
+      `Own-room attempts: ${attemptCount()}`,
+      `Partial nights: ${partialNightCount()}`,
+      `Pilot threshold met: ${hasVerifiedTransition() ? "yes" : "not yet"}`,
       `Required check-ins complete: ${CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result)) ? "yes" : "not yet"}`,
-      `Completion voucher: ${state.recruitmentPilotId && CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result)) ? "eligible" : "not yet eligible"}`
+      `Completion voucher: ${state.recruitmentPilotId && CHECKPOINTS.every((day) => Boolean(state.checkpoints?.[day]?.result)) ? "eligible" : "not yet eligible"}`,
+      `Day 14 next help: ${state.checkpoints?.[14]?.whatNext || "not selected"}`
     ];
     return lines.join("\n");
   }
 
   async function copySummary() {
     const status = document.querySelector("[data-copy-status]");
+    const text = progressSummary();
     try {
-      await navigator.clipboard.writeText(progressSummary());
+      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+      else throw new Error("Clipboard API unavailable");
       status.textContent = "Progress summary copied—no child name or contact details included.";
     } catch {
-      status.textContent = "Copy was blocked by this browser. Select your progress manually from the page.";
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.append(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      status.textContent = copied ? "Progress summary copied—no child name or contact details included." : "Copy was blocked by this browser. Your progress remains visible on this page.";
     }
   }
 
   function resetPilot() {
-    const okay = window.confirm("Start a new room experiment? This removes the current plan and check-ins from this browser.");
+    const dialog = document.querySelector("[data-reset-dialog]");
+    if (dialog?.showModal) {
+      dialog.showModal();
+      return;
+    }
+    const okay = window.confirm("This will replace your current plan on this device. Continue?");
     if (!okay) return;
+    clearPilot();
+  }
+
+  function clearPilot() {
     localStorage.removeItem(STORE_KEY);
     state = initialState();
     window.location.reload();
+  }
+
+  function calendarDate(dayOffset) {
+    const date = new Date(state.startedAt || Date.now());
+    date.setHours(12, 0, 0, 0);
+    date.setDate(date.getDate() + dayOffset);
+    return `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
+  }
+
+  function downloadReminders() {
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    const events = CHECKPOINTS.map((day) => [
+      "BEGIN:VEVENT",
+      `UID:${state.householdId}-day-${day}@springofzen.com`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${calendarDate(day)}`,
+      `SUMMARY:MyNest Day ${day} check-in`,
+      "DESCRIPTION:Open your MyNest plan and record the structured room-entry and sleep observation.",
+      "END:VEVENT"
+    ].join("\r\n")).join("\r\n");
+    const calendar = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Spring of Zen//MyNest//EN\r\nCALSCALE:GREGORIAN\r\n${events}\r\nEND:VCALENDAR\r\n`;
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([calendar], { type: "text/calendar;charset=utf-8" }));
+    link.download = "mynest-day-1-3-7-14-reminders.ics";
+    document.body.append(link);
+    link.click();
+    URL.revokeObjectURL(link.href);
+    link.remove();
+    document.querySelector("[data-copy-status]").textContent = "Calendar reminders downloaded for Day 1, 3, 7, and 14.";
   }
 
   document.querySelector("[data-start]").addEventListener("click", () => {
@@ -389,6 +475,12 @@
   document.querySelectorAll("[data-back]").forEach((button) => button.addEventListener("click", () => renderStep(Number(button.dataset.back))));
   document.querySelectorAll("[data-reset]").forEach((button) => button.addEventListener("click", resetPilot));
   document.querySelector("[data-copy-summary]").addEventListener("click", copySummary);
+  document.querySelector("[data-calendar]").addEventListener("click", downloadReminders);
+  document.querySelector("[data-dialog-copy]").addEventListener("click", async () => {
+    await copySummary();
+    document.querySelector("[data-dialog-status]").textContent = document.querySelector("[data-copy-status]").textContent;
+  });
+  document.querySelector("[data-confirm-reset]").addEventListener("click", clearPilot);
 
   document.querySelector("[data-diagnosis-form]").addEventListener("submit", (event) => {
     event.preventDefault();

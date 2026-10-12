@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17243f">
   <title>MyNest — My Room. My World.</title>
-  <meta name="description" content="A child-owned responsive room and gentle first-room pilot for children ages 3–6, from Spring of Zen.">
+  <meta name="description" content="A child-owned responsive room and gentle first-room pilot for children ages 2½–6, from Spring of Zen.">
   <meta property="og:title" content="MyNest — My Room. My World.">
   <meta property="og:description" content="Enter a room-sized world, then build a gentle first-night plan and observe the transition for 14 days.">
   <meta property="og:type" content="website">
+  <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://www.springofzen.com/mynest/">
   <link rel="preload" href="magic-room/assets/ocean-room-base-v03-desktop.jpg" as="image" media="(min-width: 681px)">
   <link rel="preload" href="magic-room/assets/ocean-room-base-v03-mobile.jpg" as="image" media="(max-width: 680px)">
-  <link rel="stylesheet" href="portal.css?v=20261006-lived-v03">
+  <link rel="stylesheet" href="portal.css?v=20261013-authority-v02">
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","name":"Spring of Zen","url":"https://www.springofzen.com/","brand":{"@type":"Brand","name":"MyNest"}},{"@context":"https://schema.org","@type":"WebPage","name":"MyNest — My Room. My World.","description":"A child-owned responsive room and gentle first-room pilot for children ages 2½–6.","publisher":{"@type":"Organization","name":"Spring of Zen"},"url":"https://www.springofzen.com/mynest/","inLanguage":"en"}]</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the room plan</a>
@@ -261,7 +263,11 @@
               <h2 id="step5-title">Watch the pattern, not one night.</h2>
               <p>Return on each checkpoint. MyNest keeps the plan and progress on this device.</p>
             </div>
-            <div class="outcome-ring" data-outcome-ring><strong data-success-count>0</strong><span>own-room<br>nights logged</span></div>
+            <div class="outcome-counts" aria-label="Observed outcome counts">
+              <span><strong data-full-count>0</strong>Full nights</span>
+              <span><strong data-attempt-count>0</strong>Attempts</span>
+              <span><strong data-partial-count>0</strong>Partial nights</span>
+            </div>
           </div>
 
           <div class="summary-strip" data-summary-strip></div>
@@ -276,6 +282,12 @@
             </div>
           </div>
 
+          <div class="safety-boundary" data-safety-boundary hidden>
+            <strong>Pause and review the fit.</strong>
+            <p>The latest checkpoint shows no clear progress. If distress is severe, worsening, or connected to pain, breathing, persistent nightmares, strong daytime fear, major developmental or medical concerns, or room safety, stop the experiment and seek appropriate qualified guidance.</p>
+            <a href="not-the-right-fit/">When MyNest is not the right fit</a>
+          </div>
+
           <div class="outcome-card is-verified" data-voucher-card hidden>
             <span class="outcome-icon" aria-hidden="true">✓</span>
             <div>
@@ -287,9 +299,12 @@
 
           <div class="followup-actions">
             <button class="secondary-button" type="button" data-copy-summary>Copy progress summary</button>
+            <button class="secondary-button" type="button" data-calendar>Download Day 1/3/7/14 reminders</button>
             <button class="quiet-button" type="button" data-reset>Start a new experiment</button>
             <p data-copy-status aria-live="polite"></p>
           </div>
+
+          <p class="storage-warning"><strong>Progress is stored on this device.</strong> Clearing browser data or switching devices may remove it. Copy your progress summary before starting a new experiment.</p>
 
           <details class="safety-note">
             <summary>When the room may not be the whole story</summary>
@@ -299,6 +314,19 @@
       </div>
     </section>
   </main>
+
+  <dialog class="reset-dialog" data-reset-dialog aria-labelledby="reset-title">
+    <form method="dialog">
+      <h2 id="reset-title">Replace this experiment?</h2>
+      <p>This will replace your current plan on this device.</p>
+      <div>
+        <button class="secondary-button" type="button" data-dialog-copy>Copy summary</button>
+        <button class="quiet-button" type="submit" value="cancel">Cancel</button>
+        <button class="primary-button" type="button" data-confirm-reset>Start new</button>
+      </div>
+      <p data-dialog-status aria-live="polite"></p>
+    </form>
+  </dialog>
 
   <footer>
     <p><strong>MyNest</strong> · An experimental room by <a href="../index.html">Spring of Zen</a> · <span data-sync-status>Progress saved on this device</span></p>
@@ -311,6 +339,7 @@
       <a href="magic-room/">Magic Room prototype</a>
       <a href="method/">Method</a>
       <a href="results/">Results</a>
+      <a href="not-the-right-fit/">When to pause</a>
     </nav>
     <p>Demand first → product second</p>
   </footer>
@@ -339,6 +368,6 @@
   <script src="backend-config.js?v=20261004"></script>
   <script src="acquisition.js?v=20261005-v011"></script>
   <script src="pilot-sync.js?v=20261005-v011"></script>
-  <script src="portal.js?v=20261005-v011"></script>
+  <script src="portal.js?v=20261013-authority-v02"></script>
 </body>
 </html>
