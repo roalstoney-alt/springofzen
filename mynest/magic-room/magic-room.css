@@ -237,3 +237,5 @@ body[data-room-light="dusk"] .shell-event,body[data-room-light="night"] .shell-e
   .room-photo-night{transition:opacity 2s ease!important}
   body[data-room-light="dusk"] .room-dusk,body[data-room-light="night"] .room-dusk{transition:background 2s ease,opacity 2s ease!important}
 }
+
+.next-world-grid>a{position:relative;min-height:320px;overflow:hidden;padding:2rem;border-radius:1.8rem;color:#fff;text-decoration:none}

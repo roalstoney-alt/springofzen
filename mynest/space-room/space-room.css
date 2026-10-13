@@ -161,3 +161,5 @@ body.is-static-fallback[data-room-state="mission"] .room-image.is-mission, body.
   .room-image, .mission-canvas, .pod-controls button { transition-duration: 1.6s; }
   .pod-controls button:hover { transform: none; }
 }
+
+.world-links { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; }
