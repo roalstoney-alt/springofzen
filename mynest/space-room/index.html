@@ -10,8 +10,8 @@
   <link rel="canonical" href="https://www.springofzen.com/mynest/space-room/">
   <link rel="preload" href="assets/space-command-pod-idle-desktop-v02.jpg" as="image" media="(min-width: 681px)">
   <link rel="preload" href="assets/space-command-pod-idle-mobile-v02.jpg" as="image" media="(max-width: 680px)">
-  <link rel="stylesheet" href="space-room.css?v=20261013-v02">
-  <script src="space-room.js?v=20261013-v02" defer></script>
+  <link rel="stylesheet" href="space-room.css?v=20261013-v03">
+  <script src="space-room.js?v=20261013-v03" defer></script>
 </head>
 <body data-room-state="idle">
   <a class="skip-link" href="#room-story">Skip the room experience</a>
@@ -41,11 +41,27 @@
           </picture>
         </div>
 
+        <canvas class="mission-canvas" data-mission-canvas aria-hidden="true"></canvas>
+        <div class="room-light-response" aria-hidden="true"></div>
+
+        <div class="physical-anchors" aria-hidden="true">
+          <picture class="physical-cutout">
+            <source media="(max-width: 680px)" data-srcset="assets/space-command-pod-foreground-mobile-v03.png">
+            <img data-src="assets/space-command-pod-foreground-desktop-v03.png" alt="">
+          </picture>
+        </div>
+
+        <div class="pod-holo" aria-hidden="true"><i></i><i></i><b></b></div>
+
         <div class="state-readout" aria-live="polite" aria-atomic="true">
           <span data-state-kicker>Cabin idle</span>
           <strong class="sr-only" data-state-title>Your spacecraft is ready</strong>
           <small class="sr-only" data-state-copy>The cockpit is quiet until the pilot chooses to begin.</small>
         </div>
+
+        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false" aria-label="Turn mission sound on">
+          <span aria-hidden="true">◌</span><b>Sound off</b>
+        </button>
 
         <div class="pod-controls" role="group" aria-label="Sleep Command Pod controls">
           <button type="button" data-command="wake" aria-pressed="true">
@@ -59,7 +75,7 @@
           </button>
         </div>
 
-        <p class="room-alt sr-only" data-room-alt>A future spacecraft cabin with an open, sleepable Command Pod, reachable inner console, Orbit charging in a wall dock, and a warm Navigation Beacon.</p>
+        <p class="room-alt sr-only" data-room-alt>A future spacecraft cabin with an open, sleepable Command Pod, reachable inner console, Orbit charging in a wall dock, and a warm Navigation Beacon. The mission begins only when Explore is selected.</p>
       </div>
     </section>
 
@@ -67,7 +83,7 @@
       <section class="intro-section" aria-labelledby="intro-title">
         <p class="eyebrow">MyNest Space · Command Pod 02</p>
         <h1 id="intro-title">A quiet room that becomes a spacecraft when your child is ready.</h1>
-        <p class="section-lede">The cockpit is already theirs. The universe appears only after the pilot chooses Explore, reaches one blue planet, then folds back into the pod before sleep.</p>
+        <p class="section-lede">The cockpit is already theirs. The mission begins in the pod. Then the room opens into space—past the curve of Earth and into a galaxy that notices the child—before the whole cabin comes home for sleep.</p>
       </section>
 
       <section class="system-section" aria-labelledby="system-title">
@@ -83,19 +99,19 @@
         <div class="section-heading"><p class="eyebrow">One complete arc</p><h2 id="states-title">Adventure has an ending built in.</h2></div>
         <ol class="state-grid">
           <li><span>01</span><div><h3>Cabin idle</h3><p>Clean ceiling, warm room, Orbit docked.</p></div></li>
-          <li><span>02</span><div><h3>Mission active</h3><p>A local map wakes at the emitter, then one route grows toward the blue planet.</p></div></li>
+          <li><span>02</span><div><h3>Mission active</h3><p>A local map wakes at the emitter, then the wall and ceiling open into a real-time universe.</p></div></li>
           <li><span>03</span><div><h3>Return home</h3><p>The universe contracts as the warm room returns.</p></div></li>
           <li><span>04</span><div><h3>Sleep</h3><p>Only a low amber beacon remains. No galaxy, no prompt.</p></div></li>
         </ol>
       </section>
 
       <section class="missions-section" aria-labelledby="missions-title">
-        <p class="eyebrow">Mission 01</p>
-        <h2 id="missions-title">Find the Blue Planet.</h2>
+        <p class="eyebrow">Mission 001 · Galaxy Scale</p>
+        <h2 id="missions-title">From the cockpit to the edge of the Milky Way.</h2>
         <div class="mission-list">
-          <p><span>01</span><strong>Leave Home</strong><small>The pilot taps Explore. The local map recognizes the action.</small></p>
-          <p><span>02</span><strong>Find Blue Planet</strong><small>One trajectory and one destination keep the mission clear.</small></p>
-          <p><span>03</span><strong>Return Home</strong><small>The map contracts, the shade lifts, and Orbit settles in the dock.</small></p>
+          <p><span>01</span><strong>Launch</strong><small>The pilot taps Explore. The emitter wakes and space grows outward from the pod.</small></p>
+          <p><span>02</span><strong>Earth &amp; Galaxy</strong><small>One enormous horizon gives way to one immense, responsive galaxy.</small></p>
+          <p><span>03</span><strong>Return Home</strong><small>Space reverses into the emitter, warm architecture returns, and Orbit settles in the dock.</small></p>
         </div>
       </section>
 

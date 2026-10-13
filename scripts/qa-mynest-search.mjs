@@ -43,8 +43,9 @@ assert.match(main, /id="room-check"/);
 for (const question of published) assert.match(main, new RegExp(`questions/${question.slug}/`));
 
 const results = read("mynest/results/index.html");
-assert.match(results, /Pilot data not yet sufficient\./);
-assert.match(results, /We do not use invented sample results\./);
+assert.match(results, /Pilot data (?:is )?not yet sufficient\./);
+assert.match(results, /No outcome or effectiveness claim is supported|We do not use invented sample results/i);
+assert.match(results, /Test or synthetic records are excluded/i);
 
 const sitemap = read("sitemap.xml");
 for (const canonical of canonicalUrls) assert.ok(sitemap.includes(`<loc>${canonical}</loc>`), `${canonical} missing from sitemap`);

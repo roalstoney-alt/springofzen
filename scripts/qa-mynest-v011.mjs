@@ -61,8 +61,9 @@ assert.match(recruit, /not conditional on success, a purchase, a review, or a te
 assert.match(recruit, /<link rel="canonical" href="https:\/\/www\.springofzen\.com\/mynest\/recruit\/">/);
 
 const method = read("mynest/method/index.html");
-assert.match(method, /manually reviewed from relevant public Reddit discussions/i);
-assert.match(method, /broad autonomous web crawling is disabled/i);
+assert.match(method, /Current observations are parent-reported, household-specific/i);
+assert.match(method, /Anonymous pilot data may be aggregated only after completion, consent, privacy, and evidence checks pass/i);
+assert.match(method, /Test records are not evidence/i);
 
 for (const page of [
   "mynest/index.html",
