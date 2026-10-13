@@ -7,7 +7,8 @@
   const phrase = document.querySelector("[data-state-phrase]");
   const fireflyField = document.querySelector("[data-fireflies]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const loaded = new Map([["day", Promise.resolve()]]);
+  const floorVariant = window.__forestFloorVariant === "b" ? "b" : "a";
+  const loaded = new Map();
   let desiredMode = "day";
   let transitionTimer = 0;
   let meadowTimer = 0;
@@ -18,14 +19,18 @@
     rest: { kicker: "Lights-off real", phrase: "Magic can rest too.", live: "Lights-Off Real mode. All active magic has stopped and only calm practical light remains." }
   };
 
+  body.dataset.floorVariant = floorVariant;
+
   function loadPicture(mode) {
     if (loaded.has(mode)) return loaded.get(mode);
     const picture = document.querySelector(`[data-picture="${mode}"]`);
     if (!picture) return Promise.resolve();
-    const source = picture.querySelector("source[data-srcset]");
-    const image = picture.querySelector("img[data-src]");
-    if (source) { source.srcset = source.dataset.srcset; source.removeAttribute("data-srcset"); }
-    if (image) { image.src = image.dataset.src; image.removeAttribute("data-src"); }
+    const source = picture.querySelector("source");
+    const image = picture.querySelector("img");
+    const sourceKey = `${floorVariant}Srcset`;
+    const imageKey = `${floorVariant}Src`;
+    if (source?.dataset[sourceKey]) source.srcset = source.dataset[sourceKey];
+    if (image?.dataset[imageKey]) image.src = image.dataset[imageKey];
     const ready = !image || image.complete
       ? Promise.resolve()
       : new Promise((resolve) => {
@@ -101,6 +106,7 @@
   stage?.addEventListener("pointerdown", createRipple, { passive: true });
   seedFireflies();
   body.classList.add("is-enhanced");
+  loadPicture("day");
 
   const idleLoad = () => {
     loadPicture("night");

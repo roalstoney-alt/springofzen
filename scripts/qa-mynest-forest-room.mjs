@@ -42,7 +42,7 @@ assert(css.includes('data-forest-mode="night"') && css.includes("animation-durat
 assert(css.includes('data-forest-mode="rest"] .firefly-field') && css.includes("opacity: 0"), "lights-off mode removes active fireflies");
 assert(js.includes("createRipple") && js.includes('body.dataset.forestMode === "rest"'), "meadow response is local and disabled at lights-off");
 assert(css.includes("transition: opacity 2.8s"), "day-to-night and night-to-rest use a real crossfade");
-assert(js.includes("loadPicture") && html.includes("data-srcset"), "night and rest imagery load after the first day render");
+assert(js.includes("loadPicture") && html.includes("data-a-srcset"), "night and rest imagery load after the first day render");
 assert(js.includes("prefers-reduced-motion") && css.includes("prefers-reduced-motion"), "reduced-motion behavior is implemented");
 assert(!/fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage/.test(js), "Forest Room adds no backend, tracking, or local persistence");
 assert(!/getUserMedia|MediaRecorder|microphone|camera/i.test(js), "Forest Room requests no camera or microphone access");

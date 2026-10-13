@@ -8,10 +8,22 @@
   <meta name="description" content="A real bedroom that blooms into a gentle enchanted forest, then grows quiet again for sleep.">
   <meta name="robots" content="noindex,nofollow">
   <link rel="canonical" href="https://www.springofzen.com/mynest/forest-room/">
-  <link rel="preload" href="assets/forest-room-day-desktop-v01.jpg" as="image" media="(min-width: 681px)">
-  <link rel="preload" href="assets/forest-room-day-mobile-v01.jpg" as="image" media="(max-width: 680px)">
-  <link rel="stylesheet" href="forest-room.css?v=20261014-v01">
-  <script src="forest-room.js?v=20261014-v01" defer></script>
+  <script>
+    (() => {
+      const floor = new URLSearchParams(location.search).get("floor") === "b" ? "b" : "a";
+      document.documentElement.dataset.floorVariant = floor;
+      window.__forestFloorVariant = floor;
+      const mobile = matchMedia("(max-width: 680px)").matches;
+      const suffix = floor === "b" ? "-b-meadow-v01.webp" : "-v01.jpg";
+      const preload = document.createElement("link");
+      preload.rel = "preload";
+      preload.as = "image";
+      preload.href = `assets/forest-room-day-${mobile ? "mobile" : "desktop"}${suffix}`;
+      document.head.append(preload);
+    })();
+  </script>
+  <link rel="stylesheet" href="forest-room.css?v=20261014-v02">
+  <script src="forest-room.js?v=20261014-v02" defer></script>
 </head>
 <body data-forest-mode="day">
   <a class="skip-link" href="#forest-story">Skip the room experience</a>
@@ -29,17 +41,17 @@
 
       <div class="forest-stage" data-forest-stage>
         <div class="room-images" aria-hidden="true">
-          <picture class="room-image is-day">
-            <source media="(max-width: 680px)" srcset="assets/forest-room-day-mobile-v01.jpg">
-            <img src="assets/forest-room-day-desktop-v01.jpg" alt="">
+          <picture class="room-image is-day" data-picture="day">
+            <source media="(max-width: 680px)" srcset="assets/forest-room-day-mobile-v01.jpg" data-a-srcset="assets/forest-room-day-mobile-v01.jpg" data-b-srcset="assets/forest-room-day-mobile-b-meadow-v01.webp">
+            <img src="assets/forest-room-day-desktop-v01.jpg" data-a-src="assets/forest-room-day-desktop-v01.jpg" data-b-src="assets/forest-room-day-desktop-b-meadow-v01.webp" alt="">
           </picture>
           <picture class="room-image is-night" data-picture="night">
-            <source media="(max-width: 680px)" data-srcset="assets/forest-room-night-mobile-v01.jpg">
-            <img data-src="assets/forest-room-night-desktop-v01.jpg" alt="">
+            <source media="(max-width: 680px)" data-a-srcset="assets/forest-room-night-mobile-v01.jpg" data-b-srcset="assets/forest-room-night-mobile-b-meadow-v01.webp">
+            <img data-a-src="assets/forest-room-night-desktop-v01.jpg" data-b-src="assets/forest-room-night-desktop-b-meadow-v01.webp" alt="">
           </picture>
           <picture class="room-image is-rest" data-picture="rest">
-            <source media="(max-width: 680px)" data-srcset="assets/forest-room-rest-mobile-v01.jpg">
-            <img data-src="assets/forest-room-rest-desktop-v01.jpg" alt="">
+            <source media="(max-width: 680px)" data-a-srcset="assets/forest-room-rest-mobile-v01.jpg" data-b-srcset="assets/forest-room-rest-mobile-b-meadow-v01.webp">
+            <img data-a-src="assets/forest-room-rest-desktop-v01.jpg" data-b-src="assets/forest-room-rest-desktop-b-meadow-v01.webp" alt="">
           </picture>
         </div>
 
