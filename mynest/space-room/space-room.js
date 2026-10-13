@@ -8,28 +8,26 @@
   const copy = document.querySelector("[data-state-copy]");
   const roomAlt = document.querySelector("[data-room-alt]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const missions = ["Leave Home", "Find Blue Planet", "Return Home"];
-  let missionIndex = 0;
   let sleepTimer = null;
 
   const states = {
     idle: {
       kicker: "Cabin idle",
-      title: "Ready when you are",
-      copy: "The room is simply a room.",
-      alt: "A quiet real child's room with an open-sided Sleep Command Pod, Orbit docked nearby, and an idle Navigation Beacon."
+      title: "Your spacecraft is ready",
+      copy: "The cockpit is quiet until the pilot chooses to begin.",
+      alt: "A future spacecraft cabin with an open, sleepable Command Pod, reachable inner console, Orbit charging in a wall dock, and a warm Navigation Beacon."
     },
     mission: {
       kicker: "Mission active",
-      title: missions[0],
-      copy: "The universe opens from the pod.",
-      alt: "A gentle blue star map projects from the open Sleep Command Pod onto the front wall and center ceiling while the rest of the room stays familiar."
+      title: "Find the Blue Planet",
+      copy: "The emitter opens one route from the cockpit.",
+      alt: "One route to a blue planet expands from a local hologram at the Command Pod emitter onto the front wall and center ceiling."
     },
     return: {
       kicker: "Return home",
       title: "Cabin light returning",
       copy: "The map folds back into the pod.",
-      alt: "The blue star map contracts toward the Sleep Command Pod as warm room light returns and the Navigation Beacon turns amber."
+      alt: "The route contracts into the Command Pod emitter as the window shade lifts, warm cabin light returns, and the Navigation Beacon turns amber."
     },
     sleep: {
       kicker: "Sleep",
@@ -44,15 +42,13 @@
     body.dataset.roomState = next;
     const state = states[next];
     kicker.textContent = state.kicker;
-    title.textContent = next === "mission" ? missions[missionIndex] : state.title;
+    title.textContent = state.title;
     copy.textContent = state.copy;
     roomAlt.textContent = state.alt;
     controls.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.command === command)));
   }
 
   function startMission() {
-    if (body.dataset.roomState === "mission") missionIndex = (missionIndex + 1) % missions.length;
-    else missionIndex = 0;
     setState("mission", "explore");
   }
 
