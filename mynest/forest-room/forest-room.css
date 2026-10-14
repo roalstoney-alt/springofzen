@@ -37,7 +37,9 @@ body[data-forest-mode="night"] .daylight-bloom { opacity: .08; }
 body[data-forest-mode="rest"] .daylight-bloom { opacity: 0; }
 
 .firefly-field, .window-stars { position: absolute; z-index: 5; inset: 0; pointer-events: none; overflow: hidden; transition: opacity 2.2s ease; }
+.firefly-field { opacity: 0; }
 .firefly { position: absolute; left: var(--x); top: var(--y); width: .36rem; height: .36rem; border-radius: 50%; background: #ffdc76; box-shadow: 0 0 .45rem .16rem rgba(255,215,103,.82), 0 0 1.6rem .35rem rgba(255,210,95,.32); opacity: .6; animation: firefly-drift var(--duration) ease-in-out var(--delay) infinite alternate; }
+body[data-forest-mode="night"] .firefly-field { opacity: 1; }
 body[data-forest-mode="night"] .firefly { animation-duration: calc(var(--duration) * 1.8); opacity: .38; }
 body[data-forest-mode="night"] .firefly:nth-child(2n), body[data-forest-mode="night"] .firefly:nth-child(3n) { display: none; }
 body[data-forest-mode="rest"] .firefly-field { opacity: 0; }
@@ -48,6 +50,7 @@ body[data-forest-mode="rest"] .firefly-field { opacity: 0; }
 .window-stars i:nth-child(1){--x:12%;--y:19%}.window-stars i:nth-child(2){--x:27%;--y:15%;animation-delay:-1.2s}.window-stars i:nth-child(3){--x:36%;--y:31%;animation-delay:-3.5s}.window-stars i:nth-child(4){--x:17%;--y:41%;animation-delay:-4.1s}.window-stars i:nth-child(5){--x:31%;--y:48%;animation-delay:-2.2s}.window-stars i:nth-child(6){--x:8%;--y:53%;animation-delay:-.7s}
 body[data-forest-mode="night"] .window-stars { opacity: .75; }
 body[data-forest-mode="rest"] .window-stars { opacity: 0; }
+html[data-floor-variant="b"] .window-stars { display: none; }
 @keyframes star-breathe { from { opacity: .24; transform: scale(.72); } to { opacity: .85; transform: scale(1.12); } }
 
 .meadow-response { position: absolute; z-index: 6; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 10rem at var(--meadow-x, 50%) var(--meadow-y, 76%), rgba(255,224,121,.28), transparent 62%); transition: opacity .8s ease; mix-blend-mode: screen; }
@@ -88,6 +91,9 @@ body.is-transitioning .state-whisper { opacity: .35; transform: translateY(5px);
 .mode-grid article:nth-child(1) { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(21,48,30,.68)), url("assets/forest-room-day-desktop-v01.jpg") center/cover; }
 .mode-grid article:nth-child(2) { background: linear-gradient(180deg, rgba(10,26,23,.05), rgba(8,24,20,.72)), url("assets/forest-room-night-desktop-v01.jpg") center/cover; }
 .mode-grid article:nth-child(3) { background: linear-gradient(180deg, rgba(5,12,10,.12), rgba(5,14,11,.8)), url("assets/forest-room-rest-desktop-v01.jpg") center/cover; }
+html[data-floor-variant="b"] .mode-grid article:nth-child(1) { background-image: linear-gradient(180deg, rgba(255,255,255,.05), rgba(21,48,30,.68)), url("assets/forest-room-day-desktop-b-practical-v02.webp"); }
+html[data-floor-variant="b"] .mode-grid article:nth-child(2) { background-image: linear-gradient(180deg, rgba(10,26,23,.05), rgba(8,24,20,.72)), url("assets/forest-room-night-desktop-b-practical-v02.webp"); }
+html[data-floor-variant="b"] .mode-grid article:nth-child(3) { background-image: linear-gradient(180deg, rgba(5,12,10,.12), rgba(5,14,11,.8)), url("assets/forest-room-rest-desktop-b-practical-v02.webp"); }
 .mode-grid article > span { width: 2rem; height: 2rem; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.46); border-radius: 50%; font-size: .62rem; font-weight: 900; }
 .mode-grid h3 { margin: 1rem 0 .65rem; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 500; }
 .mode-grid p { margin: 0; color: rgba(255,255,255,.8); line-height: 1.6; }

@@ -1,8 +1,11 @@
 import { createHash } from "node:crypto";
+import { createRequire } from "node:module";
 import { access, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
+const require = createRequire(import.meta.url);
+const sharp = require("sharp");
 const read = (relative) => readFile(path.join(root, relative));
 const text = async (relative) => (await read(relative)).toString("utf8");
 const assert = (condition, message) => {
@@ -33,13 +36,16 @@ for (const [filename, expectedHash] of Object.entries(controlHashes)) {
 
 for (const state of ["day", "night", "rest"]) {
   for (const size of ["desktop", "mobile"]) {
-    const filename = `forest-room-${state}-${size}-b-meadow-v01.webp`;
+    const filename = `forest-room-${state}-${size}-b-practical-v02.webp`;
     const relative = `mynest/forest-room/assets/${filename}`;
     await access(path.join(root, relative));
     const bytes = await read(relative);
     assert(bytes.subarray(0, 4).toString("ascii") === "RIFF" && bytes.subarray(8, 12).toString("ascii") === "WEBP", `B asset is WebP: ${filename}`);
-    assert((await stat(path.join(root, relative))).size > 1_000_000, `B asset is production-sized: ${filename}`);
+    assert((await stat(path.join(root, relative))).size > 150_000, `B asset is production-sized: ${filename}`);
     assert(html.includes(filename), `B asset is wired into the comparison route: ${filename}`);
+    const metadata = await sharp(path.join(root, relative)).metadata();
+    const expected = size === "desktop" ? [1672, 941] : [941, 1672];
+    assert(metadata.width === expected[0] && metadata.height === expected[1], `B asset has the intended ${size} framing: ${filename}`);
   }
 }
 
@@ -50,7 +56,10 @@ assert(!/localStorage|sessionStorage/.test(html + js), "A/B preview stores no vi
 assert(!/fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon/.test(js), "A/B preview adds no backend or telemetry call");
 assert((html.match(/data-mode=/g) || []).length === 3, "day, night, and lights-off controls remain unchanged");
 assert(js.includes("seedFireflies") && css.includes("firefly-drift"), "existing firefly behavior remains unchanged");
+assert(css.includes('body[data-forest-mode="night"] .firefly-field { opacity: 1; }'), "fireflies are reserved for the night mode");
+assert(css.includes('html[data-floor-variant="b"] .window-stars { display: none; }'), "B relies on the photographed night window without an extra star layer");
+assert(html.includes("Exactly two practical bedside lamps") && html.includes("fitted short-pile carpet"), "practical implementation boundaries are public");
 assert(js.includes('body.dataset.forestMode === "rest"') && css.includes('data-forest-mode="rest"] .firefly-field'), "lights-off motion boundary remains unchanged");
 assert(js.includes("prefers-reduced-motion") && css.includes("prefers-reduced-motion"), "reduced-motion behavior remains unchanged");
 
-console.log("MYNEST_FOREST_MEADOW_AB_QA=PASS");
+console.log("MYNEST_FOREST_PRACTICAL_V02_QA=PASS");
