@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#081016">
+  <title>MyKidsNest — Three Worlds. One Room.</title>
+  <meta name="description" content="Step into three immersive children's room worlds: meet Milo in Ocean, launch a spacecraft in Space, or enter the enchanted Forest.">
+  <link rel="canonical" href="https://mykidsnest.com/">
+  <link rel="preload" href="/assets/ocean/assets/ocean-room-child-eye-desktop-v03.jpg" as="image" media="(min-width: 721px)">
+  <link rel="preload" href="/assets/ocean/assets/ocean-room-child-eye-mobile-v03.jpg" as="image" media="(max-width: 720px)">
+  <link rel="stylesheet" href="/assets/shared/site.css">
+  <link rel="stylesheet" href="/assets/shared/home.css">
+  <script src="/assets/shared/home.js" defer></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"MyKidsNest","url":"https://mykidsnest.com/","description":"Three immersive room worlds for children."}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Brand","name":"MyKidsNest","url":"https://mykidsnest.com/"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#worlds">Skip to worlds</a>
+  <header class="home-header">
+    <a class="mkn-wordmark" href="/" aria-label="MyKidsNest home"><span aria-hidden="true">◌</span> MyKidsNest</a>
+    <p class="home-note">Three worlds · one room</p>
+  </header>
+  <main id="worlds" class="world-carousel" data-carousel aria-roledescription="carousel" aria-label="Choose a MyKidsNest world">
+    <section class="world-slide slide-ocean is-active" data-slide data-world="Ocean" aria-hidden="false">
+      <picture><source media="(max-width: 720px)" srcset="/assets/ocean/assets/ocean-room-child-eye-mobile-v03.jpg"><img src="/assets/ocean/assets/ocean-room-child-eye-desktop-v03.jpg" alt="A calm real child's room ready to become an ocean world"></picture>
+      <img class="hero-milo" src="/assets/ocean/assets/milo-living-cutout-v02.webp" alt="" aria-hidden="true">
+      <div class="slide-copy"><span class="slide-index">World 01 · Ocean</span><h1>Ocean</h1><p>Meet Milo.</p><a class="enter-link" href="/ocean/">Enter Ocean</a></div>
+    </section>
+    <section class="world-slide slide-space" data-slide data-world="Space" aria-hidden="true">
+      <picture><source media="(max-width: 720px)" srcset="/assets/space/space-command-pod-mission-mobile-v02.jpg"><img src="/assets/space/space-command-pod-mission-desktop-v02.jpg" alt="A child's Command Pod with a galaxy and Earth route glowing beyond it"></picture>
+      <div class="slide-copy"><span class="slide-index">World 02 · Space</span><h1>Space</h1><p>Launch your own spacecraft.</p><a class="enter-link" href="/space/" tabindex="-1">Enter Space</a></div>
+    </section>
+    <section class="world-slide slide-forest" data-slide data-world="Forest" aria-hidden="true">
+      <picture><source media="(max-width: 720px)" srcset="/assets/forest/forest-room-day-mobile-b-practical-v02.webp"><img src="/assets/forest/forest-room-day-desktop-b-practical-v02.webp" alt="A practical enchanted meadow bedroom with a canopy bed, deer, and forest window"></picture>
+      <div class="slide-copy"><span class="slide-index">World 03 · Forest</span><h1>Forest</h1><p>Step into the enchanted meadow.</p><a class="enter-link" href="/forest/" tabindex="-1">Enter Forest</a></div>
+    </section>
+    <button class="carousel-arrow" type="button" data-direction="previous" aria-label="Previous world">←</button>
+    <button class="carousel-arrow" type="button" data-direction="next" aria-label="Next world">→</button>
+    <div class="carousel-dots" role="group" aria-label="Choose a slide">
+      <button class="carousel-dot" type="button" data-slide-to="0" aria-label="Show Ocean" aria-current="true"></button>
+      <button class="carousel-dot" type="button" data-slide-to="1" aria-label="Show Space" aria-current="false"></button>
+      <button class="carousel-dot" type="button" data-slide-to="2" aria-label="Show Forest" aria-current="false"></button>
+    </div>
+    <p class="sr-only" aria-live="polite" data-carousel-live></p>
+  </main>
+</body>
+</html>

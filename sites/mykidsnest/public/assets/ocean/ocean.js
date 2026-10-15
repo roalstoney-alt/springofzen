@@ -1,0 +1,394 @@
+(() => {
+  "use strict";
+
+  const body = document.body;
+  const stage = document.querySelector("[data-room-stage]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const qaEvents = [];
+  const wakeTimers = [];
+  const returnTimers = [];
+  const residentTimers = [];
+  let audioEngine = null;
+  let wakeStarted = false;
+  let feedbackTimer = null;
+  let fishTimer = null;
+  let followTimer = null;
+  let fishTouchReset = null;
+  let controlsTimer = null;
+  let activeInteraction = null;
+  let fishTouches = 0;
+  let miloTouches = 0;
+
+  window.MYNEST_LOCAL_QA_EVENTS = qaEvents;
+
+  function logLocal(type) {
+    qaEvents.push(Object.freeze({ type, at: new Date().toISOString() }));
+    window.dispatchEvent(new CustomEvent("mynest:local-qa", { detail: { type } }));
+  }
+
+  function clearTimers(collection) {
+    while (collection.length) window.clearTimeout(collection.pop());
+  }
+
+  function queueTimer(collection, delay, callback) {
+    collection.push(window.setTimeout(callback, delay));
+  }
+
+  function setMiloState(next) {
+    const allowed = ["idle", "notice_child", "approach", "play", "return_home", "sleep"];
+    if (!allowed.includes(next)) return;
+    body.dataset.miloState = next;
+  }
+
+  function setFishState(next) {
+    body.dataset.fishState = next;
+  }
+
+  function stopFishCycle() {
+    window.clearTimeout(fishTimer);
+    fishTimer = null;
+  }
+
+  function scheduleFishCycle() {
+    stopFishCycle();
+    if (!body.classList.contains("ocean-ready") || body.dataset.mode === "rest" || body.classList.contains("magic-moment")) return;
+    const cycle = ["move", "observe", "hide", "return"];
+    const current = body.dataset.fishState || "move";
+    const next = cycle[(cycle.indexOf(current) + 1) % cycle.length];
+    const delays = reducedMotion ? { move: 3000, observe: 2200, hide: 1800, return: 1800 } : { move: 6500, observe: 3200, hide: 4200, return: 2800 };
+    fishTimer = window.setTimeout(() => {
+      setFishState(next);
+      scheduleFishCycle();
+    }, delays[current] || 3600);
+  }
+
+  function stopResidentLoop() {
+    clearTimers(residentTimers);
+  }
+
+  function scheduleResidentLoop() {
+    stopResidentLoop();
+    if (body.dataset.mode === "rest" || body.classList.contains("magic-moment")) return;
+    const visiblePause = reducedMotion ? 7000 : 14000 + Math.round(Math.random() * 4000);
+    queueTimer(residentTimers, visiblePause, () => {
+      if (body.dataset.mode === "rest") return;
+      body.classList.add("milo-away");
+      setMiloState("idle");
+      const absentPause = reducedMotion ? 4500 : 11000 + Math.round(Math.random() * 4000);
+      queueTimer(residentTimers, absentPause, () => {
+        if (body.dataset.mode === "rest") return;
+        body.classList.remove("milo-away");
+        body.classList.add("milo-returning");
+        queueTimer(residentTimers, reducedMotion ? 1200 : 3600, () => {
+          body.classList.remove("milo-returning");
+          scheduleResidentLoop();
+        });
+      });
+    });
+  }
+
+  function wakeRoom(immediate = false) {
+    if (wakeStarted && !immediate) return;
+    clearTimers(wakeTimers);
+    wakeStarted = true;
+    const times = reducedMotion ? [800, 1300, 1800, 2400, 3200, 4200] : immediate ? [0, 500, 1100, 1900, 3000, 4300] : [3000, 4500, 6000, 8000, 10500, 13500];
+    queueTimer(wakeTimers, times[0], () => { body.classList.add("wake-ripple", "fish-peek", "discovery-one"); logLocal("OCEAN_WOKE"); });
+    queueTimer(wakeTimers, times[1], () => setFishState("observe"));
+    queueTimer(wakeTimers, times[2], () => { body.classList.add("wake-water", "wake-life", "discovery-two"); setFishState("observe"); });
+    queueTimer(wakeTimers, times[3], () => { body.classList.add("discovery-three"); setFishState("move"); });
+    queueTimer(wakeTimers, times[4], () => {
+      body.classList.add("milo-entered", "milo-arriving");
+      setFishState("hide"); setMiloState("idle"); logLocal("MILO_SEEN");
+    });
+    queueTimer(wakeTimers, times[5], () => {
+      body.classList.remove("milo-arriving");
+      body.classList.add("ocean-ready");
+      setFishState("return");
+      scheduleFishCycle();
+      scheduleResidentLoop();
+    });
+  }
+
+  function pulseTone(frequency = 118, duration = 1.15) {
+    if (!audioEngine) return;
+    const { context, master } = audioEngine;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(frequency * .74, context.currentTime + duration);
+    gain.gain.setValueAtTime(0, context.currentTime);
+    gain.gain.linearRampToValueAtTime(.07, context.currentTime + .16);
+    gain.gain.exponentialRampToValueAtTime(.001, context.currentTime + duration);
+    oscillator.connect(gain).connect(master);
+    oscillator.start();
+    oscillator.stop(context.currentTime + duration);
+  }
+
+  function createAudioEngine() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return null;
+    const context = new AudioContext();
+    const master = context.createGain();
+    master.gain.value = .045;
+    master.connect(context.destination);
+    const low = context.createOscillator();
+    const high = context.createOscillator();
+    const lowGain = context.createGain();
+    const highGain = context.createGain();
+    const filter = context.createBiquadFilter();
+    low.type = "sine"; high.type = "sine";
+    low.frequency.value = 68; high.frequency.value = 132;
+    lowGain.gain.value = .045; highGain.gain.value = .006;
+    filter.type = "lowpass"; filter.frequency.value = 320;
+    low.connect(lowGain).connect(filter); high.connect(highGain).connect(filter); filter.connect(master);
+    low.start(); high.start();
+    return { context, master, low, high, setRest(resting) {
+      const now = context.currentTime;
+      low.frequency.setTargetAtTime(resting ? 52 : 68, now, 1.4);
+      high.frequency.setTargetAtTime(resting ? 96 : 132, now, 1.4);
+      master.gain.setTargetAtTime(resting ? .018 : .045, now, 1.8);
+    }, stop() {
+      master.gain.setTargetAtTime(.001, context.currentTime, .25);
+      window.setTimeout(() => context.close(), 700);
+    } };
+  }
+
+  async function toggleAudio() {
+    const button = document.querySelector("[data-audio]");
+    if (audioEngine) {
+      audioEngine.stop(); audioEngine = null;
+      button.querySelector("b").textContent = "Sound off";
+      button.setAttribute("aria-pressed", "false");
+      return;
+    }
+    audioEngine = createAudioEngine();
+    if (!audioEngine) return;
+    await audioEngine.context.resume();
+    audioEngine.setRest(body.dataset.mode === "rest");
+    button.querySelector("b").textContent = "Sound on";
+    button.setAttribute("aria-pressed", "true");
+    pulseTone(126, .8);
+  }
+
+  function clearResponseClasses() {
+    body.classList.remove("shell-response", "reef-response", "plush-response", "milo-response");
+  }
+
+  function triggerResponse(type) {
+    if (!body.classList.contains("ocean-ready")) wakeRoom(true);
+    if (body.dataset.mode === "rest" || activeInteraction) return;
+    activeInteraction = type;
+    stopFishCycle();
+    stopResidentLoop();
+    clearResponseClasses();
+    window.clearTimeout(feedbackTimer);
+    const delay = reducedMotion ? 60 : type === "reef" ? 550 + Math.random() * 400 : 150 + Math.random() * 450;
+    feedbackTimer = window.setTimeout(() => {
+      body.classList.remove("milo-away");
+      body.classList.add(`${type}-response`);
+      const eventNames = { shell: "SHELL_CLICKED", reef: "REEF_CLICKED", plush: "PLUSH_CLICKED", milo: "MILO_CLICKED" };
+      logLocal(eventNames[type]);
+      if (type === "milo") {
+        miloTouches = Math.min(3, miloTouches + 1);
+        setMiloState(miloTouches === 1 ? "notice_child" : miloTouches === 2 ? "approach" : "play");
+        pulseTone(112, 1.05);
+      }
+      if (type === "plush") { setMiloState("approach"); pulseTone(96, 1.15); }
+      if (type === "shell") { setMiloState("notice_child"); setFishState("observe"); pulseTone(196, .7); }
+      if (type === "reef") { setFishState("hide"); pulseTone(152, .5); }
+      feedbackTimer = window.setTimeout(() => {
+        clearResponseClasses();
+        activeInteraction = null;
+        setMiloState("idle");
+        setFishState("return");
+        scheduleFishCycle();
+        scheduleResidentLoop();
+      }, reducedMotion ? 1900 : type === "milo" ? 6200 : 5000);
+    }, delay);
+  }
+
+  function setRoomLight(state) {
+    if (!["day", "dusk", "night"].includes(state)) return;
+    body.dataset.roomLight = state;
+  }
+
+  function resetReturnHome({ preserveLight = false } = {}) {
+    clearTimers(returnTimers);
+    body.classList.remove("rest-requested", "rest-exiting", "shell-warming", "fish-exit", "return-quiet", "return-turn", "return-travel", "return-transfer", "return-sleep", "rest-complete");
+    if (!preserveLight) setRoomLight("day");
+    document.querySelector("[data-rest-phrase]").textContent = "";
+  }
+
+  function startReturnHome() {
+    resetReturnHome({ preserveLight: true });
+    stopFishCycle();
+    stopResidentLoop();
+    window.clearTimeout(feedbackTimer);
+    feedbackTimer = null;
+    clearResponseClasses(); activeInteraction = null;
+    body.classList.remove("milo-away", "milo-returning");
+    body.classList.add("rest-requested");
+    const times = [300, 800, 1500, 2000, 3000, 4500, 5200, 9400, 12600];
+    queueTimer(returnTimers, times[0], () => setFishState("observe"));
+    queueTimer(returnTimers, times[1], () => { body.classList.add("return-quiet"); setRoomLight("dusk"); });
+    queueTimer(returnTimers, times[2], () => body.classList.add("shell-warming"));
+    queueTimer(returnTimers, times[3], () => { body.classList.add("fish-exit"); setFishState("hide"); });
+    queueTimer(returnTimers, times[4], () => setRoomLight("night"));
+    queueTimer(returnTimers, times[5], () => {
+      setMiloState("return_home");
+      body.classList.add("return-turn");
+      logLocal("MILO_RETURN_HOME_STARTED");
+    });
+    queueTimer(returnTimers, times[6], () => body.classList.add("return-travel"));
+    queueTimer(returnTimers, times[7], () => body.classList.add("return-transfer"));
+    queueTimer(returnTimers, times[8], () => {
+      body.classList.add("return-sleep", "rest-complete");
+      setMiloState("sleep");
+      document.querySelector("[data-rest-phrase]").textContent = "Milo is sleeping.";
+      logLocal("MILO_RETURNED_HOME");
+    });
+  }
+
+  function exitRest() {
+    resetReturnHome({ preserveLight: true });
+    stopFishCycle();
+    stopResidentLoop();
+    body.classList.add("rest-exiting");
+    setFishState("hide");
+    setMiloState("idle");
+    setRoomLight("dusk");
+    queueTimer(returnTimers, 1800, () => setRoomLight("day"));
+    queueTimer(returnTimers, 3700, () => {
+      body.classList.remove("rest-exiting");
+      setFishState("return");
+      scheduleFishCycle();
+      scheduleResidentLoop();
+    });
+  }
+
+  function setMode(mode) {
+    if (!["explore", "story", "rest"].includes(mode)) return;
+    const wasRest = body.dataset.mode === "rest";
+    body.dataset.mode = mode;
+    document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", String(mode === "rest"));
+    if (mode === "rest") {
+      logLocal("REST_STARTED");
+      startReturnHome();
+    } else {
+      body.classList.remove("milo-away");
+      if (wasRest || body.dataset.roomLight !== "day") exitRest();
+      else {
+        resetReturnHome();
+        setMiloState("idle");
+        setFishState("return");
+        scheduleFishCycle();
+        scheduleResidentLoop();
+      }
+    }
+    if (audioEngine) audioEngine.setRest(mode === "rest");
+  }
+
+  function playMagicMoment() {
+    if (body.classList.contains("magic-moment")) return;
+    logLocal("MAGIC_MOMENT_PLAYED");
+    setMode("explore");
+    clearTimers(returnTimers);
+    setRoomLight("day");
+    body.classList.remove("rest-exiting");
+    stopFishCycle();
+    stopResidentLoop();
+    clearResponseClasses();
+    document.querySelector("[data-ocean-experience]").scrollIntoView({ behavior: "auto" });
+    body.classList.remove("wake-ripple", "wake-water", "wake-life", "discovery-one", "discovery-two", "discovery-three", "milo-entered", "ocean-ready");
+    setFishState("hide");
+    void body.offsetWidth;
+    body.classList.add("magic-moment");
+    window.setTimeout(() => {
+      body.classList.remove("magic-moment");
+      body.classList.add("wake-water", "wake-life", "discovery-one", "discovery-two", "discovery-three", "milo-entered", "ocean-ready");
+      setFishState("observe");
+      setMiloState("idle");
+      scheduleFishCycle();
+      scheduleResidentLoop();
+    }, reducedMotion ? 3200 : 10400);
+  }
+
+  function restartScene() {
+    clearTimers(wakeTimers); clearTimers(returnTimers); stopResidentLoop(); stopFishCycle();
+    window.clearTimeout(feedbackTimer); window.clearTimeout(followTimer); window.clearTimeout(fishTouchReset);
+    window.clearTimeout(controlsTimer);
+    activeInteraction = null; fishTouches = 0; miloTouches = 0; wakeStarted = false;
+    body.dataset.mode = "explore"; body.dataset.miloState = "idle"; setFishState("hide");
+    setRoomLight("day");
+    body.className = "";
+    document.querySelector("[data-rest-toggle]")?.setAttribute("aria-pressed", "false");
+    document.querySelector("[data-rest-phrase]").textContent = "";
+    controlsTimer = window.setTimeout(() => body.classList.add("controls-ready"), reducedMotion ? 250 : 1500);
+    queueTimer(wakeTimers, reducedMotion ? 200 : 700, () => wakeRoom());
+    logLocal("SCENE_RESTARTED");
+  }
+
+  stage.addEventListener("pointermove", (event) => {
+    if (!body.classList.contains("ocean-ready") || body.dataset.mode === "rest") return;
+    const bounds = stage.getBoundingClientRect();
+    const x = Math.max(8, Math.min(92, ((event.clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.max(58, Math.min(84, ((event.clientY - bounds.top) / bounds.height) * 100));
+    stage.style.setProperty("--pointer-x", `${x}%`);
+    stage.style.setProperty("--pointer-y", `${y}%`);
+  });
+
+  stage.addEventListener("pointerdown", (event) => {
+    if (!body.classList.contains("ocean-ready") || body.dataset.mode === "rest" || activeInteraction) return;
+    if (event.target.closest("button, a, input, select, label")) return;
+    const bounds = stage.getBoundingClientRect();
+    const x = Math.max(8, Math.min(92, ((event.clientX - bounds.left) / bounds.width) * 100));
+    const y = Math.max(58, Math.min(84, ((event.clientY - bounds.top) / bounds.height) * 100));
+    if (y < 58) return;
+    stage.style.setProperty("--pointer-x", `${x}%`);
+    stage.style.setProperty("--pointer-y", `${y}%`);
+    fishTouches += 1;
+    activeInteraction = "fish";
+    stopFishCycle();
+    window.clearTimeout(followTimer);
+    window.clearTimeout(fishTouchReset);
+
+    if (fishTouches === 1) {
+      setFishState("observe");
+      logLocal("FISH_NOTICED_CHILD");
+    } else if (fishTouches === 2) {
+      body.classList.add("fish-follow");
+      setFishState("observe");
+      logLocal("FISH_FOLLOWED_BRIEFLY");
+      window.setTimeout(() => {
+        body.classList.remove("milo-away");
+        setMiloState("notice_child");
+      }, reducedMotion ? 80 : 700);
+    } else {
+      setFishState("hide");
+      logLocal("FISH_CHOSE_TO_HIDE");
+    }
+
+    followTimer = window.setTimeout(() => {
+      body.classList.remove("fish-follow");
+      setFishState(fishTouches > 1 ? "hide" : "return");
+      setMiloState("idle");
+      activeInteraction = null;
+      scheduleFishCycle();
+      scheduleResidentLoop();
+    }, reducedMotion ? 900 : fishTouches === 2 ? 2600 : 1900);
+    fishTouchReset = window.setTimeout(() => { fishTouches = 0; }, reducedMotion ? 2600 : 8500);
+  });
+
+  document.querySelector("[data-wake]")?.addEventListener("click", () => wakeRoom(true));
+  document.querySelector("[data-audio]").addEventListener("click", toggleAudio);
+  document.querySelector("[data-milo]").addEventListener("click", () => triggerResponse("milo"));
+  document.querySelectorAll("[data-room-zone]").forEach((button) => button.addEventListener("click", () => triggerResponse(button.dataset.roomZone)));
+  document.querySelectorAll(".mode-controls [data-mode]").forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
+  document.querySelector("[data-restart]")?.addEventListener("click", restartScene);
+  document.querySelector("[data-rest-toggle]").addEventListener("click", () => setMode(body.dataset.mode === "rest" ? "explore" : "rest"));
+  document.querySelector("[data-magic-moment]").addEventListener("click", playMagicMoment);
+  setFishState("hide"); logLocal("ROOM_LOADED");
+  wakeRoom();
+  controlsTimer = window.setTimeout(() => body.classList.add("controls-ready"), reducedMotion ? 250 : 1500);
+})();

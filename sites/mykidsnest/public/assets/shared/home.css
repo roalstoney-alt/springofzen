@@ -1,0 +1,58 @@
+:root { color-scheme: dark; --ease: cubic-bezier(.2, .72, .2, 1); }
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #081016; }
+body { color: #fff; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+button, a { font: inherit; }
+.skip-link { position: fixed; z-index: 100; left: 1rem; top: -5rem; padding: .7rem 1rem; border-radius: 999px; background: #fff; color: #111; }
+.skip-link:focus { top: 1rem; }
+.home-header { position: fixed; z-index: 40; inset: 0 0 auto; padding: max(1.15rem, env(safe-area-inset-top)) clamp(1rem, 3.5vw, 3.5rem); display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
+.home-header > * { pointer-events: auto; }
+.home-note { margin: 0; font-size: .61rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; text-shadow: 0 2px 16px rgba(0,0,0,.65); }
+.world-carousel { position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 560px; }
+.world-slide { position: absolute; inset: 0; visibility: hidden; opacity: 0; transition: opacity 1.35s var(--ease), visibility 0s linear 1.35s; isolation: isolate; }
+.world-slide.is-active { visibility: visible; opacity: 1; transition-delay: 0s; }
+.world-slide picture, .world-slide picture img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.world-slide picture { z-index: -3; overflow: hidden; background: #0a1118; }
+.world-slide picture img { display: block; object-fit: cover; transform: scale(1.035); transition: transform 7s linear; }
+.world-slide.is-active picture img { transform: scale(1); }
+.world-slide::before { content: ""; position: absolute; z-index: -2; inset: 0; background: linear-gradient(180deg, rgba(3,7,10,.36), transparent 30%, transparent 52%, rgba(2,6,10,.72)); }
+.world-slide::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(2,7,11,.28), transparent 58%); }
+.slide-ocean::after { background: linear-gradient(90deg, rgba(4,25,35,.48), transparent 62%), linear-gradient(180deg, transparent 55%, rgba(2,20,29,.42)); }
+.slide-space::after { background: linear-gradient(90deg, rgba(6,7,18,.56), transparent 61%), linear-gradient(180deg, transparent 50%, rgba(5,7,17,.46)); }
+.slide-forest::after { background: linear-gradient(90deg, rgba(12,26,17,.44), transparent 64%), linear-gradient(180deg, transparent 54%, rgba(8,21,13,.48)); }
+.hero-milo { position: absolute; z-index: -1; right: 4%; top: 29%; width: min(38vw, 590px); filter: drop-shadow(0 28px 34px rgba(0,31,46,.32)); transform: translate3d(2rem, .5rem, 0) rotate(-4deg); opacity: 0; transition: opacity 1.1s ease .35s, transform 1.6s var(--ease) .2s; }
+.world-slide.is-active .hero-milo { opacity: .96; transform: translate3d(0, 0, 0) rotate(-4deg); }
+.slide-copy { position: absolute; left: clamp(1.3rem, 7vw, 7rem); bottom: clamp(7.7rem, 15vh, 10rem); width: min(41rem, calc(100% - 2.6rem)); text-shadow: 0 3px 26px rgba(0,0,0,.58); }
+.slide-index { display: block; margin-bottom: 1rem; font-size: .62rem; font-weight: 850; letter-spacing: .22em; text-transform: uppercase; opacity: .82; }
+.slide-copy h1 { margin: 0; font: 500 clamp(4rem, 10vw, 9.5rem)/.79 Georgia, serif; letter-spacing: -.065em; }
+.slide-copy p { margin: 1.2rem 0 1.7rem; font: 500 clamp(1.22rem, 2.4vw, 2rem)/1.2 Georgia, serif; }
+.enter-link { display: inline-flex; align-items: center; gap: 2rem; min-height: 3.4rem; padding: 0 1.25rem; border: 1px solid rgba(255,255,255,.6); border-radius: 999px; background: rgba(5,12,16,.24); color: #fff; font-size: .72rem; font-weight: 850; letter-spacing: .13em; text-decoration: none; backdrop-filter: blur(12px); transition: background .25s ease, color .25s ease, transform .25s ease; }
+.enter-link::after { content: "→"; font-size: 1.15rem; }
+.enter-link:hover, .enter-link:focus-visible { background: #fff; color: #152129; transform: translateY(-2px); text-shadow: none; }
+.enter-link:focus-visible, .carousel-arrow:focus-visible, .carousel-dot:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.carousel-arrow { position: fixed; z-index: 35; top: 50%; width: 3rem; height: 3rem; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; background: rgba(7,12,16,.24); color: #fff; cursor: pointer; backdrop-filter: blur(10px); transform: translateY(-50%); }
+.carousel-arrow:hover { background: rgba(255,255,255,.18); }
+.carousel-arrow[data-direction="previous"] { left: clamp(.8rem, 2vw, 2rem); }
+.carousel-arrow[data-direction="next"] { right: clamp(.8rem, 2vw, 2rem); }
+.carousel-dots { position: fixed; z-index: 35; left: 50%; bottom: max(1.6rem, env(safe-area-inset-bottom)); display: flex; gap: .6rem; padding: .7rem .8rem; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; background: rgba(6,11,15,.3); backdrop-filter: blur(12px); transform: translateX(-50%); }
+.carousel-dot { width: .55rem; height: .55rem; padding: 0; border: 1px solid rgba(255,255,255,.75); border-radius: 50%; background: transparent; cursor: pointer; transition: width .3s ease, background .3s ease; }
+.carousel-dot[aria-current="true"] { width: 2rem; border-radius: 999px; background: #fff; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 720px) {
+  .home-note { display: none; }
+  .world-slide picture img { object-position: center; }
+  .slide-copy { left: 1.15rem; bottom: 7.3rem; width: calc(100% - 2.3rem); }
+  .slide-copy h1 { font-size: clamp(3.5rem, 19vw, 6rem); }
+  .slide-copy p { max-width: 18rem; font-size: 1.18rem; }
+  .hero-milo { right: -5%; top: 37%; width: min(78vw, 470px); }
+  .carousel-arrow { display: none; }
+  .slide-ocean picture img { object-position: 50% 50%; }
+  .slide-space picture img { object-position: 50% 50%; }
+  .slide-forest picture img { object-position: 52% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world-slide { transition-duration: .35s; }
+  .world-slide picture img, .hero-milo, .enter-link, .carousel-dot { transition: none; transform: none; }
+}
