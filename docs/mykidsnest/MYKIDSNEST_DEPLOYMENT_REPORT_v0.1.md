@@ -20,7 +20,7 @@ No personal information is requested or stored. Ocean pilot forms and backend sy
 
 - Account: `f2e22e5cefa40fa25e8a461a149ae12c`
 - Zone: `mykidsnest.com` (`active`, full setup)
-- Worker version: `b855f1ea-33c4-4c64-9e1b-c620840ecfae`
+- Worker version: `87e64dd7-d876-4104-ac16-c9ab139ea239`
 - Worker preview: `https://mykidsnest-site.roalstoney.workers.dev`
 - Custom domains: `mykidsnest.com`, `www.mykidsnest.com`
 - Deployed: 2026-10-15
@@ -48,7 +48,7 @@ No personal information is requested or stored. Ocean pilot forms and backend sy
 
 ## Independence and regression
 
-- Static audit: 42 public files, 5 HTML documents, 26 local images, 0 missing references.
+- Static audit: 43 public files, 5 HTML documents, 26 local raster images plus one SVG favicon, 0 missing references.
 - SpringOfZen hotlinks: 0 image, 0 JavaScript, 0 CSS, 0 API.
 - Backend and PII collection: unchanged / none added.
 - Existing SpringOfZen routes `/mynest/`, `/mynest/magic-room/`, `/mynest/space-room/`, and `/mynest/forest-room/` each returned HTTP 200 after deployment.
