@@ -1,3 +1,5 @@
+/Users/roal/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
+/Users/roal/.zprofile:2: no such file or directory: /opt/homebrew/bin/brew
 /* Isolated parent information. World runtime styles and assets remain unchanged. */
 .mkn-parent-section,.mkn-parent-footer,.mkn-parent-top,.mkn-parent-page{box-sizing:border-box;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65;color:#1c3235;background:#f4f0e7}
 .mkn-parent-section{padding:clamp(2rem,6vw,5rem);border-top:1px solid #d7d7c9}
@@ -17,6 +19,7 @@ body.mkn-parent-page{margin:0;min-height:100vh}.mkn-parent-page main{max-width:5
 /* Original home locks scrolling for its full-screen carousel. Restore document scrolling only. */
 html:has(body.mkn-parent-home),body.mkn-parent-home{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
 .mkn-parent-home .home-header{position:absolute}.mkn-parent-home .mkn-parent-section{position:relative}
+.mkn-parent-home .carousel-arrow,.mkn-parent-home .carousel-dots{position:absolute}
 @media(max-width:600px){.mkn-parent-grid,.mkn-parent-worlds{grid-template-columns:1fr}.mkn-parent-actions>a{width:100%}.mkn-parent-section{padding:2rem 1.2rem}.mkn-parent-page main{padding:1.25rem}.mkn-parent-page input,.mkn-parent-page select{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.mkn-parent-page *,.mkn-parent-section *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 

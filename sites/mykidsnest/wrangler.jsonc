@@ -1,3 +1,5 @@
+/Users/roal/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
+/Users/roal/.zprofile:2: no such file or directory: /opt/homebrew/bin/brew
 {
   "$schema": "../../node_modules/.pnpm/wrangler@4.147.0/node_modules/wrangler/config-schema.json",
   "name": "mykidsnest-site",
@@ -11,6 +13,22 @@
     "html_handling": "force-trailing-slash",
     "not_found_handling": "none",
     "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "LEADS_DB",
+      "database_name": "mykidsnest-leads",
+      "database_id": "4b743455-eaa0-49ee-a620-4449f1ff9398",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "LEAD_COLLECTION_ENABLED": "true",
+    "LEAD_POLICY_APPROVED": "2026-10-16-v1",
+    "LEAD_RETENTION_READY": "true"
+  },
+  "triggers": {
+    "crons": ["17 3 * * *"]
   },
   "routes": [
     { "pattern": "mykidsnest.com", "custom_domain": true },

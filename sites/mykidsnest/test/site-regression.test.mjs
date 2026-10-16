@@ -1,3 +1,5 @@
+/Users/roal/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
+/Users/roal/.zprofile:2: no such file or directory: /opt/homebrew/bin/brew
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -36,8 +38,10 @@ test('all public documents keep same-origin metadata, no remote runtime referenc
 test('parent controls are separate additions, with adult consent and no free-text child input',()=>{
  for(const name of ['index.html','ocean/index.html','space/index.html','forest/index.html']){
   const html=fs.readFileSync(path.join(publicRoot,name),'utf8');assert.match(html,/mkn-parent-section/);assert.match(html,/Request a Digital Room Design/);assert.match(html,/property="og:image"/);assert.ok(html.indexOf('mkn-parent-section')>html.indexOf('data-carousel')||name!=='index.html');
+  if(name==='index.html')assert.ok(html.indexOf('</main>')<html.indexOf('mkn-parent-section'));
  }
  const form=fs.readFileSync(path.join(publicRoot,'request/index.html'),'utf8');assert.match(form,/<fieldset disabled>/);assert.match(form,/type="checkbox" value="yes" required/);assert.doesNotMatch(form,/<textarea|type="file"|name="child/i);assert.match(form,/noindex,follow/);
+ assert.match(form,/<option value="ocean">Ocean<\/option>/);
  const client=fs.readFileSync(path.join(publicRoot,'assets/shared/parents-v04.js'),'utf8');assert.match(client,/response.ok/);assert.match(client,/result.reference/);assert.match(client,/offline/);assert.match(client,/AbortSignal.timeout/);assert.match(client,/form.dataset.saved/);
  const css=fs.readFileSync(path.join(publicRoot,'assets/shared/parents-v04.css'),'utf8');assert.match(css,/prefers-reduced-motion/);assert.match(css,/@media\(max-width:600px\)/);assert.match(css,/overflow-y:auto/);
 });
