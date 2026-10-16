@@ -7,6 +7,7 @@
 .mkn-parent-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin:1.5rem 0}
 .mkn-parent-section a,.mkn-parent-page a,.mkn-parent-footer a{color:#214e4b;text-underline-offset:.2em}
 a.mkn-parent-button,.mkn-parent-page button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;max-width:100%;padding:.75rem 1rem;background:#214e4b;color:#fff;border:1px solid #214e4b;border-radius:.6rem;font:inherit;font-weight:650;text-decoration:none;white-space:normal}
+.mkn-parent-page [hidden]{display:none!important}
 a.mkn-parent-button.is-secondary{color:#214e4b;background:transparent}
 .mkn-parent-footer{display:flex;flex-wrap:wrap;gap:.5rem 1.3rem;padding:1.5rem clamp(1rem,6vw,5rem);border-top:1px solid #d7d7c9;font-size:.85rem}
 .mkn-parent-section a:focus-visible,.mkn-parent-page :focus-visible,.mkn-parent-footer a:focus-visible{outline:3px solid #bd693d;outline-offset:4px}

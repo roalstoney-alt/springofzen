@@ -41,7 +41,7 @@ test('parent controls are separate additions, with adult consent and no free-tex
  const form=fs.readFileSync(path.join(publicRoot,'request/index.html'),'utf8');assert.match(form,/<fieldset disabled>/);assert.match(form,/type="checkbox" value="yes" required/);assert.doesNotMatch(form,/<textarea|type="file"|name="child/i);assert.match(form,/noindex,follow/);
  assert.match(form,/<option value="ocean">Ocean<\/option>/);
  const client=fs.readFileSync(path.join(publicRoot,'assets/shared/parents-v04.js'),'utf8');assert.match(client,/response.ok/);assert.match(client,/result.reference/);assert.match(client,/offline/);assert.match(client,/AbortSignal.timeout/);assert.match(client,/form.dataset.saved/);
- const css=fs.readFileSync(path.join(publicRoot,'assets/shared/parents-v04.css'),'utf8');assert.match(css,/prefers-reduced-motion/);assert.match(css,/@media\(max-width:600px\)/);assert.match(css,/overflow-y:auto/);
+ const css=fs.readFileSync(path.join(publicRoot,'assets/shared/parents-v04.css'),'utf8');assert.match(css,/prefers-reduced-motion/);assert.match(css,/@media\(max-width:600px\)/);assert.match(css,/overflow-y:auto/);assert.match(css,/\[hidden\]\{display:none!important\}/);
 });
 test('trust, routing and sitemap entries exist; private endpoints stay no-store and non-indexable',async()=>{
  for(const slug of ['parents','request','about','contact','privacy','safety','faq','terms']){
