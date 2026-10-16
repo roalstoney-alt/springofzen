@@ -38,3 +38,7 @@ All production assets are stored under `sites/mykidsnest/public/`. The standalon
 | `forest.css`, `forest.js` | Three-mode scene transitions, gentle meadow response, and fireflies | Approved local MyNest Forest runtime, rebuilt as one public default without A/B controls |
 
 The source repository owns these project assets. No third-party CDN asset or remotely licensed stock file is introduced by this standalone build.
+
+## v0.4 review candidate (not yet production)
+
+The original 36 runtime/style/media assets above remain byte-identical. New `assets/shared/parents-v04.css` and `parents-v04.js` are isolated parent information/form additions. Only that new script can request the two same-origin adult inquiry endpoints; the world scripts remain network-free. The new Worker module `src/inquiries.js` can use an explicitly configured `LEADS_DB` binding, but production collection is closed until the approved policy, retention, secret and binding gates pass. There is no external client runtime, marketing pixel or SpringOfZen dependency. See `docs/mykidsnest/v04/` for migration, review and rollback limits.
