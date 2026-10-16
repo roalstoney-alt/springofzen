@@ -1,5 +1,3 @@
-/Users/roal/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
-/Users/roal/.zprofile:2: no such file or directory: /opt/homebrew/bin/brew
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';

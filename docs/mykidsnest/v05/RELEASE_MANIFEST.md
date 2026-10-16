@@ -1,5 +1,3 @@
-/Users/roal/.zprofile:1: no such file or directory: /opt/homebrew/bin/brew
-/Users/roal/.zprofile:2: no such file or directory: /opt/homebrew/bin/brew
 # MyKidsNest production release v0.5
 
 Release date: 2026-10-16  
