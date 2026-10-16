@@ -31,7 +31,9 @@ for (const file of textFiles) {
   const source = fs.readFileSync(file, "utf8");
   if (/springofzen\.com/i.test(source)) fail(`${relative} links to SpringOfZen`);
   if (/\b(?:XMLHttpRequest|WebSocket|indexedDB|localStorage)\b|\bfetch\s*\(/.test(source) && !relative.endsWith("src/worker.js")) {
-    fail(`${relative} contains a browser data/network dependency`);
+    const adultOnly = relative === "assets/shared/parents-v04.js";
+    const calls = [...source.matchAll(/\bfetch\s*\(\s*(["'])([^"']+)\1/g)].map(match => match[2]);
+    if (!adultOnly || calls.length !== 2 || calls.some(url => !["/api/inquiry-token", "/api/inquiries"].includes(url)) || /XMLHttpRequest|WebSocket|indexedDB|localStorage/.test(source)) fail(`${relative} contains an unapproved browser data/network dependency`);
   }
   if (/\b(?:pilot|research|prototype)\b/i.test(source) && /\.(?:html|js)$/.test(file)) {
     fail(`${relative} exposes internal testing language`);

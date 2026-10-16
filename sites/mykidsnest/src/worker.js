@@ -1,3 +1,4 @@
+import { handleInquiry, purgeExpired } from "./inquiries.js";
 const CANONICAL_HOST = "mykidsnest.com";
 const WORLD_ALIASES = new Map([
   ["/ocean-room", "/ocean/"],
@@ -7,7 +8,7 @@ const WORLD_ALIASES = new Map([
   ["/forest-room", "/forest/"],
   ["/forest-room/", "/forest/"]
 ]);
-const CLEAN_ROUTES = new Set(["/ocean", "/space", "/forest"]);
+const CLEAN_ROUTES = new Set(["/ocean", "/space", "/forest", "/parents", "/request", "/about", "/contact", "/privacy", "/safety", "/faq", "/terms"]);
 
 function redirect(url, status) {
   return new Response(null, {
@@ -21,7 +22,7 @@ function redirect(url, status) {
 
 function withHeaders(response, pathname) {
   const headers = new Headers(response.headers);
-  headers.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests");
+  headers.set("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests");
   headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()");
   headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   headers.set("X-Content-Type-Options", "nosniff");
@@ -29,7 +30,10 @@ function withHeaders(response, pathname) {
   headers.set("Cross-Origin-Opener-Policy", "same-origin");
   headers.set("Vary", "Accept-Encoding");
 
-  if (/\.(?:avif|gif|jpe?g|png|svg|webp|woff2?)$/i.test(pathname)) {
+  if (pathname.startsWith("/api/")) {
+    headers.set("Cache-Control", "no-store");
+    headers.set("X-Robots-Tag", "noindex");
+  } else if (/\.(?:avif|gif|jpe?g|png|svg|webp|woff2?)$/i.test(pathname)) {
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
   } else if (/\.(?:css|js)$/i.test(pathname)) {
     headers.set("Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
@@ -40,6 +44,7 @@ function withHeaders(response, pathname) {
 }
 
 export default {
+  async scheduled(_event, env, ctx) { ctx.waitUntil(purgeExpired(env)); },
   async fetch(request, env) {
     const url = new URL(request.url);
 
@@ -59,6 +64,8 @@ export default {
       url.pathname += "/";
       return redirect(url, 308);
     }
+
+    if (url.pathname.startsWith("/api/")) return withHeaders(await handleInquiry(request, env), url.pathname);
 
     if (!['GET', 'HEAD'].includes(request.method)) {
       return withHeaders(new Response("Method Not Allowed", { status: 405, headers: { Allow: "GET, HEAD" } }), url.pathname);

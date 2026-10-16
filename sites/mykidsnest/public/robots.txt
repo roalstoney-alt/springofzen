@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /request/
 
 Sitemap: https://mykidsnest.com/sitemap.xml
