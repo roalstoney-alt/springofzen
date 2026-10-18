@@ -1,0 +1,24 @@
+{
+  "internal_order_reference": "SYNTH-FOREST-A-001",
+  "etsy_order_reference": "SYNTHETIC-NOT-AN-ETSY-ORDER",
+  "test": "A - Small Bedroom",
+  "age_range": "4-6",
+  "room": "Compact rectangular bedroom; approximate dimensions intentionally omitted",
+  "preferences": "Green forest direction",
+  "forest_elements": "Meadow floor, natural tree, subtle deer presence",
+  "existing_furniture": "Existing bed and wardrobe",
+  "constraints": "Limited floor space",
+  "palette": [
+    "#CAD4B2",
+    "#879B72",
+    "#F2E9D8",
+    "#B9896D"
+  ],
+  "suggestions": [
+    "Keep the existing bed as the visual anchor rather than adding another large furniture piece.",
+    "Use a restrained meadow-green floor direction and keep the center path visually open.",
+    "Place forest character cues in one reading corner instead of distributing props across the floor.",
+    "Use warm low-level lighting as atmosphere only; final product selection remains outside this starter scope."
+  ],
+  "manual_review_required": false
+}

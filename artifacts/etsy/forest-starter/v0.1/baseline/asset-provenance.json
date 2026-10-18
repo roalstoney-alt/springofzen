@@ -1,0 +1,120 @@
+{
+  "project": "MYKIDSNEST-ETSY-FOREST-001",
+  "captured_at": "2026-10-18T12:29:49.679840+00:00",
+  "baseline_sha": "6020cb44978b9ffd5bcc347243880d29b12a1689",
+  "feature_branch": "codex/mykidsnest-etsy-forest-starter-v01",
+  "source_assets": [
+    {
+      "filename": "forest-room-day-desktop-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-day-desktop-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-day-desktop-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-day-desktop-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 419304,
+      "sha256": "6c49c9d147c0120d628015b9cb29aa6bdaf084479c9ec2b18cc1d601b5524ffc",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    },
+    {
+      "filename": "forest-room-day-mobile-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-day-mobile-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-day-mobile-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-day-mobile-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 415964,
+      "sha256": "df4a01aec9048548903ee980574b168455febc29cff1b1aa41db8111a9cd243b",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    },
+    {
+      "filename": "forest-room-night-desktop-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-night-desktop-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-night-desktop-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-night-desktop-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 303094,
+      "sha256": "1ae3d89b49e7fa5493fb255647fb346018245877f96411fe8debee317f8674e1",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    },
+    {
+      "filename": "forest-room-night-mobile-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-night-mobile-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-night-mobile-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-night-mobile-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 322278,
+      "sha256": "ff64f395da646200e051042ac802271026026a6f876b13f65fbab50b82eb9d23",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    },
+    {
+      "filename": "forest-room-rest-desktop-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-rest-desktop-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-rest-desktop-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-rest-desktop-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 177620,
+      "sha256": "992e2f4edd158ab100e8cba8056674e1a6830ebcca69fc3d700835362512c1fe",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    },
+    {
+      "filename": "forest-room-rest-mobile-b-practical-v02.webp",
+      "source_path": "mynest/forest-room/assets/forest-room-rest-mobile-b-practical-v02.webp",
+      "production_path": "sites/mykidsnest/public/assets/forest/forest-room-rest-mobile-b-practical-v02.webp",
+      "package_path": "images/original-assets/forest-room-rest-mobile-b-practical-v02.webp",
+      "git_sha_original_introduction": "cdd4780767d31c740c41645af80a2174958ce504",
+      "git_sha_standalone_site_copy": "876e9483e4e495e0b7b6f8c68659dd286311497b",
+      "dimensions": [
+        941,
+        1672
+      ],
+      "format": "WEBP",
+      "mode": "RGB",
+      "bytes": 218018,
+      "sha256": "fa2e90d842cd5e3d27e6466b14709844bfd536607fd6698a433baeb2d85fa778",
+      "usage_rights_status": "OWNER_CONFIRMATION_REQUIRED",
+      "production_usage_status": "CURRENT_FOREST_ROUTE_SOURCE"
+    }
+  ],
+  "source_assets_recovered": 6,
+  "design_generation_method": "deterministic composition of exact production artwork with customer-specific annotation and palette; no generative image API",
+  "rights_status": "OWNER_CONFIRMATION_REQUIRED",
+  "production_changed": false
+}

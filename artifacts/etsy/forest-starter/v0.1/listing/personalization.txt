@@ -1,0 +1,13 @@
+Please share your child's age, approximate room dimensions (L x W x H), favorite forest colors or animals, and any special design preferences. You may send a room photo through Etsy Messages after purchase. Please avoid including people or personal information.
+
+PRIVACY IMPLEMENTATION NOTE FOR HUMAN REVIEW
+
+Use broad age ranges rather than an exact birth date. Do not request a child's name, birth date, school, home address, identifiable photograph, medical information, or personal story.
+
+Recommended Etsy Custom options fields (maximum five under the policy reviewed 2026-10-18):
+
+1. Age range - required list: 2.5-4 / 4-6 / 6-8 / Prefer not to say
+2. Approximate room dimensions - optional text: L x W x H plus unit
+3. Forest colors or animals - required text
+4. Existing furniture and special preferences - optional text
+5. Room-only photo - optional file upload or request through Etsy Messages; no people or identifying details

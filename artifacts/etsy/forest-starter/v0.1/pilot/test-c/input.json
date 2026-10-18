@@ -1,0 +1,24 @@
+{
+  "internal_order_reference": "SYNTH-FOREST-C-001",
+  "etsy_order_reference": "SYNTHETIC-NOT-AN-ETSY-ORDER",
+  "test": "C - Constrained Layout",
+  "age_range": "5-7",
+  "room": "Irregular room geometry; approximate dimensions intentionally omitted",
+  "preferences": "Lighter forest palette for a darker room",
+  "forest_elements": "Window woodland view and restrained mushroom-light cues",
+  "existing_furniture": "Existing bed and storage must remain",
+  "constraints": "Limited natural light, irregular geometry, multiple furniture restrictions",
+  "palette": [
+    "#EEF0DD",
+    "#BFCDAA",
+    "#D8C9AE",
+    "#A78972"
+  ],
+  "suggestions": [
+    "Use lighter wall and textile values so the forest direction does not darken the room further.",
+    "Treat the irregular geometry as a manual review trigger before suggesting any layout change.",
+    "Keep existing furniture positions provisional until adult-provided measurements are checked.",
+    "Use layered ambient lighting as a visual direction only, not as an electrical specification."
+  ],
+  "manual_review_required": true
+}

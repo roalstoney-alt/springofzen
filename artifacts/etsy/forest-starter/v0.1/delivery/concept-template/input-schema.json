@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "required": [
+    "internal_order_reference",
+    "age_range",
+    "room",
+    "preferences",
+    "forest_elements",
+    "existing_furniture",
+    "constraints"
+  ],
+  "forbidden_personal_data": [
+    "child_name",
+    "birth_date",
+    "school",
+    "home_address",
+    "identifiable_person_photo",
+    "medical_information"
+  ],
+  "optional_room_photo_rules": "room only; no people, addresses, mail, school marks, or other identifying content"
+}
