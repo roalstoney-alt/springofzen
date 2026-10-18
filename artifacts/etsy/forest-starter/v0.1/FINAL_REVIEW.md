@@ -43,7 +43,7 @@ ETSY_COMPLIANCE_STATUS = CONDITIONAL - NOT POLICY_BLOCKED; owner rights/AI prove
 
 UNRESOLVED_BLOCKERS = Etsy listing URL/ID and seller settings NOT_VERIFIED; usage rights and AI provenance confirmation; processing-time and revision commitment; platform/payment fees; labor costing; refund/cancellation/legal review; human publication approval
 
-PR_URL = NOT_CREATED_YET
+PR_URL = https://github.com/roalstoney-alt/springofzen/pull/2
 
 ZIP_ARTIFACT_PATH = artifacts/etsy/forest-starter/MYKIDSNEST_FOREST_STARTER_COMMERCIAL_PILOT_v0.1.zip
 
