@@ -1,0 +1,24 @@
+{
+  "internal_order_reference": "SYNTH-FOREST-B-001",
+  "etsy_order_reference": "SYNTHETIC-NOT-AN-ETSY-ORDER",
+  "test": "B - Medium Bedroom",
+  "age_range": "3-5",
+  "room": "Standard medium bedroom; approximate dimensions intentionally omitted",
+  "preferences": "Neutral woodland palette",
+  "forest_elements": "Woodland animals with one calm deer focal cue",
+  "existing_furniture": "Existing bed, dresser, and book storage",
+  "constraints": "Retain all major furniture",
+  "palette": [
+    "#E8DDC7",
+    "#B9B49D",
+    "#86917B",
+    "#C9A79B"
+  ],
+  "suggestions": [
+    "Unify existing furniture with a soft neutral textile and wall-color direction.",
+    "Use one deer cue and a small number of woodland details to avoid visual clutter.",
+    "Reserve the window side for the meadow atmosphere while keeping furniture positions conceptual.",
+    "Repeat sage, warm cream, and muted blush in small accents rather than matching every object."
+  ],
+  "manual_review_required": false
+}

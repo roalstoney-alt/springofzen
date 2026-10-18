@@ -1,0 +1,22 @@
+{
+  "internal_order_reference": "[INTERNAL_ORDER_REFERENCE]",
+  "etsy_order_reference": "[ETSY_ORDER_REFERENCE - PRIVATE STORAGE ONLY]",
+  "test": "A - Small Bedroom",
+  "age_range": "[AGE_RANGE]",
+  "room": "[ROOM]",
+  "preferences": "[PREFERENCES]",
+  "forest_elements": "[FOREST_ELEMENTS]",
+  "existing_furniture": "[EXISTING_FURNITURE]",
+  "constraints": "[CONSTRAINTS]",
+  "palette": [
+    "#CAD4B2",
+    "#879B72",
+    "#F2E9D8",
+    "#B9896D"
+  ],
+  "suggestions": [
+    "[APPROVED SUGGESTION 1]",
+    "[APPROVED SUGGESTION 2]"
+  ],
+  "manual_review_required": false
+}
