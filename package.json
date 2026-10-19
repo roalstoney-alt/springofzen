@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test workers/mynest-api/test/*.test.js",
+    "test": "node --test workers/mynest-api/test/*.test.js scripts/mykidsnest/test-metricool-identity-gate.mjs",
+    "test:mykidsnest:metricool-identity": "node --test scripts/mykidsnest/test-metricool-identity-gate.mjs",
     "qa:mynest:magic": "node scripts/qa-mynest-ocean-room001.mjs",
     "mynest:dev": "wrangler dev --config workers/mynest-api/wrangler.jsonc",
     "mynest:deploy": "wrangler deploy --config workers/mynest-api/wrangler.jsonc"

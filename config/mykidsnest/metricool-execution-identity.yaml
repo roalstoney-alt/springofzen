@@ -1,0 +1,35 @@
+{
+  "project": "MyKidsNest",
+  "metricool": {
+    "expected_account": "youtale520@gmail.com",
+    "expected_account_evidence": "OWNER_CONFIRMED",
+    "incorrect_account": "roalstoney@gmail.com",
+    "incorrect_account_evidence": "OWNER_CONFIRMED",
+    "brand_id": "VERIFY_FROM_LAST_KNOWN_GOOD",
+    "observed_brand_candidate": "7419677",
+    "observed_brand_candidate_evidence": "SYSTEM_OBSERVED_BROWSER_SESSION_NOT_ACCOUNT_BOUND",
+    "current_connector_brand_id": "7419165",
+    "current_connector_active_account": "NOT_EXPOSED_BY_CONNECTOR",
+    "current_connector_access_to_observed_brand_candidate": "DENIED_403",
+    "required_networks": [
+      "pinterest",
+      "tiktok",
+      "instagram"
+    ],
+    "intended_social_handles": {
+      "pinterest": "NOT_RECOVERED",
+      "tiktok": "NOT_RECOVERED",
+      "instagram": "NOT_RECOVERED"
+    },
+    "identity_gate": "REQUIRED",
+    "credential_source": "EXISTING_AUTHORIZED_CONNECTION",
+    "credential_source_identifier": "VERIFY_EXISTING_AUTHORIZED_CONNECTION",
+    "observed_credential_sources": [
+      "CHATGPT_METRICOOL_CONNECTOR",
+      "IAB_METRICOOL_SESSION_USER_5765860"
+    ],
+    "secret_material": "FORBIDDEN",
+    "on_unverified": "BLOCK_READ_WRITE",
+    "automatic_account_substitution": "FORBIDDEN"
+  }
+}
